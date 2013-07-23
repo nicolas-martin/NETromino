@@ -12,7 +12,7 @@
 
 @interface Tetromino : CCSprite {
 
-	enum tetrominoTypes tetrominoType;
+	tetrominoType tetrominoType;
 	BOOL stuck;
 	
 	CGPoint leftMostPosition;
@@ -20,10 +20,13 @@
 	
 	int boardX;
 	int boardY;
+	NSNumber* blockFrequencies;
 }
 
+
+
 @property (readwrite, assign) NSMutableArray *blocksInTetromino;
-@property enum tetrominoTypes tetrominoType;
+@property (readonly) tetrominoType tetrominoType;
 @property (assign) BOOL stuck;
 @property (readwrite, assign) int boardX;
 @property (readwrite, assign) int boardY;
@@ -35,4 +38,8 @@
 
 - (BOOL)isBlockInTetromino:(id)block;
 - (void)moveTetrominoDown;
+
+- (tetrominoType*)generateNextBlock;
+
+
 @end

@@ -7,7 +7,7 @@
 //
 
 #import "Block.h"
-
+typedef uint8_t BLOCK[4][4];
 @interface Block (private)
 
 - (void)initializeDefaults;
@@ -15,12 +15,133 @@
 
 @end
 
-@implementation Block
+static BLOCK bI[2] = {
+	{
+		{0,0,0,0},
+		{1,1,1,1},
+		{0,0,0,0},
+		{0,0,0,0}
+	}, {
+		{0,1,0,0},
+		{0,1,0,0},
+		{0,1,0,0},
+		{0,1,0,0}
+	}
+};
+static BLOCK bO[1] = {
+	{
+		{0,2,2,0},
+		{0,2,2,0},
+		{0,0,0,0},
+		{0,0,0,0}
+	}
+};
+static BLOCK bJ[4] = {
+	{
+		{3,0,0,0},
+		{3,3,3,0},
+		{0,0,0,0},
+		{0,0,0,0}
+	}, {
+		{0,3,3,0},
+		{0,3,0,0},
+		{0,3,0,0},
+		{0,0,0,0}
+	}, {
+		{0,0,0,0},
+		{3,3,3,0},
+		{0,0,3,0},
+		{0,0,0,0}
+	}, {
+		{0,3,0,0},
+		{0,3,0,0},
+		{3,3,0,0},
+		{0,0,0,0}
+	},
+};
+static BLOCK bL[4] = {
+	{
+		{0,0,4,0},
+		{4,4,4,0},
+		{0,0,0,0},
+		{0,0,0,0}
+	}, {
+		{0,4,0,0},
+		{0,4,0,0},
+		{0,4,4,0},
+		{0,0,0,0}
+	}, {
+		{0,0,0,0},
+		{4,4,4,0},
+		{4,0,0,0},
+		{0,0,0,0}
+	}, {
+		{4,4,0,0},
+		{0,4,0,0},
+		{0,4,0,0},
+		{0,0,0,0}
+	}
+};
+static BLOCK bZ[2] = {
+	{
+		{5,5,0,0},
+		{0,5,5,0},
+		{0,0,0,0},
+		{0,0,0,0}
+	}, {
+		{0,0,5,0},
+		{0,5,5,0},
+		{0,5,0,0},
+		{0,0,0,0}
+	}
+};
+static BLOCK bS[2] = {
+	{
+		{0,1,1,0},
+		{1,1,0,0},
+		{0,0,0,0},
+		{0,0,0,0}
+	}, {
+		{1,0,0,0},
+		{1,1,0,0},
+		{0,1,0,0},
+		{0,0,0,0}
+	}
+};
+static BLOCK bT[4] = {
+	{
+		{0,2,0,0},
+		{2,2,2,0},
+		{0,0,0,0},
+		{0,0,0,0}
+	}, {
+		{0,2,0,0},
+		{0,2,2,0},
+		{0,2,0,0},
+		{0,0,0,0}
+	}, {
+		{0,0,0,0},
+		{2,2,2,0},
+		{0,2,0,0},
+		{0,0,0,0}
+	}, {
+		{0,2,0,0},
+		{2,2,0,0},
+		{0,2,0,0},
+		{0,0,0,0}
+	}
+};
 
+static BLOCK *blocks[7] = {bI, bO, bJ, bL, bZ, bS, bT};
+static NSInteger orientationCount[7] = {2, 1, 4, 4, 2, 2, 4};
+
+@implementation Block
 @synthesize boardX;
 @synthesize boardY;
 @synthesize stuck;
 @synthesize disappearing;
+@synthesize orientation;
+@synthesize type;
 
 + (Block *)newBlock:(int)blockType
 {
@@ -28,25 +149,25 @@
 	Block *temp = nil;
 
 	switch (blockType) {
-		case kLetterI:
+		case I_block:
 			color = @"cyan";
 			break;
-		case kLetterO:
+		case O_block:
 			color = @"yellow";
 			break;
-		case kLetterS:
+		case J_block:
 			color = @"green";
 			break;
-		case kLetterZ:
+		case L_block:
 			color = @"red";
 			break;
-		case kLetterL:
+		case Z_block:
 			color = @"orange";
 			break;
-		case kLetterJ:
+		case S_block:
 			color = @"blue";
 			break;
-		case kLetterT:
+		case T_block:
 			color = @"magenta";
 			break;
 		default:
@@ -65,6 +186,39 @@
 	
 }
 
++ (id)blockWithType:(tetrominoType)blockType
+		orientation:(NSInteger)blockOrientation
+{
+	return [[[self alloc] initWithType:blockType
+						   orientation:blockOrientation] autorelease];
+}
+
+- (id)initWithType:(tetrominoType)blockType
+	   orientation:(NSInteger)blockOrientation
+{
+	type = blockType;
+	orientation = (blockOrientation % orientationCount[type]);
+	
+	return self;
+}
+
++ (id)randomBlockUsingBlockFrequency:(NSNumber*)blockFrequency
+{
+	return [[[self alloc] initWithRandomTypeAndOrientationUsingFrequency:blockFrequency] autorelease];
+}
+
+- (id)initWithRandomTypeAndOrientationUsingFrequency:(NSNumber*)blockFrequency
+{
+	blockFrequency = random() % 7;
+	
+	type = (tetrominoType)blockFrequency;
+	orientation = (random() % orientationCount[type]);
+	
+	return self;
+}
+
+
+
 - (NSComparisonResult)compareWithBlock:(Block *)block
 {
 	return [[NSNumber numberWithInt:self.boardX]
@@ -73,7 +227,6 @@
 			
 
 //TODO Add client flexibility
-// !!!: Actually?
 - (void)initializeDefaults
 {
 	
@@ -88,7 +241,6 @@
 
 - (void)redrawPositionOnBoard 
 {
-	//[self runAction:[MoveTo actionWithDuration:1.0/45.0 position:COMPUTE_X_Y(boardX, boardY)]];
 	self.position = COMPUTE_X_Y(boardX, boardY);
 }
 
@@ -104,12 +256,6 @@
 	[self redrawPositionOnBoard];
 }
 
-- (void)moveLeft
-{
-	boardX -= 1;
-	[self redrawPositionOnBoard];
-}
-
 - (void)moveByX:(int)offsetX
 {
 	boardX += offsetX;
@@ -119,6 +265,20 @@
 {
 	boardX += 1;
 	[self redrawPositionOnBoard];
+}
+
+- (void)moveLeft
+{
+	boardX -= 1;
+	[self redrawPositionOnBoard];
+}
+
+- (void)rotateInDirection:(RotationDirection)direction
+{/*
+	NSInteger newOrientation = (orientation + direction + [self numOrientations]) % [self numOrientations];
+	return [iTetBlock blockWithType:type
+						orientation:newOrientation
+						   position:position];*/
 }
 
 

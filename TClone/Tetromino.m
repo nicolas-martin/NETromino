@@ -7,7 +7,10 @@
 //
 
 #import "Tetromino.h"
+#import "Block.h"
+
 #define NSLog(FORMAT, ...) printf("%s\n", [[NSString stringWithFormat:FORMAT, ##__VA_ARGS__] UTF8String]);
+
 @interface Tetromino (private)
 - (void)initializeTetromino;
 - (void)setShape;
@@ -21,8 +24,8 @@
 
 - (id)init
 {
-	if ((self = [super init])) {
-		tetrominoType = (arc4random() % 7);
+	if (self = [super init])
+	{
 		_blocksInTetromino = [[NSMutableArray alloc] init];
 		for (int i = 0; i < 4; i++) {
 			Block *tempBlock = [Block newBlock:tetrominoType];
@@ -36,6 +39,7 @@
 	return self;
 }
 
+
 - (void)initializeTetromino
 {
 	self.stuck = NO;
@@ -45,21 +49,36 @@
 	self.boardY = firstBlock.boardY;
 	self.anchorPoint = ccp(0,0);
 }
+
+
+- (tetrominoType*)generateNextBlock
+{
+	return [Block randomBlockUsingBlockFrequency:blockFrequencies];
+}
+
+
+
+
+
 //Generates a random shape
 //What is the index for?
 - (void)setShape
 {
 	NSUInteger index = 0;
 	//Why is the loop there?
-	for (Block *currentBlock in self.children){
+	for (Block *currentBlock in self.children)
+	{
 		
-		switch (tetrominoType) {
-			case kLetterI:
+		switch (tetrominoType)
+		{
+			case I_block:
+			{
 				currentBlock.boardX = index+3;
 				currentBlock.boardY = 0;
 				break;
-			case kLetterO:
-				
+			}
+			case O_block:
+			{
 				if (index == 0 || index == 1) {
 					currentBlock.boardX = index+5;
 					currentBlock.boardY = 0;
@@ -69,7 +88,9 @@
 					currentBlock.boardY = 1;
 				}
 				break;
-			case kLetterS:
+			}
+			case J_block:
+			{
 				if (index == 0 || index == 1) {
 					currentBlock.boardX = index+6;
 					currentBlock.boardY = 0;
@@ -78,7 +99,9 @@
 					currentBlock.boardY = 1;
 				}
 				break;
-			case kLetterZ:
+			}
+			case L_block:
+			{
 				if (index == 0 || index == 1) {
 					currentBlock.boardX = index+5;
 					currentBlock.boardY = 0;
@@ -87,7 +110,9 @@
 					currentBlock.boardY = 1;
 				}
 				break;
-			case kLetterL:
+			}
+			case Z_block:
+			{
 				if (index == 3) {
 					currentBlock.boardX = index+4;
 					currentBlock.boardY = 1;
@@ -96,8 +121,9 @@
 					currentBlock.boardY = 0;
 				}
 				break;
-			case kLetterJ:
-				
+			}
+			case S_block:
+			{
 				if (index == 3) {
 					currentBlock.boardX = index+3;
 					currentBlock.boardY = 1;
@@ -106,7 +132,9 @@
 					currentBlock.boardY = 0;
 				}
 				break;
-			case kLetterT:
+			}
+			case T_block:
+			{
 				if (index == 3) {
 					currentBlock.boardX = index+3;
 					currentBlock.boardY = 1;
@@ -115,8 +143,11 @@
 					currentBlock.boardY = 0;
 				}
 				break;
+			}
 			default:
+			{
 				break;
+			}
 		}
 		currentBlock.position = COMPUTE_X_Y(currentBlock.boardX, currentBlock.boardY);
 		index++;
