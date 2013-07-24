@@ -32,20 +32,13 @@ typedef enum
 	int boardX, boardY;
 	BOOL stuck;
 	BOOL disappearing;
-	tetrominoType type;
-	NSInteger orientation;
-
 }
-
-
-@property (readonly) tetrominoType type;
-@property (readonly) NSInteger orientation;
 @property (readwrite, assign) int boardX;
 @property (readwrite, assign) int boardY;
 @property BOOL stuck;
 @property BOOL disappearing;
 
-+ (Block *)newBlock:(int)blockType;
++ (Block *)newEmptyBlockWithColorByType:(int)blockType;
 - (void)moveUp;
 - (void)moveDown;
 - (void)moveLeft;
@@ -53,13 +46,6 @@ typedef enum
 - (void)moveByX:(int)offsetX;
 - (void)rotateInDirection:(RotationDirection)direction;
 - (NSComparisonResult)compareWithBlock:(Block *)block;
-+ (id)blockWithType:(tetrominoType)blockType
-		orientation:(NSInteger)blockOrientation;
-
-// Create random blocks using the frequency information from the game rules
-// blockFrequencies must be of length 100
-+ (id)randomBlockUsingBlockFrequency:(NSNumber*)blockFrequency;
-- (id)initWithRandomTypeAndOrientationUsingFrequency:(NSNumber*)blockFrequency;
 
 
 @end

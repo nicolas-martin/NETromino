@@ -9,7 +9,8 @@
 #import "cocos2d.h"
 #import "Block.h"
 
-
+#define kLastColumn 9
+#define kLastRow 19
 @interface Tetromino : CCSprite {
 
 	tetrominoType tetrominoType;
@@ -20,10 +21,14 @@
 	
 	int boardX;
 	int boardY;
-	NSNumber* blockFrequencies;
+	tetrominoType type;
+	NSInteger orientation;
+	
 }
 
 
+@property (readonly) tetrominoType type;
+@property (readonly) NSInteger orientation;
 
 @property (readwrite, assign) NSMutableArray *blocksInTetromino;
 @property (readonly) tetrominoType tetrominoType;
@@ -36,10 +41,18 @@
 @property (readonly) CGPoint rightMostPosition;
 
 
+- (NSComparisonResult)compareWithBlock:(Block *)block;
+
+// Create random blocks using the frequency information from the game rules
+// blockFrequencies must be of length 100
++ (id)randomBlockUsingBlockFrequency;
+- (id)initWithRandomTypeAndOrientationUsingFrequency;
+
+
 - (BOOL)isBlockInTetromino:(id)block;
 - (void)moveTetrominoDown;
 
-- (tetrominoType*)generateNextBlock;
+- (Block*)generateNextBlock;
 
 
 @end

@@ -20,24 +20,203 @@
 @synthesize tetrominoType;
 @synthesize boardX;
 @synthesize boardY;
+@synthesize orientation;
+@synthesize type;
 
-
+typedef uint8_t BLOCK[4][4];
+static BLOCK bI[2] = {
+	{
+		{0,0,0,0},
+		{1,1,1,1},
+		{0,0,0,0},
+		{0,0,0,0}
+	}, {
+		{0,1,0,0},
+		{0,1,0,0},
+		{0,1,0,0},
+		{0,1,0,0}
+	}
+};
+static BLOCK bO[1] = {
+	{
+		{0,2,2,0},
+		{0,2,2,0},
+		{0,0,0,0},
+		{0,0,0,0}
+	}
+};
+static BLOCK bJ[4] = {
+	{
+		{3,0,0,0},
+		{3,3,3,0},
+		{0,0,0,0},
+		{0,0,0,0}
+	}, {
+		{0,3,3,0},
+		{0,3,0,0},
+		{0,3,0,0},
+		{0,0,0,0}
+	}, {
+		{0,0,0,0},
+		{3,3,3,0},
+		{0,0,3,0},
+		{0,0,0,0}
+	}, {
+		{0,3,0,0},
+		{0,3,0,0},
+		{3,3,0,0},
+		{0,0,0,0}
+	},
+};
+static BLOCK bL[4] = {
+	{
+		{0,0,4,0},
+		{4,4,4,0},
+		{0,0,0,0},
+		{0,0,0,0}
+	}, {
+		{0,4,0,0},
+		{0,4,0,0},
+		{0,4,4,0},
+		{0,0,0,0}
+	}, {
+		{0,0,0,0},
+		{4,4,4,0},
+		{4,0,0,0},
+		{0,0,0,0}
+	}, {
+		{4,4,0,0},
+		{0,4,0,0},
+		{0,4,0,0},
+		{0,0,0,0}
+	}
+};
+static BLOCK bZ[2] = {
+	{
+		{5,5,0,0},
+		{0,5,5,0},
+		{0,0,0,0},
+		{0,0,0,0}
+	}, {
+		{0,0,5,0},
+		{0,5,5,0},
+		{0,5,0,0},
+		{0,0,0,0}
+	}
+};
+static BLOCK bS[2] = {
+	{
+		{0,1,1,0},
+		{1,1,0,0},
+		{0,0,0,0},
+		{0,0,0,0}
+	}, {
+		{1,0,0,0},
+		{1,1,0,0},
+		{0,1,0,0},
+		{0,0,0,0}
+	}
+};
+static BLOCK bT[4] = {
+	{
+		{0,2,0,0},
+		{2,2,2,0},
+		{0,0,0,0},
+		{0,0,0,0}
+	}, {
+		{0,2,0,0},
+		{0,2,2,0},
+		{0,2,0,0},
+		{0,0,0,0}
+	}, {
+		{0,0,0,0},
+		{2,2,2,0},
+		{0,2,0,0},
+		{0,0,0,0}
+	}, {
+		{0,2,0,0},
+		{2,2,0,0},
+		{0,2,0,0},
+		{0,0,0,0}
+	}
+};
+//This is a 2D array
+static BLOCK *blocks[7] = {bI, bO, bJ, bL, bZ, bS, bT};
+static NSInteger orientationCount[7] = {2, 1, 4, 4, 2, 2, 4};
 - (id)init
 {
 	if (self = [super init])
 	{
-		_blocksInTetromino = [[NSMutableArray alloc] init];
-		for (int i = 0; i < 4; i++) {
-			Block *tempBlock = [Block newBlock:tetrominoType];
-			[self addChild:tempBlock];
-			[_blocksInTetromino addObject:tempBlock];
-			[tempBlock release];
+		
+		_blocksInTetromino = [[NSMutableArray alloc] init];\
+		
+		//Tetromino *tempTetromino = [self generateNextBlock];
+		
+		BLOCK* contents = [self contents];
+		Block *newBlock = [Block newEmptyBlockWithColorByType:type];
+		for (NSInteger row = 0; row < 4; row++)
+		{
+			for (NSInteger col = 0; col < 4; col++)
+			{
+				// Get the contents of this cell of the block
+				uint8_t cellType = (*contents)[(4 - 1) - row][col];
+				
+				// If the cell is empty, skip to the next iteration of the loop
+				if (cellType == 0)
+					continue;
+				
+				
+				newBlock.boardX = row + 3;
+				newBlock.boardY = col;
+				newBlock.position = COMPUTE_X_Y(newBlock.boardX, newBlock.boardY);
+				[self addChild:newBlock];
+				
+				
+			}
 		}
+		
+		[_blocksInTetromino addObject:newBlock];
+		
 		[self initializeTetromino];
 		
 	}
 	return self;
 }
+
+- (BLOCK*)contents
+{
+	return &(blocks[type][orientation]);
+}
+
+
+#pragma mark -
+#pragma mark Initializers
+
++ (id)randomBlockUsingBlockFrequency
+{
+	return [[[self alloc] initWithRandomTypeAndOrientationUsingFrequency] autorelease];
+}
+
+- (id)initWithRandomTypeAndOrientationUsingFrequency
+{
+	NSNumber *blockFrequency = random() % 7;
+	
+	type = (tetrominoType)blockFrequency;
+	orientation = (random() % orientationCount[type]);
+	
+	return self;
+}
+
+
+- (id)initWithType:(tetrominoType)blockType
+	   orientation:(NSInteger)blockOrientation
+{
+	type = blockType;
+	orientation = (blockOrientation % orientationCount[type]);
+	
+	return self;
+}
+
 
 
 - (void)initializeTetromino
@@ -51,108 +230,12 @@
 }
 
 
-- (tetrominoType*)generateNextBlock
+- (Tetromino *)generateNextBlock
 {
-	return [Block randomBlockUsingBlockFrequency:blockFrequencies];
+	return [Tetromino randomBlockUsingBlockFrequency];
 }
 
 
-
-
-
-//Generates a random shape
-//What is the index for?
-- (void)setShape
-{
-	NSUInteger index = 0;
-	//Why is the loop there?
-	for (Block *currentBlock in self.children)
-	{
-		
-		switch (tetrominoType)
-		{
-			case I_block:
-			{
-				currentBlock.boardX = index+3;
-				currentBlock.boardY = 0;
-				break;
-			}
-			case O_block:
-			{
-				if (index == 0 || index == 1) {
-					currentBlock.boardX = index+5;
-					currentBlock.boardY = 0;
-					
-				} else {
-					currentBlock.boardX = index+3;
-					currentBlock.boardY = 1;
-				}
-				break;
-			}
-			case J_block:
-			{
-				if (index == 0 || index == 1) {
-					currentBlock.boardX = index+6;
-					currentBlock.boardY = 0;
-				} else {
-					currentBlock.boardX = index+3;
-					currentBlock.boardY = 1;
-				}
-				break;
-			}
-			case L_block:
-			{
-				if (index == 0 || index == 1) {
-					currentBlock.boardX = index+5;
-					currentBlock.boardY = 0;
-				} else {
-					currentBlock.boardX = index+4;
-					currentBlock.boardY = 1;
-				}
-				break;
-			}
-			case Z_block:
-			{
-				if (index == 3) {
-					currentBlock.boardX = index+4;
-					currentBlock.boardY = 1;
-				} else {
-					currentBlock.boardX = index+5;
-					currentBlock.boardY = 0;
-				}
-				break;
-			}
-			case S_block:
-			{
-				if (index == 3) {
-					currentBlock.boardX = index+3;
-					currentBlock.boardY = 1;
-				} else {
-					currentBlock.boardX = index+5;
-					currentBlock.boardY = 0;
-				}
-				break;
-			}
-			case T_block:
-			{
-				if (index == 3) {
-					currentBlock.boardX = index+3;
-					currentBlock.boardY = 1;
-				} else {
-					currentBlock.boardX = index+5;
-					currentBlock.boardY = 0;
-				}
-				break;
-			}
-			default:
-			{
-				break;
-			}
-		}
-		currentBlock.position = COMPUTE_X_Y(currentBlock.boardX, currentBlock.boardY);
-		index++;
-	}
-}
 
 
 - (BOOL)stuck

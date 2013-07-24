@@ -7,7 +7,7 @@
 //
 
 #import "Block.h"
-typedef uint8_t BLOCK[4][4];
+
 @interface Block (private)
 
 - (void)initializeDefaults;
@@ -15,135 +15,15 @@ typedef uint8_t BLOCK[4][4];
 
 @end
 
-static BLOCK bI[2] = {
-	{
-		{0,0,0,0},
-		{1,1,1,1},
-		{0,0,0,0},
-		{0,0,0,0}
-	}, {
-		{0,1,0,0},
-		{0,1,0,0},
-		{0,1,0,0},
-		{0,1,0,0}
-	}
-};
-static BLOCK bO[1] = {
-	{
-		{0,2,2,0},
-		{0,2,2,0},
-		{0,0,0,0},
-		{0,0,0,0}
-	}
-};
-static BLOCK bJ[4] = {
-	{
-		{3,0,0,0},
-		{3,3,3,0},
-		{0,0,0,0},
-		{0,0,0,0}
-	}, {
-		{0,3,3,0},
-		{0,3,0,0},
-		{0,3,0,0},
-		{0,0,0,0}
-	}, {
-		{0,0,0,0},
-		{3,3,3,0},
-		{0,0,3,0},
-		{0,0,0,0}
-	}, {
-		{0,3,0,0},
-		{0,3,0,0},
-		{3,3,0,0},
-		{0,0,0,0}
-	},
-};
-static BLOCK bL[4] = {
-	{
-		{0,0,4,0},
-		{4,4,4,0},
-		{0,0,0,0},
-		{0,0,0,0}
-	}, {
-		{0,4,0,0},
-		{0,4,0,0},
-		{0,4,4,0},
-		{0,0,0,0}
-	}, {
-		{0,0,0,0},
-		{4,4,4,0},
-		{4,0,0,0},
-		{0,0,0,0}
-	}, {
-		{4,4,0,0},
-		{0,4,0,0},
-		{0,4,0,0},
-		{0,0,0,0}
-	}
-};
-static BLOCK bZ[2] = {
-	{
-		{5,5,0,0},
-		{0,5,5,0},
-		{0,0,0,0},
-		{0,0,0,0}
-	}, {
-		{0,0,5,0},
-		{0,5,5,0},
-		{0,5,0,0},
-		{0,0,0,0}
-	}
-};
-static BLOCK bS[2] = {
-	{
-		{0,1,1,0},
-		{1,1,0,0},
-		{0,0,0,0},
-		{0,0,0,0}
-	}, {
-		{1,0,0,0},
-		{1,1,0,0},
-		{0,1,0,0},
-		{0,0,0,0}
-	}
-};
-static BLOCK bT[4] = {
-	{
-		{0,2,0,0},
-		{2,2,2,0},
-		{0,0,0,0},
-		{0,0,0,0}
-	}, {
-		{0,2,0,0},
-		{0,2,2,0},
-		{0,2,0,0},
-		{0,0,0,0}
-	}, {
-		{0,0,0,0},
-		{2,2,2,0},
-		{0,2,0,0},
-		{0,0,0,0}
-	}, {
-		{0,2,0,0},
-		{2,2,0,0},
-		{0,2,0,0},
-		{0,0,0,0}
-	}
-};
-
-static BLOCK *blocks[7] = {bI, bO, bJ, bL, bZ, bS, bT};
-static NSInteger orientationCount[7] = {2, 1, 4, 4, 2, 2, 4};
 
 @implementation Block
 @synthesize boardX;
 @synthesize boardY;
 @synthesize stuck;
 @synthesize disappearing;
-@synthesize orientation;
-@synthesize type;
 
-+ (Block *)newBlock:(int)blockType
+
++ (Block *)newEmptyBlockWithColorByType:(int)blockType
 {
 	NSString *filename = nil, *color = nil;
 	Block *temp = nil;
@@ -185,39 +65,6 @@ static NSInteger orientationCount[7] = {2, 1, 4, 4, 2, 2, 4};
 	return temp;
 	
 }
-
-+ (id)blockWithType:(tetrominoType)blockType
-		orientation:(NSInteger)blockOrientation
-{
-	return [[[self alloc] initWithType:blockType
-						   orientation:blockOrientation] autorelease];
-}
-
-- (id)initWithType:(tetrominoType)blockType
-	   orientation:(NSInteger)blockOrientation
-{
-	type = blockType;
-	orientation = (blockOrientation % orientationCount[type]);
-	
-	return self;
-}
-
-+ (id)randomBlockUsingBlockFrequency:(NSNumber*)blockFrequency
-{
-	return [[[self alloc] initWithRandomTypeAndOrientationUsingFrequency:blockFrequency] autorelease];
-}
-
-- (id)initWithRandomTypeAndOrientationUsingFrequency:(NSNumber*)blockFrequency
-{
-	blockFrequency = random() % 7;
-	
-	type = (tetrominoType)blockFrequency;
-	orientation = (random() % orientationCount[type]);
-	
-	return self;
-}
-
-
 
 - (NSComparisonResult)compareWithBlock:(Block *)block
 {
