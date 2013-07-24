@@ -13,7 +13,6 @@
 
 @interface Tetromino (private)
 - (void)initializeTetromino;
-- (void)setShape;
 @end
 
 @implementation Tetromino
@@ -147,13 +146,20 @@ static NSInteger orientationCount[7] = {2, 1, 4, 4, 2, 2, 4};
 {
 	if (self = [super init])
 	{
+		//[self generateNextBlock];
+		//NSLog(@"random with arc4random %d",arc4random() % 7);
+		NSLog(@"random with normal %ld", random() % 7);
+		NSNumber *blockFrequency = random() % 7;
 		
-		_blocksInTetromino = [[NSMutableArray alloc] init];\
+		type = (tetrominoType)blockFrequency;
+		orientation = (random() % orientationCount[type]);
+		
+		_blocksInTetromino = [[NSMutableArray alloc] init];
 		
 		//Tetromino *tempTetromino = [self generateNextBlock];
 		
 		BLOCK* contents = [self contents];
-		Block *newBlock = [Block newEmptyBlockWithColorByType:type];
+		
 		for (NSInteger row = 0; row < 4; row++)
 		{
 			for (NSInteger col = 0; col < 4; col++)
@@ -165,7 +171,7 @@ static NSInteger orientationCount[7] = {2, 1, 4, 4, 2, 2, 4};
 				if (cellType == 0)
 					continue;
 				
-				
+				Block *newBlock = [Block newEmptyBlockWithColorByType:type];
 				newBlock.boardX = row + 3;
 				newBlock.boardY = col;
 				newBlock.position = COMPUTE_X_Y(newBlock.boardX, newBlock.boardY);
@@ -175,7 +181,7 @@ static NSInteger orientationCount[7] = {2, 1, 4, 4, 2, 2, 4};
 			}
 		}
 		
-		[_blocksInTetromino addObject:newBlock];
+		[_blocksInTetromino addObject:self];
 		
 		[self initializeTetromino];
 		
@@ -199,6 +205,8 @@ static NSInteger orientationCount[7] = {2, 1, 4, 4, 2, 2, 4};
 
 - (id)initWithRandomTypeAndOrientationUsingFrequency
 {
+	//NSLog(@"random with arc4random %d",arc4random() % 7);
+	NSLog(@"random with normal %ld", random() % 7);
 	NSNumber *blockFrequency = random() % 7;
 	
 	type = (tetrominoType)blockFrequency;
@@ -222,7 +230,7 @@ static NSInteger orientationCount[7] = {2, 1, 4, 4, 2, 2, 4};
 - (void)initializeTetromino
 {
 	self.stuck = NO;
-	[self setShape];
+	//[self setShape];
 	Block *firstBlock = [children_ objectAtIndex:0];
 	self.boardX = firstBlock.boardX;
 	self.boardY = firstBlock.boardY;

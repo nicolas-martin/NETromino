@@ -3,13 +3,7 @@
    version = "1.0">
    <ContextStates>
       <ContextState
-         contextName = "+[IntroLayer scene]:IntroLayer.m">
-      </ContextState>
-      <ContextState
          contextName = "-[Tetromino initializeTetromino]:Tetromino.m">
-      </ContextState>
-      <ContextState
-         contextName = "-[GameLogicLayer moveTetrominoRight]:GameLogicLayer.m">
       </ContextState>
       <ContextState
          contextName = "-[IntroLayer init]:IntroLayer.m">
@@ -23,7 +17,22 @@
          contextName = "-[GameLogicLayer canMoveTetrominoByX:]:GameLogicLayer.m">
       </ContextState>
       <ContextState
+         contextName = "+[IntroLayer scene]:IntroLayer.m">
+      </ContextState>
+      <ContextState
+         contextName = "-[Tetromino initWithRandomTypeAndOrientationUsingFrequency]:Tetromino.m">
+      </ContextState>
+      <ContextState
+         contextName = "+[Tetromino randomBlockUsingBlockFrequency]:Tetromino.m">
+      </ContextState>
+      <ContextState
          contextName = "-[GameLogicLayer moveBlocksDown]:GameLogicLayer.m">
+      </ContextState>
+      <ContextState
+         contextName = "-[Tetromino generateNextBlock]:Tetromino.m">
+      </ContextState>
+      <ContextState
+         contextName = "-[GameLogicLayer moveTetrominoRight]:GameLogicLayer.m">
       </ContextState>
    </ContextStates>
 </VariablesViewState>
