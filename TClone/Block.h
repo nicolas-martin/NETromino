@@ -8,23 +8,7 @@
 
 #import "cocos2d.h"
 
-typedef enum
-{
-	I_block,
-	O_block,
-	J_block,
-	L_block,
-	Z_block,
-	S_block,
-	T_block
-} tetrominoType;
 
-typedef enum
-{
-	rotateCounterclockwise = -1,
-	rotateNone = 0,
-	rotateClockwise = 1
-} RotationDirection;
 
 
 
@@ -44,7 +28,6 @@ typedef enum
 - (void)moveLeft;
 - (void)moveRight;
 - (void)moveByX:(int)offsetX;
-- (void)rotateInDirection:(RotationDirection)direction;
 - (NSComparisonResult)compareWithBlock:(Block *)block;
 
 

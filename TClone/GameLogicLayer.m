@@ -115,7 +115,8 @@
 - (void)createNewTetromino
 {
 	
-	Tetromino *tempTetromino = [[Tetromino alloc] init];
+	//Tetromino *tempTetromino = [[Tetromino alloc] init];
+	Tetromino *tempTetromino = [Tetromino randomBlockUsingBlockFrequency];
 	
 	for (Block *currentBlock in tempTetromino.children) {
 

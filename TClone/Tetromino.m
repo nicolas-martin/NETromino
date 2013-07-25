@@ -146,8 +146,6 @@ static NSInteger orientationCount[7] = {2, 1, 4, 4, 2, 2, 4};
 {
 	if (self = [super init])
 	{
-		//[self generateNextBlock];
-		//NSLog(@"random with arc4random %d",arc4random() % 7);
 		NSLog(@"random with normal %ld", random() % 7);
 		NSNumber *blockFrequency = random() % 7;
 		
@@ -194,9 +192,38 @@ static NSInteger orientationCount[7] = {2, 1, 4, 4, 2, 2, 4};
 	return &(blocks[type][orientation]);
 }
 
+- (Tetromino*)blockRotatedInDirection:(RotationDirection)direction
+{
+	NSInteger newOrientation = (orientation + direction + [self numOrientations]) % [self numOrientations];
+	//TODO Do I need to return a new one or just this one?
+	return [Tetromino blockWithType:type orientation:newOrientation BoardX:boardX BoardY:boardY];
+}
+
++ (id)blockWithType:(tetrominoType)blockType orientation:(NSInteger)blockOrientation BoardX:(NSInteger)positionX BoardY:(NSInteger)positionY
+{
+	return [[[self alloc] initWithType:blockType orientation:blockOrientation BoardX:positionX BoardY:positionY] autorelease];
+}
+
+- (id)initWithType:(tetrominoType)blockType orientation:(NSInteger)blockOrientation BoardX:(NSInteger)positionX BoardY:(NSInteger)positionY
+{
+	type = blockType;
+	orientation = (blockOrientation % orientationCount[type]);
+	boardX = positionX;
+	boardY = positionY;
+	
+	return self;
+}
+
+
+
+- (NSInteger)numOrientations
+{
+	return orientationCount[type];
+}
 
 #pragma mark -
 #pragma mark Initializers
+
 
 + (id)randomBlockUsingBlockFrequency
 {
@@ -205,13 +232,47 @@ static NSInteger orientationCount[7] = {2, 1, 4, 4, 2, 2, 4};
 
 - (id)initWithRandomTypeAndOrientationUsingFrequency
 {
-	//NSLog(@"random with arc4random %d",arc4random() % 7);
-	NSLog(@"random with normal %ld", random() % 7);
-	NSNumber *blockFrequency = random() % 7;
-	
-	type = (tetrominoType)blockFrequency;
-	orientation = (random() % orientationCount[type]);
-	
+
+	if (self = [super init])
+	{
+		NSLog(@"random with normal %ld", random() % 7);
+		NSNumber *blockFrequency = random() % 7;
+		
+		type = (tetrominoType)blockFrequency;
+		orientation = (random() % orientationCount[type]);
+		
+		_blocksInTetromino = [[NSMutableArray alloc] init];
+		
+		//Tetromino *tempTetromino = [self generateNextBlock];
+		
+		BLOCK* contents = [self contents];
+		
+		for (NSInteger row = 0; row < 4; row++)
+		{
+			for (NSInteger col = 0; col < 4; col++)
+			{
+				// Get the contents of this cell of the block
+				uint8_t cellType = (*contents)[(4 - 1) - row][col];
+				
+				// If the cell is empty, skip to the next iteration of the loop
+				if (cellType == 0)
+					continue;
+				
+				Block *newBlock = [Block newEmptyBlockWithColorByType:type];
+				newBlock.boardX = row + 3;
+				newBlock.boardY = col;
+				newBlock.position = COMPUTE_X_Y(newBlock.boardX, newBlock.boardY);
+				[self addChild:newBlock];
+				
+				
+			}
+		}
+		
+		[_blocksInTetromino addObject:self];
+		
+		[self initializeTetromino];
+		
+	}
 	return self;
 }
 
@@ -319,5 +380,11 @@ static NSInteger orientationCount[7] = {2, 1, 4, 4, 2, 2, 4};
 	}
 	return myRightPosition;
 }
+
+- (NSString*)description
+{
+	return [NSString stringWithFormat:@"%@: type = %d, boardX = %d, boardY = %d, orientation = %d", [super description], type, boardX, boardY, orientation];
+}
+
 
 @end

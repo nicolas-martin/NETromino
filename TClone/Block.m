@@ -6,8 +6,7 @@
 //  Copyright 2009 __MyCompanyName__. All rights reserved.
 //
 
-#import "Block.h"
-
+#import "Tetromino.h"
 @interface Block (private)
 
 - (void)initializeDefaults;
@@ -120,13 +119,7 @@
 	[self redrawPositionOnBoard];
 }
 
-- (void)rotateInDirection:(RotationDirection)direction
-{/*
-	NSInteger newOrientation = (orientation + direction + [self numOrientations]) % [self numOrientations];
-	return [iTetBlock blockWithType:type
-						orientation:newOrientation
-						   position:position];*/
-}
+
 
 
 
