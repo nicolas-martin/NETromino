@@ -3,7 +3,12 @@
    version = "1.0">
    <ContextStates>
       <ContextState
-         contextName = "-[Tetromino initializeTetromino]:Tetromino.m">
+         contextName = "-[Tetromino initWithType:orientation:BoardX:BoardY:]:Tetromino.m">
+         <PersistentStrings>
+            <PersistentString
+               value = "(BLOCK *)contents">
+            </PersistentString>
+         </PersistentStrings>
       </ContextState>
       <ContextState
          contextName = "-[IntroLayer init]:IntroLayer.m">
@@ -14,25 +19,34 @@
          </PersistentStrings>
       </ContextState>
       <ContextState
-         contextName = "-[GameLogicLayer canMoveTetrominoByX:]:GameLogicLayer.m">
-      </ContextState>
-      <ContextState
          contextName = "+[IntroLayer scene]:IntroLayer.m">
       </ContextState>
       <ContextState
-         contextName = "-[Tetromino initWithRandomTypeAndOrientationUsingFrequency]:Tetromino.m">
-      </ContextState>
-      <ContextState
-         contextName = "+[Tetromino randomBlockUsingBlockFrequency]:Tetromino.m">
-      </ContextState>
-      <ContextState
-         contextName = "-[GameLogicLayer moveBlocksDown]:GameLogicLayer.m">
+         contextName = "-[GameLogicLayer canMoveTetrominoByX:]:GameLogicLayer.m">
       </ContextState>
       <ContextState
          contextName = "-[Tetromino generateNextBlock]:Tetromino.m">
       </ContextState>
       <ContextState
+         contextName = "-[Tetromino initWithRandomTypeAndOrientationUsingFrequency]:Tetromino.m">
+      </ContextState>
+      <ContextState
+         contextName = "-[GameLogicLayer moveBlocksDown]:GameLogicLayer.m">
+      </ContextState>
+      <ContextState
+         contextName = "-[GameLogicLayer processTaps]:GameLogicLayer.m">
+      </ContextState>
+      <ContextState
+         contextName = "+[Tetromino randomBlockUsingBlockFrequency]:Tetromino.m">
+      </ContextState>
+      <ContextState
          contextName = "-[GameLogicLayer moveTetrominoRight]:GameLogicLayer.m">
+      </ContextState>
+      <ContextState
+         contextName = "-[Tetromino initializeTetromino]:Tetromino.m">
+      </ContextState>
+      <ContextState
+         contextName = "-[Tetromino initWithType:rotationDirection:BoardX:BoardY:]:Tetromino.m">
       </ContextState>
    </ContextStates>
 </VariablesViewState>

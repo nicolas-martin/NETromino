@@ -32,7 +32,7 @@ typedef enum
 
 @interface Tetromino : CCSprite {
 
-	tetrominoType tetrominoType;
+	//tetrominoType tetrominoType;
 	BOOL stuck;	
 	CGPoint leftMostPosition;
 	CGPoint rightMostPosition;	
@@ -47,7 +47,7 @@ typedef enum
 @property (readonly) tetrominoType type;
 @property (readonly) NSInteger orientation;
 @property (readwrite, assign) NSMutableArray *blocksInTetromino;
-@property (readonly) tetrominoType tetrominoType;
+//@property (readonly) tetrominoType tetrominoType;
 @property (assign) BOOL stuck;
 @property (readwrite, assign) int boardX;
 @property (readwrite, assign) int boardY;
@@ -61,10 +61,12 @@ typedef enum
 // blockFrequencies must be of length 100
 + (id)randomBlockUsingBlockFrequency;
 - (id)initWithRandomTypeAndOrientationUsingFrequency;
-+ (id)blockWithType:(tetrominoType)blockType orientation:(NSInteger)blockOrientation BoardX:(NSInteger)positionX BoardY:(NSInteger)positionY;
-+ (id)blockWithType:(tetrominoType)blockType orientation:(NSInteger)blockOrientation BoardX:(NSInteger)positionX BoardY:(NSInteger)positionY;
++ (id)blockWithType:(tetrominoType)blockType orientation:(RotationDirection)blockOrientation BoardX:(NSInteger)positionX BoardY:(NSInteger)positionY;
++ (id)blockWithType:(tetrominoType)blockType orientation:(RotationDirection)blockOrientation BoardX:(NSInteger)positionX BoardY:(NSInteger)positionY;
 
-- (Tetromino*)blockRotatedInDirection:(RotationDirection)direction;
+- (Tetromino*)TetrominoRotatedInDirection:(RotationDirection)direction;
+
+
 - (BOOL)isBlockInTetromino:(id)block;
 - (void)moveTetrominoDown;
 

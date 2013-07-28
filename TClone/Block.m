@@ -102,11 +102,20 @@
 	[self redrawPositionOnBoard];
 }
 
+-(void)MoveTo:(Block *)block
+{
+	boardX = block.boardX;
+	boardY = block.boardY;
+	
+	[self redrawPositionOnBoard];
+}
+
 - (void)moveByX:(int)offsetX
 {
 	boardX += offsetX;
 	[self redrawPositionOnBoard];
 }
+
 - (void)moveRight
 {
 	boardX += 1;
@@ -118,9 +127,5 @@
 	boardX -= 1;
 	[self redrawPositionOnBoard];
 }
-
-
-
-
 
 @end

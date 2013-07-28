@@ -8,10 +8,6 @@
 
 #import "cocos2d.h"
 
-
-
-
-
 @interface Block : CCSprite {
 	int boardX, boardY;
 	BOOL stuck;
@@ -29,7 +25,7 @@
 - (void)moveRight;
 - (void)moveByX:(int)offsetX;
 - (NSComparisonResult)compareWithBlock:(Block *)block;
-
+-(void)MoveTo:(Block *)block;
 
 @end
 

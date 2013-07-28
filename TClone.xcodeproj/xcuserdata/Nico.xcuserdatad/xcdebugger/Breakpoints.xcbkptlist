@@ -8,51 +8,25 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "TClone/GameLogicLayer.m"
-         timestampString = "396164219.227316"
+         timestampString = "396508093.778645"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "274"
-         endingLineNumber = "274"
-         landmarkName = "-canMoveTetrominoByX:"
+         startingLineNumber = "200"
+         endingLineNumber = "200"
+         landmarkName = "-moveTetrominoDown"
          landmarkType = "5">
       </FileBreakpoint>
       <FileBreakpoint
          shouldBeEnabled = "No"
          ignoreCount = "0"
          continueAfterRunningActions = "No"
-         filePath = "TClone/TetrisAppDelegate.m"
-         timestampString = "396133567.467363"
+         filePath = "TClone/GameLogicLayer.m"
+         timestampString = "396727206.804579"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "45"
-         endingLineNumber = "45"
-         landmarkName = "-directorDidReshapeProjection:"
-         landmarkType = "5">
-      </FileBreakpoint>
-      <FileBreakpoint
-         shouldBeEnabled = "No"
-         ignoreCount = "0"
-         continueAfterRunningActions = "No"
-         filePath = "TClone/IntroLayer.m"
-         timestampString = "396137141.751647"
-         startingColumnNumber = "9223372036854775807"
-         endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "59"
-         endingLineNumber = "59"
-         landmarkName = "-onEnter"
-         landmarkType = "5">
-      </FileBreakpoint>
-      <FileBreakpoint
-         shouldBeEnabled = "No"
-         ignoreCount = "0"
-         continueAfterRunningActions = "No"
-         filePath = "TClone/IntroLayer.m"
-         timestampString = "396137183.689383"
-         startingColumnNumber = "9223372036854775807"
-         endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "36"
-         endingLineNumber = "36"
-         landmarkName = "-init"
+         startingLineNumber = "119"
+         endingLineNumber = "119"
+         landmarkName = "-createNewTetromino"
          landmarkType = "5">
       </FileBreakpoint>
       <FileBreakpoint
@@ -60,25 +34,38 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "TClone/Tetromino.m"
-         timestampString = "396328786.232463"
+         timestampString = "396734309.320312"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "156"
-         endingLineNumber = "156"
-         landmarkName = "-init"
+         startingLineNumber = "118"
+         endingLineNumber = "118"
+         landmarkName = "-initWithTypeRotationPosition:rotationDirection:BoardX:BoardY:"
          landmarkType = "5">
       </FileBreakpoint>
       <FileBreakpoint
-         shouldBeEnabled = "Yes"
+         shouldBeEnabled = "No"
          ignoreCount = "0"
          continueAfterRunningActions = "No"
-         filePath = "TClone/Tetromino.m"
-         timestampString = "396328786.232463"
+         filePath = "TClone/GameLogicLayer.m"
+         timestampString = "396739042.726894"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "210"
-         endingLineNumber = "210"
-         landmarkName = "-initWithRandomTypeAndOrientationUsingFrequency"
+         startingLineNumber = "323"
+         endingLineNumber = "323"
+         landmarkName = "-ccTouchesEnded:withEvent:"
+         landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "No"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         filePath = "TClone/Block.m"
+         timestampString = "396735684.730188"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "90"
+         endingLineNumber = "90"
+         landmarkName = "-redrawPositionOnBoard"
          landmarkType = "5">
       </FileBreakpoint>
    </FileBreakpoints>

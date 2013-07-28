@@ -31,7 +31,7 @@
 
 - (BOOL)canMoveTetrominoByX:(int)offSetX;
 
-- (void)moveBlock:(Block *)block byX:(int)offsetX;
+- (void)moveBlockX:(Block *)block byX:(int)offsetX;
 @end
 
 @implementation GameLogicLayer
@@ -114,9 +114,10 @@
 //Creates a new block
 - (void)createNewTetromino
 {
+	//Tetromino *tempTetromino = [Tetromino randomBlockUsingBlockFrequency];
 	
-	//Tetromino *tempTetromino = [[Tetromino alloc] init];
-	Tetromino *tempTetromino = [Tetromino randomBlockUsingBlockFrequency];
+	Tetromino *tempTetromino = [Tetromino blockWithType:0 orientation:0 BoardX:3 BoardY:3];
+	
 	
 	for (Block *currentBlock in tempTetromino.children) {
 
@@ -128,7 +129,7 @@
 	[tempTetromino release];
 	
 	NSLog(@"+++++++ %d +++++++", tetronimoInGame.count);
-	
+		//NSLog(@"CURRENT TETROMINO :: type = %d orientation = %d currentBoardX = %d currentBoardY = %d", userTetromino.type, userTetromino.orientation, userTetromino.boardX, userTetromino.boardY);
 	
 }
 
@@ -192,7 +193,7 @@
 	}
 	return YES;
 }
-
+//TODO Bug here
 - (void)moveTetrominoDown
 {
 	//for each block of the tetronimo
@@ -247,7 +248,7 @@
 		CCArray *reversedBlockArray = [[[CCArray alloc] initWithArray:userTetromino.children]autorelease];  // make copy
 		//[reversedBlockArray reverseObjects]; // reverse contents
 		for (Block* currentBlock in reversedBlockArray) {
-			[self moveBlock:currentBlock byX:-1];
+			[self moveBlockX:currentBlock byX:-1];
 		}
 	}
 }
@@ -260,7 +261,7 @@
 		CCArray *reversedBlockArray = [[[CCArray alloc] initWithArray:userTetromino.children]autorelease];  // make copy
 		[reversedBlockArray reverseObjects]; // reverse contents
 		for (Block* currentBlock in reversedBlockArray) {
-			[self moveBlock:currentBlock byX:1];
+			[self moveBlockX:currentBlock byX:1];
 		}
 	}
 	
@@ -291,22 +292,45 @@
 - (void)ccTouchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
 {
 	UITouch *touch = [touches anyObject];
-	CGPoint point = [touch locationInView: [touch view]];
+	CGPoint location = [touch locationInView: [touch view]];
 	
-	//Flip the UITouch coord upside down for portrait mode
-	// Because UITouch goes from top down and Cocos2d goes from bottom up?
-	//960 = retina
-	//480 = standard
-	point.y = 480 - point.y;
+	//TODO: MOVE THIS CODE TETROMINO??
+	CGFloat leftMostX = 0;
+	CGFloat rightMostX = 0;
+	CGFloat lowestY = 0;
+	Block *lastBlock;
 	
-	if (point.y < 70) {
+	for(Block* block in userTetromino.children)
+	{
+		lastBlock = block;
+		if(lastBlock.position.x <= block.position.x)
+		{
+			leftMostX = block.position.x;
+		}
+		
+		if(lastBlock.position.x >= block.position.x)
+		{
+			rightMostX = lastBlock.position.x;
+		}
+		
+		if(lastBlock.position.y <= block.position.y)
+		{
+			lowestY = lastBlock.position.y;
+		}
+	}
+
+	location = [[CCDirector sharedDirector] convertToGL:location];
+	
+	if (location.y < lowestY) {
 		touchType = kDropBlocks;
-	}else if (point.x < 120) {
+	}else if (location.x < leftMostX) {
 		touchType = kMoveLeft;
-	} else if (point.x >= 120 && point.x <= 240) {
+	} else if (location.x > rightMostX) {
 		touchType = kMoveRight;
 	}
 	[self processTaps];
+	
+	
 }
 
 - (void)processTaps
@@ -342,7 +366,7 @@
 
 
 //Helper function to recalculate left and right block positions
-- (void)moveBlock:(Block *)block byX:(int)offsetX
+- (void)moveBlockX:(Block *)block byX:(int)offsetX
 {
 	//double checking to see if there's nothing 
 	if (board[block.boardX + offsetX][block.boardY] == nil) {
@@ -352,6 +376,7 @@
 		[block moveByX:offsetX];
 	}
 }
+
 
 - (void)gameOver:(BOOL)won
 {
