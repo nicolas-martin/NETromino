@@ -19,6 +19,21 @@
 		kMoveLeft,
 		kMoveRight
 	} touchType;
+	/*
+	NSMutableArray *curRow;
+	NSMutableArray *array = [NSMutableArray alloc] init];
+	curRow = [NSMutableArray array];
+	[curRow addObject:];
+	[curRow addObject:];
+	[curRow addObject:];
+	[array addObject:curRow]; 
+
+	curRow = [NSMutableArray array];
+	[curRow addObject:];
+	[curRow addObject:];
+	[curRow addObject:];
+	[array addObject:curRow];
+*/
 	
 	Block *board[kLastColumn + 1][kLastRow + 1];
 	Tetromino *userTetromino;
@@ -26,11 +41,7 @@
 	int moveCycleRatio;
 	int difficulty;
 	int score;
-	
-	//TODO: Fix Labels
-	//Label *scoreLabel;
-	//Label *difficultyLabel;
-	
+		
 	CGPoint dragStartPoint;
 	CGPoint lastDragMove;
 	int lastDragStartTime;

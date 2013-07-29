@@ -16,87 +16,36 @@
 @end
 
 @implementation Tetromino
-@synthesize boardX;
-@synthesize boardY;
+@synthesize anchorX;
+@synthesize anchorY;
 @synthesize orientation;
 @synthesize type;
 
 typedef uint8_t BLOCK[4][4];
 
-/*- (id)init
-{
-	if (self = [super init])
-	{
-		NSLog(@"random with normal %ld", random() % 7);
-		NSNumber *blockFrequency = random() % 7;
-		
-		type = (tetrominoType)blockFrequency;
-
-		
-		orientation = (random() % orientationCount[type]);
-
-		
-		_blocksInTetromino = [[NSMutableArray alloc] init];
-		
-		//Tetromino *tempTetromino = [self generateNextBlock];
-		
-		BLOCK* contents = [self contents];
-		
-		for (NSInteger row = 0; row < 4; row++)
-		{
-			for (NSInteger col = 0; col < 4; col++)
-			{
-				// Get the contents of this cell of the block
-				uint8_t cellType = (*contents)[(4 - 1) - row][col];
-				
-				// If the cell is empty, skip to the next iteration of the loop
-				if (cellType == 0)
-					continue;
-				
-				Block *newBlock = [Block newEmptyBlockWithColorByType:type];
-				newBlock.boardX = row + 3;
-				newBlock.boardY = col;
-				newBlock.position = COMPUTE_X_Y(newBlock.boardX, newBlock.boardY);
-				[self addChild:newBlock];
-				
-				
-			}
-		}
-		
-		[_blocksInTetromino addObject:self];
-		
-		[self initializeTetromino];
-		
-	}
-	return self;
-}*/
 
 - (BLOCK*)contents
 {
 	return &(blocks[type][orientation]);
 }
 
-- (Tetromino*)TetrominoRotatedInDirection:(RotationDirection)direction
+
++ (id)blockWithType:(tetrominoType)blockType Direction:(RotationDirection)blockOrientation BoardX:(NSInteger)positionX BoardY:(NSInteger)positionY CurrentOrientation:(NSInteger)CurrentOrientation;
 {
-	NSInteger newOrientation = (orientation + direction + [self numOrientations]) % [self numOrientations];
-	//TODO Do I need to return a new one or just this one?
-	return [Tetromino blockWithType:type orientation:newOrientation BoardX:boardX BoardY:boardY];
+	return [[self alloc] initWithTypeRotationPosition:blockType rotationDirection:blockOrientation BoardX:positionX BoardY:positionY CurrentOrientation:CurrentOrientation];
 }
 
-+ (id)blockWithType:(tetrominoType)blockType orientation:(RotationDirection)blockOrientation BoardX:(NSInteger)positionX BoardY:(NSInteger)positionY
-{
-	return [[self alloc] initWithTypeRotationPosition:blockType rotationDirection:blockOrientation BoardX:positionX BoardY:positionY];
-}
-
-- (id)initWithTypeRotationPosition:(tetrominoType)blockType rotationDirection:(RotationDirection)blockDirection BoardX:(NSInteger)positionX BoardY:(NSInteger)positionY
+- (id)initWithTypeRotationPosition:(tetrominoType)blockType rotationDirection:(RotationDirection)blockDirection BoardX:(NSInteger)positionX BoardY:(NSInteger)positionY CurrentOrientation:(NSInteger)CurrentOrientation;
 {
 	if (self = [super init])
 	{
-		
+		self.anchorX = positionX;
+		self.anchorY = positionY;
 		type = blockType;
+		orientation = CurrentOrientation;
+
 		orientation = (orientation + blockDirection + [self numOrientations]) % [self numOrientations];
-		
-		NSLog(@"ROTATE BLOCKTYPE = %d, ORIENTATION = %d, POSITIONX = %d, POSITIONY = %d", blockType, blockDirection, positionX, positionY);
+
 		
 		_blocksInTetromino = [[NSMutableArray alloc] init];
 		
@@ -109,13 +58,13 @@ typedef uint8_t BLOCK[4][4];
 				// Get the contents of this cell of the block
 				uint8_t cellType = (*contents)[(4 - 1) - row][col];
 				
-				// If the cell is empty, skip to the next iteration of the loop
+				// If the cell is empty, skip to the next iteration of the Ïloop
 				if (cellType == 0)
 					continue;
 				
 				Block *newBlock = [Block newEmptyBlockWithColorByType:type];
-				newBlock.boardX = (row + 3) + positionX;
-				newBlock.boardY = col + positionY;
+				newBlock.boardX = (row + anchorX);
+				newBlock.boardY = col + anchorY;
 				newBlock.position = COMPUTE_X_Y(newBlock.boardX, newBlock.boardY);
 				[self addChild:newBlock];
 				[_blocksInTetromino addObject:newBlock];
@@ -152,12 +101,15 @@ typedef uint8_t BLOCK[4][4];
 		type = (tetrominoType)blockFrequency;
 		int randomOrientation = arc4random() % orientationCount[type];
 				
-		NSLog(@"----> blockType =  %d With orientation %d",blockFrequency, randomOrientation );
+		//NSLog(@"----> blockType =  %d With orientation %d",blockFrequency, randomOrientation );
 		
 		orientation = randomOrientation;
 		_blocksInTetromino = [[NSMutableArray alloc] init];
 				
 		BLOCK* contents = [self contents];
+		
+		self.anchorX = rowoffset;
+		self.anchorY = 0;
 		
 		for (NSInteger row = 0; row < 4; row++)
 		{
@@ -167,15 +119,16 @@ typedef uint8_t BLOCK[4][4];
 				uint8_t cellType = (*contents)[(4 - 1) - row][col];
 				
 				// If the cell is empty, skip to the next iteration of the loop
-				if (cellType == 0)
+				if (cellType == 0)	
 					continue;
-				
+			
+
 				Block *newBlock = [Block newEmptyBlockWithColorByType:type];
-				newBlock.boardX = row + 3;
-				newBlock.boardY = col;
+				newBlock.boardX = row + anchorX;
+				newBlock.boardY = col + anchorY;
 				newBlock.position = COMPUTE_X_Y(newBlock.boardX, newBlock.boardY);
 				[self addChild:newBlock];
-				//[_blocksInTetromino addObject:newBlock];
+				[_blocksInTetromino addObject:newBlock];
 				
 			}
 		}
@@ -202,9 +155,9 @@ typedef uint8_t BLOCK[4][4];
 {
 	self.stuck = NO;
 	//[self setShape];
-	Block *firstBlock = [children_ objectAtIndex:0];
-	self.boardX = firstBlock.boardX;
-	self.boardY = firstBlock.boardY;
+	/*Block *firstBlock = [children_ objectAtIndex:0];
+	self.anchorX = firstBlock.boardX;
+	self.anchorY = firstBlock.boardY;*/
 	self.anchorPoint = ccp(0,0);
 }
 
@@ -245,7 +198,7 @@ typedef uint8_t BLOCK[4][4];
 		[currentBlock moveDown];
 	}
 	//set the tetromino one down
-	self.boardY += 1;
+	self.anchorY += 1;
 	//NSLog(@"Move down = %d, and pixel Y = %d",COMPUTE_X(self.boardX), COMPUTE_Y(self.boardY));
 	//[self runAction:[MoveTo actionWithDuration:1.0/45.0 position:COMPUTE_X_Y(self.boardX, self.boardY)]];
 	
@@ -303,7 +256,7 @@ typedef uint8_t BLOCK[4][4];
 
 - (NSString*)description
 {
-	return [NSString stringWithFormat:@"%@: type = %d, boardX = %d, boardY = %d, orientation = %d", [super description], type, boardX, boardY, orientation];
+	return [NSString stringWithFormat:@"%@: type = %d, boardX = %d, boardY = %d, orientation = %d", [super description], type, anchorX, anchorY, orientation];
 }
 
 static BLOCK bI[2] = {

@@ -11,6 +11,7 @@
 
 #define kLastColumn 9
 #define kLastRow 19
+#define rowoffset 3
 typedef enum
 {
 	I_block,
@@ -30,14 +31,13 @@ typedef enum
 	rotateClockwise = 1
 } RotationDirection;
 
-@interface Tetromino : CCSprite {
-
-	//tetrominoType tetrominoType;
+@interface Tetromino : CCSprite
+{
 	BOOL stuck;	
 	CGPoint leftMostPosition;
 	CGPoint rightMostPosition;	
-	int boardX;
-	int boardY;
+	int anchorX;
+	int anchorY;
 	tetrominoType type;
 	NSInteger orientation;
 	
@@ -47,19 +47,19 @@ typedef enum
 @property (readonly) tetrominoType type;
 @property (readonly) NSInteger orientation;
 @property (readwrite, strong) NSMutableArray *blocksInTetromino;
-//@property (readonly) tetrominoType tetrominoType;
 @property (assign) BOOL stuck;
-@property (readwrite, assign) int boardX;
-@property (readwrite, assign) int boardY;
+@property (readwrite, assign) int anchorX;
+@property (readwrite, assign) int anchorY;
 @property (readonly) CGPoint leftMostPosition;
 @property (readonly) CGPoint rightMostPosition;
 @property (readonly) CGPoint highestPosition;
 @property (readonly) CGPoint lowestPosition;
 
+
 + (id)randomBlockUsingBlockFrequency;
 - (id)initWithRandomTypeAndOrientationUsingFrequency;
-+ (id)blockWithType:(tetrominoType)blockType orientation:(RotationDirection)blockOrientation BoardX:(NSInteger)positionX BoardY:(NSInteger)positionY;
-- (Tetromino*)TetrominoRotatedInDirection:(RotationDirection)direction;
++ (id)blockWithType:(tetrominoType)blockType Direction:(RotationDirection)blockOrientation BoardX:(NSInteger)positionX BoardY:(NSInteger)positionY CurrentOrientation:(NSInteger)CurrentOrientation;
+
 - (BOOL)isBlockInTetromino:(id)block;
 - (void)moveTetrominoDown;
 

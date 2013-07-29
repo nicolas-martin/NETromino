@@ -59,10 +59,10 @@
 		
 		// ask director for the window size
 		CGSize size = [[CCDirector sharedDirector] winSize];
-		NSLog(@"=====================================");
-		NSLog(@"window height = %f", size.height);
-		NSLog(@"window width = %f", size.width);
-		NSLog(@"=====================================");
+		//NSLog(@"=====================================");
+		//NSLog(@"window height = %f", size.height);
+		//NSLog(@"window width = %f", size.width);
+		//NSLog(@"=====================================");
 		CCSprite *background;
 		
 		if( UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone ) {
@@ -203,7 +203,7 @@
 	}
 	
 	
-	//NSLog(@"userTetromino Position: %d, %d", userTetromino.boardX, userTetromino.boardY);
+/*
 	NSString *blockPositions = [[NSString alloc] init];
 	NSString *blockPositionInline = [[NSString alloc] init];
 	for (Block *block in userTetromino.children) {
@@ -213,7 +213,7 @@
 		blockPositionInline = [blockPositionInline stringByAppendingString:blockPositions];
 		
 	}
-	NSLog(@"Block %@", blockPositionInline);
+	NSLog(@"Block %@", blockPositionInline);*/
 	
 	
 	//If the block is not stuck move it down
@@ -242,6 +242,7 @@
 		for (Block* currentBlock in reversedBlockArray) {
 			[self moveBlockX:currentBlock byX:-1];
 		}
+		userTetromino.anchorX -= 1;
 	}
 }
 
@@ -255,6 +256,8 @@
 		for (Block* currentBlock in reversedBlockArray) {
 			[self moveBlockX:currentBlock byX:1];
 		}
+		
+		userTetromino.anchorX += 1;
 	}
 	
 }
@@ -301,8 +304,8 @@
 	//Drop only if touched right under the piece
 	if (location.y < lowestY)
 	{
-		touchType = kDropBlocks;
-		//touchType = kBlockFlip;
+		//touchType = kDropBlocks;
+		touchType = kBlockFlip;
 	}
 	
 	else if (location.x < leftMostX)
@@ -321,6 +324,41 @@
 	
 	
 }
+
+- (void)rotateTetromino:(RotationDirection)direction
+{
+    Tetromino *rotated = [Tetromino blockWithType:userTetromino.type Direction:direction BoardX:userTetromino.anchorX BoardY:userTetromino.anchorY CurrentOrientation:userTetromino.orientation];
+    
+	for (Block *currentBlock in rotated.children)
+	{
+		//check if the new block is within the bounds and
+		if(currentBlock.boardX < 0 || currentBlock.boardX > kLastColumn || currentBlock.boardY < 0 || currentBlock.boardY > kLastRow || (board[currentBlock.boardX][currentBlock.boardY] == nil))
+		{
+			NSLog(@"DENIED");
+			return;
+			
+		}
+	}
+	
+	
+	//Delete old tetromino
+	for (Block *currentBlock in userTetromino.children)
+	{
+		board[currentBlock.boardX][currentBlock.boardY] = nil;
+		
+	}
+	[self removeChild:userTetromino cleanup:YES];
+	
+	//add rotated to board
+	for (Block *currentBlock in rotated.children)
+	{
+		board[currentBlock.boardX][currentBlock.boardY] = currentBlock;
+	}
+	userTetromino = rotated;
+	[self addChild:userTetromino];
+}
+
+
 
 - (void)processTaps
 {
@@ -355,13 +393,8 @@
 	{
 		touchType = kNone;
 		
-		Tetromino *rotated = [Tetromino blockWithType:userTetromino.type orientation:rotateClockwise BoardX:userTetromino.boardX BoardY:userTetromino.boardY];
-		
-		userTetromino = rotated;
-		
-		for (Block *currentBlock in userTetromino.children) {
-			[currentBlock MoveTo:currentBlock];
-		}
+
+		[self rotateTetromino:rotateClockwise];
 		
 	}
 	
