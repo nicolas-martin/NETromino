@@ -39,16 +39,12 @@
 
 +(CCScene *) scene
 {
-    // 'scene' is an autorelease object.
     CCScene *scene = [CCScene node];
     
-    // 'layer' is an autorelease object.
     GameLogicLayer *layer = [GameLogicLayer node];
     
-    // add layer as a child to scene
     [scene addChild: layer];
-    
-    // return the scene
+
     return scene;
 }
 
@@ -58,32 +54,27 @@
 {
 	if ((self = [super init])) {
 		isTouchEnabled_ = YES;
-		tetronimoInGame = [[NSMutableArray alloc] init];		
+		tetronimoInGame = [[NSMutableArray alloc] init];
 		
 		
-		
-		 // ask director for the window size
-		 CGSize size = [[CCDirector sharedDirector] winSize];
+		// ask director for the window size
+		CGSize size = [[CCDirector sharedDirector] winSize];
 		NSLog(@"=====================================");
 		NSLog(@"window height = %f", size.height);
 		NSLog(@"window width = %f", size.width);
 		NSLog(@"=====================================");
 		CCSprite *background;
-		 
-		 if( UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone ) {
-		 background = [CCSprite spriteWithFile:@"tetris_bg.jpg"];
-		 background.rotation = 90;
-		 } else {
-		 background = [CCSprite spriteWithFile:@"tetris_bg.jpg"];
-		 }
-		 background.position = ccp(size.width/2, size.height/2);
-		 
-		 // add the label as a child to this Layer
-		 [self addChild: background];
-		 
-		 
-		 
-		 
+		
+		if( UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone ) {
+			background = [CCSprite spriteWithFile:@"tetris_bg.jpg"];
+			background.rotation = 90;
+		} else {
+			background = [CCSprite spriteWithFile:@"tetris_bg.jpg"];
+		}
+		background.position = ccp(size.width/2, size.height/2);
+		
+		// add the label as a child to this Layer
+		[self addChild: background];
 		
 		
 		[self startGame];
@@ -96,7 +87,7 @@
 	//The board is one big block?
 	memset(board, 0, sizeof(board));
 	
-	[self createNewTetromino];
+	[self tryToCreateNewTetromino];
 	frameCount = 0;
 	moveCycleRatio = 40;
 	[self schedule:@selector(updateBoard:) interval:(1.0/60.0)];
@@ -114,27 +105,28 @@
 //Creates a new block
 - (void)createNewTetromino
 {
-	//Tetromino *tempTetromino = [Tetromino randomBlockUsingBlockFrequency];
+	Tetromino *tempTetromino = [Tetromino randomBlockUsingBlockFrequency];
 	
-	Tetromino *tempTetromino = [Tetromino blockWithType:0 orientation:0 BoardX:3 BoardY:3];
+	//Tetromino *tempTetromino = [Tetromino blockWithType:0 orientation:0 BoardX:0 BoardY:0];
 	
 	
 	for (Block *currentBlock in tempTetromino.children) {
-
+		
 		board[currentBlock.boardX][currentBlock.boardY] = currentBlock;
 	}
 	userTetromino = tempTetromino;
-	[self addChild:userTetromino];	
-	[tetronimoInGame addObject:userTetromino];	
-	[tempTetromino release];
+	[self addChild:userTetromino];
+	[tetronimoInGame addObject:userTetromino];
+
 	
 	NSLog(@"+++++++ %d +++++++", tetronimoInGame.count);
-		//NSLog(@"CURRENT TETROMINO :: type = %d orientation = %d currentBoardX = %d currentBoardY = %d", userTetromino.type, userTetromino.orientation, userTetromino.boardX, userTetromino.boardY);
+	
 	
 }
 
 - (void)tryToCreateNewTetromino
 {
+	//TODO: Implement a more robust logic
 	// If any spot in the top two rows where blocks spawn is taken
 	for (int i = 4; i < 8; i++)
 	{
@@ -148,7 +140,7 @@
 }
 
 
-
+//TODO: Move this to Tetromino?
 - (void)moveBlocksDown
 {
 	Block *currentBlock = nil;
@@ -158,6 +150,7 @@
 		[self tryToCreateNewTetromino];
 	}
 	
+	//???: This logic is fucked up
 	// Go through board from bottom to top
 	for (int x = kLastColumn; x >= 0 ; x--) {
 		for (int y = kLastRow; y >= 0; y--) {
@@ -169,7 +162,6 @@
 						[self moveTetrominoDown];
 						alreadyMovedTetromino = YES;
 					}
-					
 					
 				} else if (y != kLastRow && ([self boardRowEmpty:x])){
 					[self moveBlockDown:currentBlock];
@@ -193,7 +185,7 @@
 	}
 	return YES;
 }
-//TODO Bug here
+
 - (void)moveTetrominoDown
 {
 	//for each block of the tetronimo
@@ -212,22 +204,22 @@
 	
 	
 	//NSLog(@"userTetromino Position: %d, %d", userTetromino.boardX, userTetromino.boardY);
-	NSString *blockPositions = [[[NSString alloc] init] autorelease];
-	NSString *blockPositionInline = [[[NSString alloc] init] autorelease];
+	NSString *blockPositions = [[NSString alloc] init];
+	NSString *blockPositionInline = [[NSString alloc] init];
 	for (Block *block in userTetromino.children) {
 		
 		blockPositions = [NSString stringWithFormat:@"[ %d, %d ]", block.boardX, block.boardY];
 		
 		blockPositionInline = [blockPositionInline stringByAppendingString:blockPositions];
-
+		
 	}
 	NSLog(@"Block %@", blockPositionInline);
-
+	
 	
 	//If the block is not stuck move it down
 	if (!userTetromino.stuck) {
 		// Reverse block enumerator so they dont overlap when you're shifting down
-		CCArray *reversedBlockArray = [[[CCArray alloc] initWithArray:userTetromino.children]autorelease];  // make copy
+		CCArray *reversedBlockArray = [[CCArray alloc] initWithArray:userTetromino.children];  
 		[reversedBlockArray reverseObjects]; // reverse contents
 		for (Block* currentBlock in reversedBlockArray) {
 			board[currentBlock.boardX][currentBlock.boardY] = nil;
@@ -245,7 +237,7 @@
 {
 	if ([self canMoveTetrominoByX:-1]) {
 		
-		CCArray *reversedBlockArray = [[[CCArray alloc] initWithArray:userTetromino.children]autorelease];  // make copy
+		CCArray *reversedBlockArray = [[CCArray alloc] initWithArray:userTetromino.children];  // make copy
 		//[reversedBlockArray reverseObjects]; // reverse contents
 		for (Block* currentBlock in reversedBlockArray) {
 			[self moveBlockX:currentBlock byX:-1];
@@ -257,8 +249,8 @@
 - (void)moveTetrominoRight
 {
 	if ([self canMoveTetrominoByX:1]) {
-
-		CCArray *reversedBlockArray = [[[CCArray alloc] initWithArray:userTetromino.children]autorelease];  // make copy
+		
+		CCArray *reversedBlockArray = [[CCArray alloc] initWithArray:userTetromino.children];  // make copy
 		[reversedBlockArray reverseObjects]; // reverse contents
 		for (Block* currentBlock in reversedBlockArray) {
 			[self moveBlockX:currentBlock byX:1];
@@ -270,8 +262,8 @@
 - (BOOL)canMoveTetrominoByX:(int)offSetX
 {
 	// Sort blocks by x value if moving left, reverse order if moving right
-	CCArray *reversedChildren = [[[CCArray alloc] initWithArray:userTetromino.children]autorelease];  // make copy
-
+	CCArray *reversedChildren = [[CCArray alloc] initWithArray:userTetromino.children];  // make copy
+	
 	if (offSetX > 0) {
 		[reversedChildren reverseObjects]; // reverse contents
 	}
@@ -294,40 +286,37 @@
 	UITouch *touch = [touches anyObject];
 	CGPoint location = [touch locationInView: [touch view]];
 	
-	//TODO: MOVE THIS CODE TETROMINO??
 	CGFloat leftMostX = 0;
 	CGFloat rightMostX = 0;
 	CGFloat lowestY = 0;
-	Block *lastBlock;
-	
-	for(Block* block in userTetromino.children)
-	{
-		lastBlock = block;
-		if(lastBlock.position.x <= block.position.x)
-		{
-			leftMostX = block.position.x;
-		}
-		
-		if(lastBlock.position.x >= block.position.x)
-		{
-			rightMostX = lastBlock.position.x;
-		}
-		
-		if(lastBlock.position.y <= block.position.y)
-		{
-			lowestY = lastBlock.position.y;
-		}
-	}
+	CGFloat highestY = 0;
 
+	leftMostX = COMPUTE_X([userTetromino leftMostPosition].x);
+	rightMostX = COMPUTE_X([userTetromino rightMostPosition].x);	
+	lowestY = COMPUTE_Y([userTetromino lowestPosition].y);
+	highestY = COMPUTE_Y([userTetromino highestPosition].y);
+	
 	location = [[CCDirector sharedDirector] convertToGL:location];
 	
-	if (location.y < lowestY) {
+	//Drop only if touched right under the piece
+	if (location.y < lowestY)
+	{
 		touchType = kDropBlocks;
-	}else if (location.x < leftMostX) {
-		touchType = kMoveLeft;
-	} else if (location.x > rightMostX) {
-		touchType = kMoveRight;
+		//touchType = kBlockFlip;
 	}
+	
+	else if (location.x < leftMostX)
+	{
+		touchType = kMoveLeft;
+	}
+	else if (location.x > rightMostX)
+	{
+		touchType = kMoveRight;
+	}/*
+	else if (location.y > highestY)
+	{
+		touchType = kBlockFlip;
+	}*/
 	[self processTaps];
 	
 	
@@ -335,24 +324,45 @@
 
 - (void)processTaps
 {
-	if (touchType == kDropBlocks) {
+	if (touchType == kDropBlocks)
+	{
 		touchType = kNone;
 		
-		while (!userTetromino.stuck) {
+		while (!userTetromino.stuck)
+		{
 			[self moveTetrominoDown];
 		}
-	} else if (touchType == kMoveLeft) {
+	}
+	else if (touchType == kMoveLeft)
+	{
 		touchType = kNone;
 		
-		if (userTetromino.leftMostPosition.x > 0 && !userTetromino.stuck) {
+		if (userTetromino.leftMostPosition.x > 0 && !userTetromino.stuck)
+		{
 			[self moveTetrominoLeft];
 		}
-	} else if (touchType == kMoveRight) {
+	}
+	else if (touchType == kMoveRight)
+	{
 		touchType = kNone;
 		
-		if (userTetromino.rightMostPosition.x < kLastColumn && !userTetromino.stuck) {
+		if (userTetromino.rightMostPosition.x < kLastColumn && !userTetromino.stuck)
+		{
 			[self moveTetrominoRight];
 		}
+	}
+	else if (touchType == kBlockFlip)
+	{
+		touchType = kNone;
+		
+		Tetromino *rotated = [Tetromino blockWithType:userTetromino.type orientation:rotateClockwise BoardX:userTetromino.boardX BoardY:userTetromino.boardY];
+		
+		userTetromino = rotated;
+		
+		for (Block *currentBlock in userTetromino.children) {
+			[currentBlock MoveTo:currentBlock];
+		}
+		
 	}
 	
 }
@@ -368,7 +378,7 @@
 //Helper function to recalculate left and right block positions
 - (void)moveBlockX:(Block *)block byX:(int)offsetX
 {
-	//double checking to see if there's nothing 
+	//double checking to see if there's nothing
 	if (board[block.boardX + offsetX][block.boardY] == nil) {
 		board[block.boardX][block.boardY] = nil;
 		board[block.boardX + offsetX][block.boardY] = block;
@@ -383,14 +393,5 @@
 	CCScene *gameOverScene = [GameOverLayer sceneWithWon:won];
 	[[CCDirector sharedDirector] replaceScene:gameOverScene];
 	
-}
-
-- (void)dealloc
-{
-	[self removeAllChildrenWithCleanup:YES];
-	//TODO: Fix label cleaning
-	//[difficultyLabel release];
-	//[scoreLabel release];
-	[super dealloc];
 }
 @end

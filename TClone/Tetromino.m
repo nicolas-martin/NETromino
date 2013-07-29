@@ -16,7 +16,6 @@
 @end
 
 @implementation Tetromino
-//@synthesize tetrominoType;
 @synthesize boardX;
 @synthesize boardY;
 @synthesize orientation;
@@ -86,7 +85,7 @@ typedef uint8_t BLOCK[4][4];
 
 + (id)blockWithType:(tetrominoType)blockType orientation:(RotationDirection)blockOrientation BoardX:(NSInteger)positionX BoardY:(NSInteger)positionY
 {
-	return [[[self alloc] initWithTypeRotationPosition:blockType rotationDirection:blockOrientation BoardX:positionX BoardY:positionY] autorelease];
+	return [[self alloc] initWithTypeRotationPosition:blockType rotationDirection:blockOrientation BoardX:positionX BoardY:positionY];
 }
 
 - (id)initWithTypeRotationPosition:(tetrominoType)blockType rotationDirection:(RotationDirection)blockDirection BoardX:(NSInteger)positionX BoardY:(NSInteger)positionY
@@ -139,7 +138,7 @@ typedef uint8_t BLOCK[4][4];
 
 + (id)randomBlockUsingBlockFrequency
 {
-	return [[[self alloc] initWithRandomTypeAndOrientationUsingFrequency] autorelease];
+	return [[self alloc] initWithRandomTypeAndOrientationUsingFrequency];
 }
 
 //This works with random orientation and random types!!
@@ -176,7 +175,7 @@ typedef uint8_t BLOCK[4][4];
 				newBlock.boardY = col;
 				newBlock.position = COMPUTE_X_Y(newBlock.boardX, newBlock.boardY);
 				[self addChild:newBlock];
-				[_blocksInTetromino addObject:newBlock];
+				//[_blocksInTetromino addObject:newBlock];
 				
 			}
 		}
@@ -209,15 +208,6 @@ typedef uint8_t BLOCK[4][4];
 	self.anchorPoint = ccp(0,0);
 }
 
-
-- (Tetromino *)generateNextBlock
-{
-	return [Tetromino randomBlockUsingBlockFrequency];
-}
-
-
-
-
 - (BOOL)stuck
 {
 	for (Block *block in self.children) {
@@ -247,7 +237,7 @@ typedef uint8_t BLOCK[4][4];
 
 - (void)moveTetrominoDown
 {
-	CCArray *reversedChildren = [[[CCArray alloc] initWithArray:children_]autorelease];  // make copy
+	CCArray *reversedChildren = [[CCArray alloc] initWithArray:children_];  // make copy
 	[reversedChildren reverseObjects]; // reverse contents
 	
 	for (Block *currentBlock in reversedChildren) {
@@ -262,11 +252,6 @@ typedef uint8_t BLOCK[4][4];
 	
 }
 
-- (void)dealloc
-{
-	
-	[super dealloc];
-}
 
 - (CGPoint)leftMostPosition
 {
@@ -286,6 +271,30 @@ typedef uint8_t BLOCK[4][4];
 	CGPoint myRightPosition = ccp(-1, -1);
 	for (Block *currentBlock in self.children) {
 		if (myRightPosition.x < currentBlock.boardX) {
+			myRightPosition = ccp(currentBlock.boardX, currentBlock.boardY);
+		}
+	}
+	return myRightPosition;
+}
+
+- (CGPoint)highestPosition
+{
+	
+	CGPoint	myLeftPosition = ccp(999,999);
+	for (Block *currentBlock in self.children) {
+		if ( myLeftPosition.y > currentBlock.boardY) {
+			myLeftPosition = ccp(currentBlock.boardX, currentBlock.boardY);
+		}
+	}
+	return myLeftPosition;
+	
+}
+
+- (CGPoint)lowestPosition
+{
+	CGPoint myRightPosition = ccp(-1, -1);
+	for (Block *currentBlock in self.children) {
+		if (myRightPosition.y < currentBlock.boardY) {
 			myRightPosition = ccp(currentBlock.boardX, currentBlock.boardY);
 		}
 	}

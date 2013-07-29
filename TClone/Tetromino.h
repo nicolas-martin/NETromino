@@ -46,31 +46,22 @@ typedef enum
 
 @property (readonly) tetrominoType type;
 @property (readonly) NSInteger orientation;
-@property (readwrite, assign) NSMutableArray *blocksInTetromino;
+@property (readwrite, strong) NSMutableArray *blocksInTetromino;
 //@property (readonly) tetrominoType tetrominoType;
 @property (assign) BOOL stuck;
 @property (readwrite, assign) int boardX;
 @property (readwrite, assign) int boardY;
 @property (readonly) CGPoint leftMostPosition;
 @property (readonly) CGPoint rightMostPosition;
+@property (readonly) CGPoint highestPosition;
+@property (readonly) CGPoint lowestPosition;
 
-
-- (NSComparisonResult)compareWithBlock:(Block *)block;
-
-// Create random blocks using the frequency information from the game rules
-// blockFrequencies must be of length 100
 + (id)randomBlockUsingBlockFrequency;
 - (id)initWithRandomTypeAndOrientationUsingFrequency;
 + (id)blockWithType:(tetrominoType)blockType orientation:(RotationDirection)blockOrientation BoardX:(NSInteger)positionX BoardY:(NSInteger)positionY;
-+ (id)blockWithType:(tetrominoType)blockType orientation:(RotationDirection)blockOrientation BoardX:(NSInteger)positionX BoardY:(NSInteger)positionY;
-
 - (Tetromino*)TetrominoRotatedInDirection:(RotationDirection)direction;
-
-
 - (BOOL)isBlockInTetromino:(id)block;
 - (void)moveTetrominoDown;
-
-+ (Block*)generateNextBlock;
 
 
 @end

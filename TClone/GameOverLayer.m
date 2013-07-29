@@ -11,10 +11,10 @@
 
 @implementation GameOverLayer
 
-+(CCScene *) sceneWithWon:(BOOL)won 
++(CCScene *) sceneWithWon:(BOOL)won
 {
     CCScene *scene = [CCScene node];
-    GameOverLayer *layer = [[[GameOverLayer alloc] initWithWon:won] autorelease];    
+    GameOverLayer *layer = [[GameOverLayer alloc] initWithWon:won];    
     [scene addChild: layer];
     return scene;
 }

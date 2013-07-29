@@ -55,9 +55,7 @@
 	
 	if (color) {
 		filename = [[NSString alloc] initWithFormat:@"%@.png", color];
-		temp = [[self spriteWithFile:filename] retain];
-		[filename release];
-		
+		temp = [self spriteWithFile:filename];
 		[temp initializeDefaults];
 		
 	}
