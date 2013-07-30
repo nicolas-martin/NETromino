@@ -8,6 +8,7 @@
 
 #import "GameLogicLayer.h"
 #import "GameOverLayer.h"
+#import "CCNode+SFGestureRecognizers.h"
 
 #define NSLog(FORMAT, ...) printf("%s\n", [[NSString stringWithFormat:FORMAT, ##__VA_ARGS__] UTF8String]);
 @interface GameLogicLayer (private)
@@ -56,6 +57,17 @@
 		isTouchEnabled_ = YES;
 		tetronimoInGame = [[NSMutableArray alloc] init];
 		
+		//creates gesture recognizer
+		UISwipeGestureRecognizer *swipeRightGestureRecognizer = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(swipeRightGestureRecognizer:)];
+		swipeRightGestureRecognizer.direction = UISwipeGestureRecognizerDirectionRight;
+		swipeRightGestureRecognizer.delegate = self;
+		[self addGestureRecognizer:swipeRightGestureRecognizer];
+		
+		UISwipeGestureRecognizer *swipeLeftGestureRecognizer = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(swipeLeftGestureRecognizer:)];
+		swipeLeftGestureRecognizer.direction = UISwipeGestureRecognizerDirectionLeft;
+		swipeLeftGestureRecognizer.delegate = self;
+		[self addGestureRecognizer:swipeLeftGestureRecognizer];
+		
 		
 		// ask director for the window size
 		CGSize size = [[CCDirector sharedDirector] winSize];
@@ -80,6 +92,18 @@
 		[self startGame];
 	}
 	return self;
+}
+
+- (void)swipeRightGestureRecognizer:(UISwipeGestureRecognizer*)aGestureRecognizer
+{
+		[self rotateTetromino:rotateClockwise];
+	
+}
+
+- (void)swipeLeftGestureRecognizer:(UISwipeGestureRecognizer*)aGestureRecognizer
+{
+	[self rotateTetromino:rotateCounterclockwise];
+	
 }
 
 - (void)startGame
@@ -284,6 +308,8 @@
 	return YES;
 }
 
+
+
 - (void)ccTouchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
 {
 	UITouch *touch = [touches anyObject];
@@ -304,8 +330,7 @@
 	//Drop only if touched right under the piece
 	if (location.y < lowestY)
 	{
-		//touchType = kDropBlocks;
-		touchType = kBlockFlip;
+		touchType = kDropBlocks;
 	}
 	
 	else if (location.x < leftMostX)
@@ -315,47 +340,69 @@
 	else if (location.x > rightMostX)
 	{
 		touchType = kMoveRight;
-	}/*
-	else if (location.y > highestY)
-	{
-		touchType = kBlockFlip;
-	}*/
+	}
+	
 	[self processTaps];
 	
 	
+}
+
+- (BOOL)isTetrominoInBounds:(Tetromino *)rotated
+{
+    for (Block *currentBlock in rotated.children)
+	{
+		//check if the new block is within the bounds and
+		if(currentBlock.boardX < 0 || currentBlock.boardX > kLastColumn || currentBlock.boardY < 0 || currentBlock.boardY > kLastRow )
+		{
+			NSLog(@"DENIED");
+			return NO;
+			
+		}
+		
+		Block *blockInCurrentBoard = board[currentBlock.boardX][currentBlock.boardY];
+		//if the current block is NOT part of the currentTetromino
+		if (!([userTetromino isBlockInTetromino:blockInCurrentBoard]))
+		{
+			//and is not empty
+			if (board[currentBlock.boardX][currentBlock.boardY] != nil)
+			{
+				NSLog(@"DENIED");
+				return NO;
+			}
+		}
+	}
+	return YES;
+}
+
+- (void)removeTetrominoFromBoard:(Tetromino *)tetrominotoDelete
+{
+	//Delete old tetromino
+    for (Block *currentBlock in tetrominotoDelete.children)
+	{
+		board[currentBlock.boardX][currentBlock.boardY] = nil;
+		
+	}
+	[self removeChild:tetrominotoDelete cleanup:YES];
 }
 
 - (void)rotateTetromino:(RotationDirection)direction
 {
     Tetromino *rotated = [Tetromino blockWithType:userTetromino.type Direction:direction BoardX:userTetromino.anchorX BoardY:userTetromino.anchorY CurrentOrientation:userTetromino.orientation];
     
-	for (Block *currentBlock in rotated.children)
+	//check if the rotated Tetromino within the bounds of the board
+	if([self isTetrominoInBounds:rotated])
 	{
-		//check if the new block is within the bounds and
-		if(currentBlock.boardX < 0 || currentBlock.boardX > kLastColumn || currentBlock.boardY < 0 || currentBlock.boardY > kLastRow || (board[currentBlock.boardX][currentBlock.boardY] == nil))
-		{
-			NSLog(@"DENIED");
-			return;
-			
-		}
-	}
-	
-	
-	//Delete old tetromino
-	for (Block *currentBlock in userTetromino.children)
-	{
-		board[currentBlock.boardX][currentBlock.boardY] = nil;
+		[self removeTetrominoFromBoard:userTetromino];
 		
+		//add rotated to board
+		for (Block *currentBlock in rotated.children)
+		{
+			board[currentBlock.boardX][currentBlock.boardY] = currentBlock;
+		}
+		
+		userTetromino = rotated;
+		[self addChild:userTetromino];
 	}
-	[self removeChild:userTetromino cleanup:YES];
-	
-	//add rotated to board
-	for (Block *currentBlock in rotated.children)
-	{
-		board[currentBlock.boardX][currentBlock.boardY] = currentBlock;
-	}
-	userTetromino = rotated;
-	[self addChild:userTetromino];
 }
 
 
@@ -391,8 +438,7 @@
 	}
 	else if (touchType == kBlockFlip)
 	{
-		touchType = kNone;
-		
+		touchType = kNone;		
 
 		[self rotateTetromino:rotateClockwise];
 		

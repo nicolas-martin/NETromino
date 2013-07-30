@@ -8,11 +8,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "TClone/GameLogicLayer.m"
-         timestampString = "396752910.359201"
+         timestampString = "396846055.490483"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "166"
-         endingLineNumber = "166"
+         startingLineNumber = "190"
+         endingLineNumber = "190"
          landmarkName = "-moveBlocksDown"
          landmarkType = "5">
       </FileBreakpoint>
@@ -21,11 +21,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "TClone/GameLogicLayer.m"
-         timestampString = "396753004.000158"
+         timestampString = "396846055.490483"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "183"
-         endingLineNumber = "183"
+         startingLineNumber = "207"
+         endingLineNumber = "207"
          landmarkName = "-boardRowEmpty:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -34,11 +34,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "TClone/GameLogicLayer.m"
-         timestampString = "396754848.7258"
+         timestampString = "396846055.490483"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "161"
-         endingLineNumber = "161"
+         startingLineNumber = "185"
+         endingLineNumber = "185"
          landmarkName = "-moveBlocksDown"
          landmarkType = "5">
       </FileBreakpoint>
@@ -60,24 +60,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "TClone/GameLogicLayer.m"
-         timestampString = "396771612.4819"
+         timestampString = "396846055.490483"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "337"
-         endingLineNumber = "337"
-         landmarkName = "-rotateTetromino:"
-         landmarkType = "5">
-      </FileBreakpoint>
-      <FileBreakpoint
-         shouldBeEnabled = "No"
-         ignoreCount = "0"
-         continueAfterRunningActions = "No"
-         filePath = "TClone/GameLogicLayer.m"
-         timestampString = "396771612.4819"
-         startingColumnNumber = "9223372036854775807"
-         endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "365"
-         endingLineNumber = "365"
+         startingLineNumber = "412"
+         endingLineNumber = "412"
          landmarkName = "-processTaps"
          landmarkType = "5">
       </FileBreakpoint>
@@ -86,11 +73,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "TClone/GameLogicLayer.m"
-         timestampString = "396771612.4819"
+         timestampString = "396846055.490483"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "357"
-         endingLineNumber = "357"
+         startingLineNumber = "403"
+         endingLineNumber = "403"
          landmarkName = "-rotateTetromino:"
          landmarkType = "5">
       </FileBreakpoint>

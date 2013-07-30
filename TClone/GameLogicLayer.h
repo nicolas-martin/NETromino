@@ -5,13 +5,12 @@
 //  Created by Joshua Aburto on 9/26/09.
 //  Copyright 2009 __MyCompanyName__. All rights reserved.
 //
-
 #import "Tetromino.h"
 #import "Block.h"
 #define kLastColumn 9
 #define kLastRow 19
 
-@interface GameLogicLayer : CCLayer {
+@interface GameLogicLayer : CCLayer <UIGestureRecognizerDelegate>{
 	enum touchTypes {
 		kNone,
 		kDropBlocks,
