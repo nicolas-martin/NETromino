@@ -46,7 +46,6 @@ typedef uint8_t BLOCK[4][4];
 
 		orientation = (orientation + blockDirection + [self numOrientations]) % [self numOrientations];
 
-		
 		_blocksInTetromino = [[NSMutableArray alloc] init];
 		
 		BLOCK* contents = [self contents];
@@ -101,7 +100,7 @@ typedef uint8_t BLOCK[4][4];
 		type = (tetrominoType)blockFrequency;
 		int randomOrientation = arc4random() % orientationCount[type];
 				
-		//NSLog(@"----> blockType =  %d With orientation %d",blockFrequency, randomOrientation );
+		
 		
 		orientation = randomOrientation;
 		_blocksInTetromino = [[NSMutableArray alloc] init];
@@ -138,7 +137,10 @@ typedef uint8_t BLOCK[4][4];
 	}
 	return self;
 }
-
++ (void)RemoveBlock:(Block*) blockToRemove
+{
+	
+}
 
 - (id)initWithType:(tetrominoType)blockType
 	   orientation:(NSInteger)blockOrientation
@@ -193,18 +195,14 @@ typedef uint8_t BLOCK[4][4];
 	CCArray *reversedChildren = [[CCArray alloc] initWithArray:children_];  // make copy
 	[reversedChildren reverseObjects]; // reverse contents
 	
-	for (Block *currentBlock in reversedChildren) {
+	for (Block *currentBlock in reversedChildren)
+	{
 		//move each block down
 		[currentBlock moveDown];
 	}
-	//set the tetromino one down
-	self.anchorY += 1;
-	//NSLog(@"Move down = %d, and pixel Y = %d",COMPUTE_X(self.boardX), COMPUTE_Y(self.boardY));
-	//[self runAction:[MoveTo actionWithDuration:1.0/45.0 position:COMPUTE_X_Y(self.boardX, self.boardY)]];
-	
-	
-}
 
+	self.anchorY += 1;	
+}
 
 - (CGPoint)leftMostPosition
 {

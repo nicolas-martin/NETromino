@@ -10,7 +10,8 @@
 #define kLastColumn 9
 #define kLastRow 19
 
-@interface GameLogicLayer : CCLayer <UIGestureRecognizerDelegate>{
+@interface GameLogicLayer : CCLayer <UIGestureRecognizerDelegate>
+{
 	enum touchTypes {
 		kNone,
 		kDropBlocks,
@@ -18,23 +19,13 @@
 		kMoveLeft,
 		kMoveRight
 	} touchType;
-	/*
-	NSMutableArray *curRow;
-	NSMutableArray *array = [NSMutableArray alloc] init];
-	curRow = [NSMutableArray array];
-	[curRow addObject:];
-	[curRow addObject:];
-	[curRow addObject:];
-	[array addObject:curRow]; 
-
-	curRow = [NSMutableArray array];
-	[curRow addObject:];
-	[curRow addObject:];
-	[curRow addObject:];
-	[array addObject:curRow];
-*/
 	
+		
 	Block *board[kLastColumn + 1][kLastRow + 1];
+	
+	//NSMutableArray *curRow;
+	NSMutableArray *boardArray;	
+
 	Tetromino *userTetromino;
 	int frameCount;
 	int moveCycleRatio;
@@ -45,7 +36,7 @@
 	CGPoint lastDragMove;
 	int lastDragStartTime;
 	
-	NSMutableArray *tetronimoInGame;
+	NSMutableArray *tetrominoInGame;
 	
 }
 

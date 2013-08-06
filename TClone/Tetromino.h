@@ -60,8 +60,10 @@ typedef enum
 - (id)initWithRandomTypeAndOrientationUsingFrequency;
 + (id)blockWithType:(tetrominoType)blockType Direction:(RotationDirection)blockOrientation BoardX:(NSInteger)positionX BoardY:(NSInteger)positionY CurrentOrientation:(NSInteger)CurrentOrientation;
 
++ (id)moveTetrominoRight:(Tetromino*)tetrominoToMove;
+
 - (BOOL)isBlockInTetromino:(id)block;
 - (void)moveTetrominoDown;
-
++ (void)RemoveBlock:(Block*) blockToRemove;
 
 @end

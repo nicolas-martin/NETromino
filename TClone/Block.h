@@ -26,6 +26,7 @@
 - (void)moveByX:(int)offsetX;
 - (NSComparisonResult)compareWithBlock:(Block *)block;
 -(void)MoveTo:(Block *)block;
++ (void)redrawBlock:(Block *)block;
 
 @end
 

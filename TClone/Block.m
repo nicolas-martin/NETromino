@@ -70,7 +70,6 @@
 }
 			
 
-//TODO Add client flexibility
 - (void)initializeDefaults
 {
 	
@@ -86,6 +85,11 @@
 - (void)redrawPositionOnBoard 
 {
 	self.position = COMPUTE_X_Y(boardX, boardY);
+}
+
++ (void)redrawBlock:(Block *)block
+{
+	block.position = COMPUTE_X_Y(block.boardX, block.boardY);
 }
 
 - (void)moveUp
