@@ -23,6 +23,7 @@
     
     // add layer as a child to scene
     [scene addChild: introLayer];
+
     
     // return the scene
     return scene;

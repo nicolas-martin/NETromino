@@ -9,6 +9,7 @@
 #import "GameLogicLayer.h"
 #import "GameOverLayer.h"
 #import "CCNode+SFGestureRecognizers.h"
+#import "Field.h"
 
 #define NSLog(FORMAT, ...) printf("%s\n", [[NSString stringWithFormat:FORMAT, ##__VA_ARGS__] UTF8String]);
 @interface GameLogicLayer (private)
@@ -18,8 +19,7 @@
 - (void)tryToCreateNewTetromino;
 - (void)processTaps;
 - (void)moveBlocksDown;
-- (void)moveBlockDown:(Block *)block;
-- (void)gameOver;
+
 - (void)moveTetrominoDown;
 - (BOOL)boardRowEmpty:(int)column;
 - (void)moveTetrominoLeft;
@@ -34,40 +34,67 @@
 
 +(CCScene *) scene
 {
-    CCScene *scene = [CCScene node];    
-    GameLogicLayer *layer = [GameLogicLayer node];    
+    CCScene *scene = [CCScene node];
+
+    Field *main = [Field node];
+    [scene addChild:main z:1];
+
+    Field *field1 = [Field node];
+    [scene addChild:field1 z:1];
+
+    Field *field2 = [Field node];
+    [scene addChild:field2 z:1];
+
+    Field *field3 = [Field node];
+    [scene addChild:field3 z:1];
+
+    Field *field4 = [Field node];
+    [scene addChild:field4 z:1];
+
+
+    GameLogicLayer *layer = [[GameLogicLayer alloc] initWithFields:main and:field1 and:field2 and:field3 and:field4];
     [scene addChild: layer];
+    
     return scene;
 }
 
-- (id)init
-{
+- (id)initWithFields:(Field *)mainFieldLayer and:(Field *)otherFieldLayer1 and:(Field *)otherFieldLayer2 and:(Field *)otherFieldLayer3 and:(Field *)otherFieldLayer4 {
+
 	if ((self = [super init]))
 	{
-		isTouchEnabled_ = YES;
+
+
+        _MainField = mainFieldLayer;
+        _FieldLayer1 = otherFieldLayer1;
+        _FieldLayer2 = otherFieldLayer2;
+        _FieldLayer3 = otherFieldLayer3;
+        _FieldLayer4 = otherFieldLayer4;
+
+        [_MainField initWithTileMap:[CCTMXTiledMap tiledMapWithTMXFile:@"32.tmx"]];
+        [_FieldLayer1 initWithTileMap:[CCTMXTiledMap tiledMapWithTMXFile:@"16.tmx"]];
+        [_FieldLayer2 initWithTileMap:[CCTMXTiledMap tiledMapWithTMXFile:@"16.tmx"]];
+        [_FieldLayer3 initWithTileMap:[CCTMXTiledMap tiledMapWithTMXFile:@"16.tmx"]];
+        [_FieldLayer4 initWithTileMap:[CCTMXTiledMap tiledMapWithTMXFile:@"16.tmx"]];
+
+
+        CGSize winSize = [CCDirector sharedDirector].winSize;
+
+
+        [_MainField setPosition:ccp(0,0)];
+        [_FieldLayer1 setPosition:ccp(winSize.width - _FieldLayer1.tileMap.contentSize.width, 0)];
+        [_FieldLayer2 setPosition:ccp(winSize.width - _FieldLayer2.tileMap.contentSize.width,
+        winSize.height - _FieldLayer2.tileMap.contentSize.height)];
+        [_FieldLayer3 setPosition:ccp(winSize.width - (_FieldLayer3.tileMap.contentSize.width + 200), 0)];
+        [_FieldLayer4 setPosition:ccp(winSize.width - (_FieldLayer4.tileMap.contentSize.width + 200),
+        winSize.height - (_FieldLayer4.tileMap.contentSize.height))];
+
+
+
+        self.isTouchEnabled = YES;
 		tetrominoInGame = [[NSMutableArray alloc] init];
 
 		boardArray = [[NSMutableArray alloc] init];
-		
-		/*
-		for (int i = 0; i <= kLastColumn; i++)
-		{
-			
-			
-			 NSMutableArray curRow* = [NSMutableArray alloc]init];
-			 for (int i = 0; i <= kLastRow; i++)
-			 {
-				[curRow addObject:[NSNull null]];
-			 }
-			 
-			 [boardArray addObject:curRow];
-			 
-			
-			[boardArray addObject:[NSNull null]];
-			
-		}
-		*/
-		
+
 		
 		//creates gesture recognizer for the layer
 		UISwipeGestureRecognizer *swipeRightGestureRecognizer = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(swipeRightGestureRecognizer:)];
@@ -80,28 +107,17 @@
 		swipeLeftGestureRecognizer.delegate = self;
 		[self addGestureRecognizer:swipeLeftGestureRecognizer];
 		
-		
-		// ask director for the window size
-		CGSize size = [[CCDirector sharedDirector] winSize];
-		CCSprite *background;
-		
-		if( UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone )
-		{
-			background = [CCSprite spriteWithFile:@"tetris_bg.jpg"];
-			background.rotation = 90;
-		}
-		else
-		{
-			background = [CCSprite spriteWithFile:@"tetris_bg.jpg"];
-		}
-		
-		background.position = ccp(size.width/2, size.height/2);
-		
-		[self addChild: background];		
-		[self startGame];
+
+		//[self startGame];
 	
 	}
 	return self;
+}
+
+- (CGPoint)tileCoordForPosition:(CGPoint)position {
+    int x = position.x / _MainField.tileMap.tileSize.width;
+    int y = ((_MainField.tileMap.mapSize.height * _MainField.tileMap.tileSize.height) - position.y) / _MainField.tileMap.tileSize.height;
+    return ccp(x, y);
 }
 
 - (void)swipeRightGestureRecognizer:(UISwipeGestureRecognizer*)aGestureRecognizer
@@ -121,7 +137,7 @@
 	memset(board, 0, sizeof(board));	
 	[self tryToCreateNewTetromino];
 	frameCount = 0;
-	
+
 	//TODO: Implement level speed here
 	moveCycleRatio = 40;
 	[self schedule:@selector(updateBoard:) interval:(1.0/60.0)];
@@ -134,6 +150,7 @@
 	{
 
 		[self moveBlocksDown];
+
 	}
 }
 
@@ -169,17 +186,17 @@
 			//Remove the row from the board
 			for (int x = kLastColumn; x >= 0 ; x--)
 			{
-				Block *currentBlock = board[x][y];
+				Block *currentBlockToDelete = board[x][y];
 				//[self removeChild:currentBlock cleanup:YES];
 				
 				board[x][y] = nil;
 				
-				[currentBlock MoveTo:board[x][y]];
+				[currentBlockToDelete MoveTo:board[x][y]];
 				NSLog(@"- REMOVED A BLOCK AT X = %d AND Y = %d", x, y);
 			}
 			
 			//Move down all the blocks above
-			for (int currenty = y; currenty >= 0; currenty--)
+			for (int currenty = y - 1; currenty >= 0; currenty--)
 			{
 				for (int x = kLastColumn; x >= 0 ; x--)
 				{
@@ -213,29 +230,12 @@
 	}
 	
 	userTetromino = tempTetromino;
-	[self addChild:userTetromino];
-	//[self addBlocksToBoard:userTetromino];
-	
-	
-}
 
-//TODO: Find a better way to track block on the board.
-- (void) addBlocksToBoard:(Tetromino *)tetrominoToAdd
-{
-		
-	[tetrominoInGame addObject:tetrominoToAdd];
-	
-	for(Block* block in tetrominoToAdd.children)
-	{
-		NSLog(@"BOARD X = %d BOARD Y = %d", block.boardX, block.boardY);
-		NSMutableDictionary *dic = [[NSMutableDictionary alloc]init];
-		
-		[dic setObject:block forKey:[NSNumber numberWithInt:block.boardX]];
-				
-		[boardArray insertObject:dic atIndex:block.boardY];
+    [_MainField addChild:userTetromino];
+    //[self addChild:userTetromino];
 
-		
-	}
+	
+	
 }
 
 
@@ -413,8 +413,6 @@
 	return YES;
 }
 
-
-
 - (void)ccTouchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
 {
 	UITouch *touch = [touches anyObject];
@@ -479,16 +477,16 @@
 	return YES;
 }
 
-- (void)removeTetrominoFromBoard:(Tetromino *)tetrominotoDelete
+- (void)removeTetrominoFromBoard:(Tetromino *)tetrominoToDelete
 {
 	//Delete old tetromino
-    for (Block *currentBlock in tetrominotoDelete.children)
+    for (Block *currentBlock in tetrominoToDelete.children)
 	{
 		board[currentBlock.boardX][currentBlock.boardY] = nil;
 		
 	}
-	[self removeChild:tetrominotoDelete cleanup:YES];
-	[tetrominoInGame removeObject:tetrominotoDelete];
+    [self removeChild:tetrominoToDelete cleanup:YES];
+    [tetrominoInGame removeObject:tetrominoToDelete];
 }
 
 - (void)rotateTetromino:(RotationDirection)direction
@@ -544,13 +542,6 @@
 	}
 
 	
-}
-
-
-- (void)moveBlockDown:(Block *)block
-{
-	board[block.boardX][block.boardY] = nil;
-	board[block.boardX][block.boardY + 1] = block;
 }
 
 

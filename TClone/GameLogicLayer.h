@@ -7,6 +7,8 @@
 //
 #import "Tetromino.h"
 #import "Block.h"
+#import "Field.h"
+
 #define kLastColumn 9
 #define kLastRow 19
 
@@ -15,7 +17,6 @@
 	enum touchTypes {
 		kNone,
 		kDropBlocks,
-		kBlockFlip,
 		kMoveLeft,
 		kMoveRight
 	} touchType;
@@ -37,11 +38,20 @@
 	int lastDragStartTime;
 	
 	NSMutableArray *tetrominoInGame;
+
+    Field * _MainField;
+    Field * _FieldLayer1;
+    Field * _FieldLayer2;
+    Field * _FieldLayer3;
+    Field * _FieldLayer4;
 	
 }
-
+- (id)initWithFields:(Field *)mainFieldLayer and:(Field *)otherFieldLayer1 and:(Field *)otherFieldLayer2 and:(Field *)otherFieldLayer3 and:(Field *)otherFieldLayer4;
 
 - (void)updateBoard:(ccTime)dt;
+
+- (void)removeTetrominoFromBoard:(Tetromino *)tetrominoToDelete;
+
 +(CCScene *) scene;
 
 @end
