@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" width="10" height="20" tilewidth="20" tileheight="20">
+ <tileset firstgid="1" name="preview" tilewidth="20" tileheight="20" spacing="1" margin="1">
+  <image source="../../Desktop/puzzleGraphics/preview.jpg" width="797" height="478"/>
+ </tileset>
+ <layer name="Tile Layer 1" width="10" height="20">
+  <data encoding="base64" compression="zlib">
+   eJyF0scNwkAURVHbZAoBTCyEHAohd0LuhNwJuQ/ugieh4Ussjp7uLDySNb7neQEiiML/tO+cZ5BFDuFXu+dV1FBH46vdc/f7bv+7V/3vXrW2jwGGGBmtnWGOBZZGa7fYYY+D0doLrrjhbrQ2yo+IIY6E/9vaEHkUUDRa20ATLbSN1o4wxgRTo7VLrLDGxmjtAUeccDZae8cDT7yM1iZ4HEmkkA5+W1tECWVUjNa20UEXPaO1b+zjSXk=
+  </data>
+ </layer>
+</map>

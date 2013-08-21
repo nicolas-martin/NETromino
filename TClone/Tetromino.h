@@ -12,6 +12,7 @@
 #define kLastColumn 9
 #define kLastRow 19
 #define rowoffset 3
+
 typedef enum
 {
 	I_block,
@@ -30,6 +31,13 @@ typedef enum
 	rotateNone = 0,
 	rotateClockwise = 1
 } RotationDirection;
+
+typedef enum
+{
+    moveLeft = -1,
+    moveNone = 0,
+    moveRight = 1
+} MoveDirection;
 
 @interface Tetromino : CCSprite
 {
@@ -58,12 +66,15 @@ typedef enum
 
 + (id)randomBlockUsingBlockFrequency;
 - (id)initWithRandomTypeAndOrientationUsingFrequency;
+
 + (id)blockWithType:(tetrominoType)blockType Direction:(RotationDirection)blockOrientation BoardX:(NSInteger)positionX BoardY:(NSInteger)positionY CurrentOrientation:(NSInteger)CurrentOrientation;
 
-+ (id)moveTetrominoRight:(Tetromino*)tetrominoToMove;
+- (id)moveTetrominoInDirection:(MoveDirection)direction;
 
 - (BOOL)isBlockInTetromino:(id)block;
-- (void)moveTetrominoDown;
-+ (void)RemoveBlock:(Block*) blockToRemove;
 
+- (void)rotateTetromino:(RotationDirection)direction;
+
+
+- (void)moveTetrominoDown;
 @end

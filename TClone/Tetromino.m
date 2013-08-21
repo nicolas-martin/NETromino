@@ -256,10 +256,6 @@ static NSInteger orientationCount[7] = {2, 1, 4, 4, 2, 2, 4};
 	}
 	return self;
 }
-+ (void)RemoveBlock:(Block*) blockToRemove
-{
-	
-}
 
 - (id)initWithType:(tetrominoType)blockType
 	   orientation:(NSInteger)blockOrientation
@@ -298,9 +294,20 @@ static NSInteger orientationCount[7] = {2, 1, 4, 4, 2, 2, 4};
 	}
 }
 
-+ (id)moveTetrominoRight:(Tetromino *)tetrominoToMove {
-    return nil;
+
+- (id)moveTetrominoInDirection:(MoveDirection)direction {
+    CCArray *reversedBlockArray = [[CCArray alloc] initWithArray:self.children];
+    [reversedBlockArray reverseObjects];
+
+    //TODO: Notify the board
+    //    for (Block* currentBlock in reversedBlockArray)
+    //    {
+    //        [self moveBlockInBoardX:currentBlock byX:1];
+    //    }
+
+    self.anchorX += direction;
 }
+
 
 - (BOOL)isBlockInTetromino:(id)block
 {
@@ -313,9 +320,23 @@ static NSInteger orientationCount[7] = {2, 1, 4, 4, 2, 2, 4};
 	return NO;
 }
 
-- (void)moveTetrominoDown
-{
-	CCArray *reversedChildren = [[CCArray alloc] initWithArray:children_];  // make copy
+- (void)rotateTetromino:(RotationDirection)direction {
+
+    NSLog(@"Not implemented");
+
+//    Tetromino *rotated = [Tetromino blockWithType:userTetromino.type Direction:direction BoardX:userTetromino.anchorX BoardY:userTetromino.anchorY CurrentOrientation:userTetromino.orientation];
+//
+//    for(Block *block in rotated)
+//    {
+//
+//    }
+
+}
+
+
+- (void)moveTetrominoDown {
+
+	CCArray *reversedChildren = [[CCArray alloc] initWithArray:self.children];  // make copy
 	[reversedChildren reverseObjects]; // reverse contents
 	
 	for (Block *currentBlock in reversedChildren)
@@ -327,6 +348,7 @@ static NSInteger orientationCount[7] = {2, 1, 4, 4, 2, 2, 4};
 	self.anchorY += 1;	
 }
 
+//TODO: Make sure these return the x and y like in "math"
 - (CGPoint)leftMostPosition
 {
 	
@@ -379,6 +401,7 @@ static NSInteger orientationCount[7] = {2, 1, 4, 4, 2, 2, 4};
 {
 	return [NSString stringWithFormat:@"%@: type = %d, boardX = %d, boardY = %d, orientation = %d", [super description], type, anchorX, anchorY, orientation];
 }
+
 
 
 @end

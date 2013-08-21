@@ -149,6 +149,8 @@
 		250B81B6877D074EC23CDF8E /* Field.m in Sources */ = {isa = PBXBuildFile; fileRef = 250B8857E36B4EF5E8645D9B /* Field.m */; };
 		250B83922D44EFC51701CD5B /* preview.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 250B88928643535FCEE13092 /* preview.jpg */; };
 		250B852BFB2B868DA7656F1A /* 16.tmx in Resources */ = {isa = PBXBuildFile; fileRef = 250B8B9B048EF0F350CA770E /* 16.tmx */; };
+		250B8A5E4224E7B27304F3ED /* GameController.m in Sources */ = {isa = PBXBuildFile; fileRef = 250B8A4420EA284F2A8A2B77 /* GameController.m */; };
+		250B8B25231ACA5E940AEBF4 /* Board.m in Sources */ = {isa = PBXBuildFile; fileRef = 250B804820F6ECB5C794643B /* Board.m */; };
 		250B8EA1B9637F7627E5EF20 /* 32.tmx in Resources */ = {isa = PBXBuildFile; fileRef = 250B85845376C26625E4BB8F /* 32.tmx */; };
 		250B8EE84B932B24957A3027 /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 250B88CF9EA5E7B7BC2EFE63 /* Default.png */; };
 /* End PBXBuildFile section */
@@ -433,10 +435,14 @@
 		03919F3D17A7563A00FE3A35 /* CCNode+SFGestureRecognizers.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "CCNode+SFGestureRecognizers.m"; sourceTree = "<group>"; };
 		0393C484179CEB71003AA6E4 /* GameOverLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GameOverLayer.h; sourceTree = "<group>"; };
 		0393C485179CEB72003AA6E4 /* GameOverLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GameOverLayer.m; sourceTree = "<group>"; };
+		250B804820F6ECB5C794643B /* Board.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Board.m; sourceTree = "<group>"; };
+		250B827691E2A44D55888BF4 /* GameController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GameController.h; sourceTree = "<group>"; };
 		250B85845376C26625E4BB8F /* 32.tmx */ = {isa = PBXFileReference; lastKnownFileType = file.tmx; path = 32.tmx; sourceTree = "<group>"; };
+		250B85F7F41708465CA946B9 /* Board.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Board.h; sourceTree = "<group>"; };
 		250B8857E36B4EF5E8645D9B /* Field.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Field.m; sourceTree = "<group>"; };
 		250B88928643535FCEE13092 /* preview.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = preview.jpg; sourceTree = "<group>"; };
 		250B88CF9EA5E7B7BC2EFE63 /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Default.png; path = Resources/Default.png; sourceTree = "<group>"; };
+		250B8A4420EA284F2A8A2B77 /* GameController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GameController.m; sourceTree = "<group>"; };
 		250B8B9B048EF0F350CA770E /* 16.tmx */ = {isa = PBXFileReference; lastKnownFileType = file.tmx; path = 16.tmx; sourceTree = "<group>"; };
 		250B8DEEBC626C5C822C8CFA /* Field.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Field.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -908,6 +914,10 @@
 				03311AF9179BF7A800221460 /* Tetromino.m */,
 				250B8857E36B4EF5E8645D9B /* Field.m */,
 				250B8DEEBC626C5C822C8CFA /* Field.h */,
+				250B8A4420EA284F2A8A2B77 /* GameController.m */,
+				250B827691E2A44D55888BF4 /* GameController.h */,
+				250B85F7F41708465CA946B9 /* Board.h */,
+				250B804820F6ECB5C794643B /* Board.m */,
 			);
 			name = Source;
 			sourceTree = "<group>";
@@ -1107,6 +1117,8 @@
 				0393C486179CEB72003AA6E4 /* GameOverLayer.m in Sources */,
 				03919F3E17A7563B00FE3A35 /* CCNode+SFGestureRecognizers.m in Sources */,
 				250B81B6877D074EC23CDF8E /* Field.m in Sources */,
+				250B8A5E4224E7B27304F3ED /* GameController.m in Sources */,
+				250B8B25231ACA5E940AEBF4 /* Board.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

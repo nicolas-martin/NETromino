@@ -6,6 +6,7 @@
 
 
 #import "Field.h"
+#import "Board.h"
 
 
 @implementation Field {
@@ -16,6 +17,8 @@
     if (self) {
         self.tileMap = tileMap;
         [self addChild:tileMap];
+        [_board init];
+        self.layer = [tileMap layerNamed:@"Tile Layer 1"];
     }
 
     return self;
@@ -25,4 +28,22 @@
     return [[self alloc] initWithTileMap:tileMap];
 }
 
+
+
+- (void)checkForRowsToClear {
+
+    [_board clearFullRows];
+
+}
+
+- (void)updateTetrominoPosition:(Tetromino *)tetromino {
+
+}
+
+
+- (BOOL)boardRowEmpty:(int)y {
+
+    return [_board boardRowEmpty:y];
+
+}
 @end

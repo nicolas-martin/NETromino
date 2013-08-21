@@ -29,7 +29,3 @@
 + (void)redrawBlock:(Block *)block;
 
 @end
-
-#define COMPUTE_X(x) (abs(x) * 24)
-#define COMPUTE_Y(y) (456 - (abs(y) * 24))
-#define COMPUTE_X_Y(x,y) ccp( COMPUTE_X(x), COMPUTE_Y(y))

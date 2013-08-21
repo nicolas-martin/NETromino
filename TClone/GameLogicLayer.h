@@ -14,25 +14,12 @@
 
 @interface GameLogicLayer : CCLayer <UIGestureRecognizerDelegate>
 {
-	enum touchTypes {
-		kNone,
-		kDropBlocks,
-		kMoveLeft,
-		kMoveRight
-	} touchType;
-	
-		
-	Block *board[kLastColumn + 1][kLastRow + 1];
-	
-	//NSMutableArray *curRow;
-	NSMutableArray *boardArray;	
 
-	Tetromino *userTetromino;
+    GameController *gameController;
+		
 	int frameCount;
 	int moveCycleRatio;
-	int difficulty;
-	int score;
-		
+
 	CGPoint dragStartPoint;
 	CGPoint lastDragMove;
 	int lastDragStartTime;
@@ -49,8 +36,6 @@
 - (id)initWithFields:(Field *)mainFieldLayer and:(Field *)otherFieldLayer1 and:(Field *)otherFieldLayer2 and:(Field *)otherFieldLayer3 and:(Field *)otherFieldLayer4;
 
 - (void)updateBoard:(ccTime)dt;
-
-- (void)removeTetrominoFromBoard:(Tetromino *)tetrominoToDelete;
 
 +(CCScene *) scene;
 
