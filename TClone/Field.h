@@ -25,5 +25,9 @@
 - (void)checkForRowsToClear;
 
 
+- (BOOL)canMoveTetrominoByXTetromino:(Tetromino *)userTetromino offSetX:(int)offSetX;
+
+- (BOOL)isTetrominoInBounds:(Tetromino *)tetromino;
+
 - (BOOL)boardRowEmpty:(int)x;
 @end

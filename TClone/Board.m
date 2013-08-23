@@ -7,6 +7,7 @@
 
 #import "Board.h"
 #import "CGPointExtension.h"
+#import "Block.h"
 
 
 @implementation Board {
@@ -38,11 +39,12 @@
     return arr;
 }
 
-- (BOOL)blockAt:(CGPoint)point {
+- (BOOL)isBlockAt:(CGPoint)point {
 
-    NSMutableArray *inner = [_array objectAtIndex:point.x];
+    NSMutableArray *inner = [_array objectAtIndex:(NSUInteger)point.x];
 
-    if([inner objectAtIndex:point.y])
+    //TODO: Test if this test really works with the empty array.
+    if([inner objectAtIndex:(NSUInteger)point.y])
     {
         return YES;
     }
@@ -52,11 +54,22 @@
     }
 }
 
+- (Block *)getBlockAt:(CGPoint)point{
+    if ([self isBlockAt:point])
+    {
+        return (Block *)[[_array objectAtIndex:point.x] objectAtIndex:point.y];
+    }
+    else
+    {
+        return nil;
+    }
+}
+
 - (BOOL)boardRowEmpty:(int)y
 {
     for (int x = 0;x < Nbx; x++)
     {
-        if ([self blockAt:ccp(x, y)])
+        if ([self isBlockAt:ccp(x, y)])
         {
             return NO;
         }
@@ -64,43 +77,7 @@
     return YES;
 }
 
-//Return the row to clear or clear it myself?
-- (void)clearFullRows
-{
-    BOOL occupied = NO;
-    for (int y = 0;y < Nby; y++)
-    {
 
-        for (int x = 0; x < Nbx; ++ x){
-
-            if(![self blockAt:ccp(x,y)])
-            {
-                occupied = NO;
-                //Since there's an empty block on this column there's no need to look at the others
-                //Exits both loops and get the next row
-                break;
-
-            }
-            else
-            {
-                occupied = YES;
-            }
-        }
-        if(occupied)
-        {
-            //TODO: remove row from the board
-            //TODO: Notify the view
-
-        }
-        else
-        {
-            continue;
-        }
-
-    }
-
-
-}
 
 
 @end

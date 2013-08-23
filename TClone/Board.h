@@ -19,7 +19,9 @@
 
 - (id)init;
 
-- (BOOL)blockAt:(CGPoint)point;
+- (BOOL)isBlockAt:(CGPoint)point;
+
+- (Block *)getBlockAt:(CGPoint)point;
 
 - (BOOL)boardRowEmpty:(int)y;
 

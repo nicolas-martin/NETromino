@@ -15,7 +15,6 @@
 @interface GameLogicLayer (private)
 
 - (void)startGame;
-- (void)processTaps;
 
 @end
 
@@ -140,7 +139,7 @@
     CGPoint location = [touch locationInView: [touch view]];
 
 
-    [gameController viewTap:location];
+    [gameController viewTap:[self tileCoordForPosition:location]];
 
 }
 

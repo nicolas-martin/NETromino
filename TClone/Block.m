@@ -16,10 +16,7 @@
 
 
 @implementation Block
-@synthesize boardX;
-@synthesize boardY;
-@synthesize stuck;
-@synthesize disappearing;
+
 
 
 + (Block *)newEmptyBlockWithColorByType:(int)blockType
@@ -84,12 +81,8 @@
 
 - (void)redrawPositionOnBoard 
 {
-	self.position = COMPUTE_X_Y(boardX, boardY);
-}
-
-+ (void)redrawBlock:(Block *)block
-{
-	block.position = COMPUTE_X_Y(block.boardX, block.boardY);
+    //compute
+	self.position = ccp(boardX, boardY);
 }
 
 - (void)moveUp

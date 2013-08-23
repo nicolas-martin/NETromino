@@ -39,7 +39,7 @@
     {
         [self tryToCreateNewTetromino];
     }
-    else if([userTetromino lowestPosition].y != 9 && [field boardRowEmpty:[userTetromino lowestPosition].y])
+    else if([userTetromino lowestPosition].y != 9 && [field boardRowEmpty:(NSUInteger)[userTetromino lowestPosition].y])
     {
         [self moveTetrominoDown];
         userTetromino.stuck = NO;
@@ -85,7 +85,7 @@
 
     Tetromino *tempTetromino = [Tetromino randomBlockUsingBlockFrequency];
 
-    //TODO: Should I notify or call update the view directly?
+    //TODO: Notify views
     return tempTetromino;
 
 }
@@ -101,7 +101,7 @@
 
 - (void)moveTetrominoLeft{
 
-    if ([self canMoveTetrominoByXTetromino:userTetromino offSetX:-1])
+    if ([field canMoveTetrominoByXTetromino:userTetromino offSetX:-1])
     {
         [userTetromino moveTetrominoInDirection:moveLeft];
     }
@@ -110,64 +110,15 @@
 
 - (void)moveTetrominoRight{
 
-    if ([self canMoveTetrominoByXTetromino:userTetromino offSetX:1])
+    if ([field canMoveTetrominoByXTetromino:userTetromino offSetX:1])
     {
         [userTetromino moveTetrominoInDirection:moveRight];
     }
 
 }
 
-- (BOOL)canMoveTetrominoByXTetromino:(Tetromino *)userTetromino offSetX:(int)offSetX {
-    // Sort blocks by x value if moving left, reverse order if moving right
-    CCArray *reversedChildren = [[CCArray alloc] initWithArray:userTetromino.children];
-
-    if (offSetX > 0)
-    {
-        [reversedChildren reverseObjects];
-    }
-
-    for (Block *currentBlock in reversedChildren)
-    {
-        Block *blockNextToCurrentBlock = board[currentBlock.boardX + offSetX][currentBlock.boardY];
-        //dont compare yourself
-        if (!([userTetromino isBlockInTetromino:blockNextToCurrentBlock]))
-        {
-            //if there's another block at the position you're looking at, you can't move
-            if (board[currentBlock.boardX + offSetX][currentBlock.boardY] != nil)
-            {
-                return NO;
-            }
-        }
-    }
-    return YES;
-}
 
 
-- (BOOL)isTetrominoInBounds:(Tetromino *)rotated oldTetromino:(Tetromino *)userTetromino {
-    for (Block *currentBlock in rotated.children)
-    {
-        //check if the new block is within the bounds and
-        if(currentBlock.boardX < 0 || currentBlock.boardX > kLastColumn || currentBlock.boardY < 0 || currentBlock.boardY > kLastRow )
-        {
-            NSLog(@"DENIED");
-            return NO;
-
-        }
-
-        Block *blockInCurrentBoard = board[currentBlock.boardX][currentBlock.boardY];
-        //if the current block is NOT part of the currentTetromino
-        if (!([userTetromino isBlockInTetromino:blockInCurrentBoard]))
-        {
-            //and is not empty
-            if (board[currentBlock.boardX][currentBlock.boardY] != nil)
-            {
-                NSLog(@"DENIED");
-                return NO;
-            }
-        }
-    }
-    return YES;
-}
 
 - (void)notifyTretrominoPosition:(Tetromino *)tetromino {
     for (id<GameControllerObserver> observer in _listObservers) {
@@ -179,7 +130,10 @@
 
 - (void)rotateTetromino:(RotationDirection)direction {
 
+    if([field isTetrominoInBounds:userTetromino]){
      [userTetromino rotateTetromino:direction];
+    }
+
 
 }
 
@@ -190,10 +144,11 @@
     CGFloat lowestY = 0;
     CGFloat highestY = 0;
 
-    leftMostX = COMPUTE_X([userTetromino leftMostPosition].x);
-    rightMostX = COMPUTE_X([userTetromino rightMostPosition].x);
-    lowestY = COMPUTE_Y([userTetromino lowestPosition].y);
-    highestY = COMPUTE_Y([userTetromino highestPosition].y);
+    //compute
+    leftMostX = [userTetromino leftMostPosition].x;
+    rightMostX = [userTetromino rightMostPosition].x;
+    lowestY = [userTetromino lowestPosition].y;
+    highestY = [userTetromino highestPosition].y;
 
     location = [[CCDirector sharedDirector] convertToGL:location];
 
@@ -246,7 +201,6 @@
             [self moveTetrominoRight];
         }
     }
-
 
 }
 

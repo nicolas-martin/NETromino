@@ -16,10 +16,7 @@
 @end
 
 @implementation Tetromino
-@synthesize anchorX;
-@synthesize anchorY;
-@synthesize orientation;
-@synthesize type;
+
 
 typedef uint8_t BLOCK[4][4];
 static BLOCK bI[2] = {
@@ -183,7 +180,8 @@ static NSInteger orientationCount[7] = {2, 1, 4, 4, 2, 2, 4};
 				Block *newBlock = [Block newEmptyBlockWithColorByType:type];
 				newBlock.boardX = (row + anchorX);
 				newBlock.boardY = col + anchorY;
-				newBlock.position = COMPUTE_X_Y(newBlock.boardX, newBlock.boardY);
+                //copmute?
+				newBlock.position = ccp(newBlock.boardX, newBlock.boardY);
 				[self addChild:newBlock];
 				[_blocksInTetromino addObject:newBlock];
 				
@@ -244,7 +242,8 @@ static NSInteger orientationCount[7] = {2, 1, 4, 4, 2, 2, 4};
 				Block *newBlock = [Block newEmptyBlockWithColorByType:type];
 				newBlock.boardX = row + anchorX;
 				newBlock.boardY = col + anchorY;
-				newBlock.position = COMPUTE_X_Y(newBlock.boardX, newBlock.boardY);
+                //compute?
+				newBlock.position = ccp(newBlock.boardX, newBlock.boardY);
 				[self addChild:newBlock];
 				[_blocksInTetromino addObject:newBlock];
 				
@@ -299,11 +298,11 @@ static NSInteger orientationCount[7] = {2, 1, 4, 4, 2, 2, 4};
     CCArray *reversedBlockArray = [[CCArray alloc] initWithArray:self.children];
     [reversedBlockArray reverseObjects];
 
-    //TODO: Notify the board
-    //    for (Block* currentBlock in reversedBlockArray)
-    //    {
-    //        [self moveBlockInBoardX:currentBlock byX:1];
-    //    }
+    //TODO: Notify the board and views?
+    for (Block* currentBlock in reversedBlockArray)
+    {
+        [self moveBlockInBoardX:currentBlock byX:1];
+    }
 
     self.anchorX += direction;
 }
@@ -321,6 +320,8 @@ static NSInteger orientationCount[7] = {2, 1, 4, 4, 2, 2, 4};
 }
 
 - (void)rotateTetromino:(RotationDirection)direction {
+    //TODO: Notify
+    //TODO: Set the current tetromino's block position according to the new one.
 
     NSLog(@"Not implemented");
 
@@ -335,6 +336,7 @@ static NSInteger orientationCount[7] = {2, 1, 4, 4, 2, 2, 4};
 
 
 - (void)moveTetrominoDown {
+    //TODO: Notify
 
 	CCArray *reversedChildren = [[CCArray alloc] initWithArray:self.children];  // make copy
 	[reversedChildren reverseObjects]; // reverse contents
