@@ -17,7 +17,7 @@
 @interface GameLogicLayer : CCLayer <UIGestureRecognizerDelegate>
 {
 
-    GameController *gameController;
+
 
 	int frameCount;
 	int moveCycleRatio;
@@ -40,5 +40,7 @@
 - (void)updateBoard:(ccTime)dt;
 
 +(CCScene *) scene;
+
+@property (nonatomic, strong) GameController *gameController;
 
 @end

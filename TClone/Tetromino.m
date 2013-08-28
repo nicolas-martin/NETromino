@@ -294,19 +294,6 @@ static NSInteger orientationCount[7] = {2, 1, 4, 4, 2, 2, 4};
 	}
 }
 
-
-- (id)moveTetrominoInDirection:(MoveDirection)direction {
-
-    CCArray *reversedBlockArray = [[CCArray alloc] initWithArray:self.children];
-    [reversedBlockArray reverseObjects];
-
-    //- (void)MoveBlocksInBoard:(Tetromino *)tetromino in:(MoveDirection)direction
-
-
-    self.anchorX += direction;
-}
-
-
 - (BOOL)isBlockInTetromino:(id)block
 {
 	for (Block *currentBlock in self.children) {
@@ -317,11 +304,9 @@ static NSInteger orientationCount[7] = {2, 1, 4, 4, 2, 2, 4};
 	return NO;
 }
 
-- (void)rotateTetromino:(RotationDirection)direction {
++ (Tetromino *)rotateTetromino:(Tetromino *)userTetromino in:(RotationDirection)direction {
 
-    //TODO: Set the current tetromino's block position according to the new one in the board.
-    //TODO: Notify
-
+    //TODO: Create a new tetromino with the current tetromino position in the new direction
     NSLog(@"Not implemented");
 
 //    Tetromino *rotated = [Tetromino blockWithType:userTetromino.type Direction:direction BoardX:userTetromino.anchorX BoardY:userTetromino.anchorY CurrentOrientation:userTetromino.orientation];
@@ -333,11 +318,7 @@ static NSInteger orientationCount[7] = {2, 1, 4, 4, 2, 2, 4};
 
 }
 
-
 - (void)moveTetrominoDown {
-
-    //TODO: Adjust the board
-    //TODO: Notify
 
 	CCArray *reversedChildren = [[CCArray alloc] initWithArray:self.children];  // make copy
 	[reversedChildren reverseObjects]; // reverse contents

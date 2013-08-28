@@ -52,7 +52,7 @@ typedef enum
 }
 
 
-@property (readonly) tetrominoType type;
+
 @property (readonly) NSInteger orientation;
 @property (readwrite, strong) NSMutableArray *blocksInTetromino;
 @property (assign) BOOL stuck;
@@ -69,11 +69,9 @@ typedef enum
 
 + (id)blockWithType:(tetrominoType)blockType Direction:(RotationDirection)blockOrientation BoardX:(NSInteger)positionX BoardY:(NSInteger)positionY CurrentOrientation:(NSInteger)CurrentOrientation;
 
-- (id)moveTetrominoInDirection:(MoveDirection)direction;
-
 - (BOOL)isBlockInTetromino:(id)block;
 
-- (void)rotateTetromino:(RotationDirection)direction;
++ (Tetromino *)rotateTetromino:(Tetromino *)userTetromino in:(RotationDirection)direction;
 
 - (void)moveTetrominoDown;
 @end

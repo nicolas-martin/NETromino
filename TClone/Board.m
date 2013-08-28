@@ -71,15 +71,22 @@
     [[_array objectAtIndex:point.x] replaceObjectAtIndex:point.y withObject:block];
 }
 
-//TODO: Notify
-- (void)MoveBlocksInBoard:(Tetromino *)tetromino in:(MoveDirection)direction
+
+- (void)moveTetrominoInDirection:(Tetromino *)tetromino in:(MoveDirection)direction
 {
+//     CCArray *reversedBlockArray = [[CCArray alloc] initWithArray:tetromino.children];
+//    [reversedBlockArray reverseObjects];
+
+
     //TODO: Add board verification
     for (Block* currentBlock in tetromino.children)
     {
         [self insertBlockAt:currentBlock at:ccp(currentBlock.boardX,currentBlock.boardY)];
         [currentBlock moveByX:direction];
+
     }
+
+    tetromino.anchorX += direction;
 }
 
 - (BOOL)boardRowEmpty:(int)y

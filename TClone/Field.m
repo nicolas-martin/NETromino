@@ -23,7 +23,7 @@ int Nbx;
     if (self) {
         self.tileMap = tileMap;
         [self addChild:tileMap];
-        [_board init];
+        _board = [[Board alloc] init];
         self.layer = [tileMap layerNamed:@"Tile Layer 1"];
         Nby = 20;
         Nbx = 10;

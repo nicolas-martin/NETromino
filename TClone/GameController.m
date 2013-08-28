@@ -19,6 +19,7 @@
 
 
 }
+
 - (id)initWithField:(Field *)aField {
     self = [super init];
     if (self) {
@@ -28,11 +29,9 @@
     return self;
 }
 
-
 + (id)controllerWithField:(Field *)aField {
     return [[self alloc] initWithField:aField];
 }
-
 
 - (void)moveDownOrCreate {
 
@@ -71,7 +70,6 @@
 {
     //TODO If any spot in the top two rows where blocks spawn is taken game over
 
-    //Make into propriety?
     userTetromino = [self createNewTetromino];
 }
 
@@ -80,42 +78,48 @@
 {
     CCScene *gameOverScene = [GameOverLayer sceneWithWon:won];
     [[CCDirector sharedDirector] replaceScene:gameOverScene];
-
 }
 
-
+//TODO: Add to board
+//TODO: Notify views
 - (Tetromino *)createNewTetromino {
 
     Tetromino *tempTetromino = [Tetromino randomBlockUsingBlockFrequency];
 
-    //TODO: Notify views
+
     return tempTetromino;
 
 }
 
-
+//TODO: Add verification
+//TODO: Adjust the board
+//TODO: Notify
 - (void)moveTetrominoDown
 {
-    //add verification
+    //??? Instance Method or Class method?
     [userTetromino moveTetrominoDown];
-
 }
 
-
+//TODO: Adjust the board
+//TODO: Notify
 - (void)moveTetrominoLeft{
 
     if ([field canMoveTetrominoByXTetromino:userTetromino offSetX:-1])
     {
-        [userTetromino moveTetrominoInDirection:moveLeft];
+        //field calls the board
+        //- (void)moveTetrominoInDirection:(Tetromino *)tetromino in:(MoveDirection)direction
+
     }
 }
 
-
+//TODO: Adjust the board
+//TODO: Notify
 - (void)moveTetrominoRight{
 
     if ([field canMoveTetrominoByXTetromino:userTetromino offSetX:1])
     {
-        [userTetromino moveTetrominoInDirection:moveRight];
+        //field calls the board
+        //- (void)moveTetrominoInDirection:(Tetromino *)tetromino in:(MoveDirection)direction
     }
 }
 
@@ -128,11 +132,13 @@
     }
 }
 
-
+//TODO: Adjust the board
+//TODO: Notify
 - (void)rotateTetromino:(RotationDirection)direction {
 
     if([field isTetrominoInBounds:userTetromino]){
-     [userTetromino rotateTetromino:direction];
+        Tetromino *rotatedTetromino = [Tetromino rotateTetromino:userTetromino in:direction];
+        //TODO: Move each block from userTetromino to rotatedTetromino
     }
 }
 

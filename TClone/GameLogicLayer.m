@@ -89,7 +89,7 @@
 		[self addGestureRecognizer:swipeLeftGestureRecognizer];
 
 
-        [gameController initWithField:_MainField];
+        _gameController = [[GameController alloc] initWithField:_MainField];
 
 		[self startGame];
 	
@@ -103,18 +103,19 @@
 }
 - (void)swipeRightGestureRecognizer:(UISwipeGestureRecognizer*)aGestureRecognizer
 {
-	[gameController rotateTetromino:rotateClockwise];
+	[_gameController rotateTetromino:rotateClockwise];
 	
 }
 
 - (void)swipeLeftGestureRecognizer:(UISwipeGestureRecognizer*)aGestureRecognizer
 {
-	[gameController rotateTetromino:rotateCounterclockwise];
+	[_gameController rotateTetromino:rotateCounterclockwise];
 	
 }
 
 - (void)startGame{
-	[gameController tryToCreateNewTetromino];
+
+	[_gameController tryToCreateNewTetromino];
 
 	frameCount = 0;
 	moveCycleRatio = 40;
@@ -125,7 +126,7 @@
 	frameCount += 1;
 	if (frameCount % moveCycleRatio == 0)
 	{
-        [gameController moveDownOrCreate];
+        [_gameController moveDownOrCreate];
 
 	}
 }
@@ -135,7 +136,7 @@
     CGPoint location = [touch locationInView: [touch view]];
 
 
-    [gameController viewTap:[self tileCoordForPosition:location]];
+    [_gameController viewTap:[self tileCoordForPosition:location]];
 
 }
 
