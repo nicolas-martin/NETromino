@@ -85,6 +85,7 @@
 	self.position = ccp(boardX, boardY);
 }
 
+//Remove these?
 - (void)moveUp
 {
 	boardY -= 1;

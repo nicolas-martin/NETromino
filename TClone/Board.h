@@ -6,6 +6,8 @@
 
 
 #import <Foundation/Foundation.h>
+#import "Block.h"
+#import "Tetromino.h"
 
 
 @interface Board : NSObject {
@@ -22,6 +24,8 @@
 - (BOOL)isBlockAt:(CGPoint)point;
 
 - (Block *)getBlockAt:(CGPoint)point;
+
+- (void)MoveBlocksInBoard:(Tetromino *)tetromino in:(MoveDirection)direction;
 
 - (BOOL)boardRowEmpty:(int)y;
 

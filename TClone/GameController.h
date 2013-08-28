@@ -4,8 +4,6 @@
 // To change the template use AppCode | Preferences | File Templates.
 //
 
-
-#import <Foundation/Foundation.h>
 #import "Tetromino.h"
 #import "Field.h"
 
@@ -19,6 +17,7 @@
 @interface GameController : NSObject <NSCoding> {
 
     Field *field;
+
 
     Tetromino *userTetromino;
 
@@ -36,7 +35,6 @@
 - (id)initWithField:(Field *)aField;
 
 + (id)controllerWithField:(Field *)aField;
-
 
 - (void)tryToCreateNewTetromino;
 

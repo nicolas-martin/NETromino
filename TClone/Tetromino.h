@@ -75,6 +75,5 @@ typedef enum
 
 - (void)rotateTetromino:(RotationDirection)direction;
 
-
 - (void)moveTetrominoDown;
 @end

@@ -6,12 +6,11 @@
 
 
 
-
-#import "GameController.h"
 #import "Board.h"
+#import "Tetromino.h"
 
 
-@interface Field : CCLayer <GameControllerObserver> {
+@interface Field : CCLayer {//<GameControllerObserver> {
 
 }
 @property (strong) CCTMXTiledMap *tileMap;
@@ -23,7 +22,6 @@
 + (id)layerWithTileMap:(CCTMXTiledMap *)tileMap;
 
 - (void)checkForRowsToClear;
-
 
 - (BOOL)canMoveTetrominoByXTetromino:(Tetromino *)userTetromino offSetX:(int)offSetX;
 

@@ -5,9 +5,11 @@
 //
 
 
+#import "CCLayer.h"
 #import "Field.h"
-#import "Board.h"
-
+#import "CCTMXTiledMap.h"
+#import "CGPointExtension.h"
+#import "Tetromino.h"
 
 int Nby;
 
@@ -75,13 +77,6 @@ int Nbx;
 
 }
 
-
-
-
-- (void)updateTetrominoPosition:(Tetromino *)tetromino {
-
-}
-
 - (BOOL)canMoveTetrominoByXTetromino:(Tetromino *)userTetromino offSetX:(int)offSetX {
 
     // Sort blocks by x value if moving left, reverse order if moving right
@@ -134,7 +129,6 @@ int Nbx;
     }
     return YES;
 }
-
 
 
 - (BOOL)boardRowEmpty:(int)y {

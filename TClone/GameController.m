@@ -28,6 +28,7 @@
     return self;
 }
 
+
 + (id)controllerWithField:(Field *)aField {
     return [[self alloc] initWithField:aField];
 }
@@ -60,6 +61,7 @@
     return self;
 }
 
+
 - (void)encodeWithCoder:(NSCoder *)coder {
     [coder encodeObject:self.listObservers forKey:@"self.listObservers"];
 }
@@ -73,6 +75,7 @@
     userTetromino = [self createNewTetromino];
 }
 
+
 - (void)gameOver:(BOOL)won
 {
     CCScene *gameOverScene = [GameOverLayer sceneWithWon:won];
@@ -80,7 +83,7 @@
 
 }
 
-//Creates a new block
+
 - (Tetromino *)createNewTetromino {
 
     Tetromino *tempTetromino = [Tetromino randomBlockUsingBlockFrequency];
@@ -114,10 +117,7 @@
     {
         [userTetromino moveTetrominoInDirection:moveRight];
     }
-
 }
-
-
 
 
 - (void)notifyTretrominoPosition:(Tetromino *)tetromino {
@@ -128,14 +128,14 @@
     }
 }
 
+
 - (void)rotateTetromino:(RotationDirection)direction {
 
     if([field isTetrominoInBounds:userTetromino]){
      [userTetromino rotateTetromino:direction];
     }
-
-
 }
+
 
 - (void)viewTap:(CGPoint)location {
 
@@ -171,9 +171,7 @@
 }
 
 
-
-- (void)processTaps
-{
+- (void)processTaps{
     if (touchType == kDropBlocks)
     {
         touchType = kNone;

@@ -7,7 +7,6 @@
 //
 
 #import "GameLogicLayer.h"
-#import "GameOverLayer.h"
 #import "CCNode+SFGestureRecognizers.h"
 #import "Field.h"
 
@@ -114,8 +113,7 @@
 	
 }
 
-- (void)startGame
-{
+- (void)startGame{
 	[gameController tryToCreateNewTetromino];
 
 	frameCount = 0;
@@ -123,8 +121,7 @@
 	[self schedule:@selector(updateBoard:) interval:(1.0/60.0)];
 }
 
-- (void)updateBoard:(ccTime)dt
-{
+- (void)updateBoard:(ccTime)dt{
 	frameCount += 1;
 	if (frameCount % moveCycleRatio == 0)
 	{
@@ -133,8 +130,7 @@
 	}
 }
 
-- (void)ccTouchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
-{
+- (void)ccTouchesEnded:(NSSet *)touches withEvent:(UIEvent *)event{
     UITouch *touch = [touches anyObject];
     CGPoint location = [touch locationInView: [touch view]];
 

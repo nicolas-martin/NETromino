@@ -8,6 +8,8 @@
 #import "Tetromino.h"
 #import "Block.h"
 #import "Field.h"
+#import "GameController.h"
+
 
 #define kLastColumn 9
 #define kLastRow 19
@@ -16,7 +18,7 @@
 {
 
     GameController *gameController;
-		
+
 	int frameCount;
 	int moveCycleRatio;
 

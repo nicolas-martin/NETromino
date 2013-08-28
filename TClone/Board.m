@@ -8,6 +8,7 @@
 #import "Board.h"
 #import "CGPointExtension.h"
 #import "Block.h"
+#import "Tetromino.h"
 
 
 @implementation Board {
@@ -62,6 +63,22 @@
     else
     {
         return nil;
+    }
+}
+
+- (void)insertBlockAt:(Block *)block at:(CGPoint)point
+{
+    [[_array objectAtIndex:point.x] replaceObjectAtIndex:point.y withObject:block];
+}
+
+//TODO: Notify
+- (void)MoveBlocksInBoard:(Tetromino *)tetromino in:(MoveDirection)direction
+{
+    //TODO: Add board verification
+    for (Block* currentBlock in tetromino.children)
+    {
+        [self insertBlockAt:currentBlock at:ccp(currentBlock.boardX,currentBlock.boardY)];
+        [currentBlock moveByX:direction];
     }
 }
 
