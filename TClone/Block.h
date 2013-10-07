@@ -9,7 +9,6 @@
 #import "cocos2d.h"
 
 @interface Block : CCSprite {
-	int boardX, boardY;
 	BOOL stuck;
 	BOOL disappearing;
 }

@@ -75,52 +75,52 @@
 	self.opacity = 255;
 	self.stuck = NO;
 	self.disappearing = NO;
-	self.boardX = 0;
-	self.boardY = 0;
+	_boardY = 0;
+	_boardY = 0;
 }
 
 - (void)redrawPositionOnBoard 
 {
     //compute
-	self.position = ccp(boardX, boardY);
+	self.position = ccp(_boardX, _boardY);
 }
 
 //Remove these?
 - (void)moveUp
 {
-	boardY -= 1;
+	_boardY -= 1;
 	[self redrawPositionOnBoard];
 }
 
 - (void)moveDown
 {
-	boardY += 1;
+	_boardY += 1;
 	[self redrawPositionOnBoard];
 }
 
 -(void)MoveTo:(Block *)block
 {
-	boardX = block.boardX;
-	boardY = block.boardY;
+	_boardX = block.boardX;
+	_boardY = block.boardY;
 	
 	[self redrawPositionOnBoard];
 }
 
 - (void)moveByX:(int)offsetX
 {
-	boardX += offsetX;
+	_boardX += offsetX;
 	[self redrawPositionOnBoard];
 }
 
 - (void)moveRight
 {
-	boardX += 1;
+	_boardX += 1;
 	[self redrawPositionOnBoard];
 }
 
 - (void)moveLeft
 {
-	boardX -= 1;
+	_boardX -= 1;
 	[self redrawPositionOnBoard];
 }
 

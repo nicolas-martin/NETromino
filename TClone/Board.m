@@ -72,23 +72,6 @@
 }
 
 
-- (void)moveTetrominoInDirection:(Tetromino *)tetromino in:(MoveDirection)direction
-{
-//     CCArray *reversedBlockArray = [[CCArray alloc] initWithArray:tetromino.children];
-//    [reversedBlockArray reverseObjects];
-
-
-    //TODO: Add board verification
-    for (Block* currentBlock in tetromino.children)
-    {
-        [self insertBlockAt:currentBlock at:ccp(currentBlock.boardX,currentBlock.boardY)];
-        [currentBlock moveByX:direction];
-
-    }
-
-    tetromino.anchorX += direction;
-}
-
 - (BOOL)boardRowEmpty:(int)y
 {
     for (int x = 0;x < Nbx; x++)
@@ -102,6 +85,12 @@
 }
 
 
+- (void)addTetrominoToBoard:(Tetromino *)tetromino {
 
+    for (Block *block in tetromino.children)
+    {
+        [self insertBlockAt:block at:ccp(block.boardX,block.boardY)];
+    }
 
+}
 @end

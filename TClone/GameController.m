@@ -19,7 +19,6 @@
 
 
 }
-
 - (id)initWithField:(Field *)aField {
     self = [super init];
     if (self) {
@@ -34,8 +33,8 @@
 }
 
 - (void)moveDownOrCreate {
-
-    if(userTetromino.stuck)
+    //Perhaps set all tetromino to stuck by default?
+    if(userTetromino.stuck || userTetromino == NULL)
     {
         [self tryToCreateNewTetromino];
     }
@@ -50,8 +49,8 @@
         [field checkForRowsToClear];
     }
 
-
 }
+
 - (id)init {
     if (self = [super init]) {
 
@@ -68,9 +67,14 @@
 
 - (void)tryToCreateNewTetromino
 {
-    //TODO If any spot in the top two rows where blocks spawn is taken game over
-
-    userTetromino = [self createNewTetromino];
+    if(![field.board boardRowEmpty:18] && ![field.board boardRowEmpty:19])
+    {
+        userTetromino = [self createNewTetromino];
+    }
+    else
+    {
+        [self gameOver:YES];
+    }
 }
 
 
@@ -80,46 +84,59 @@
     [[CCDirector sharedDirector] replaceScene:gameOverScene];
 }
 
-//TODO: Add to board
 //TODO: Notify views
 - (Tetromino *)createNewTetromino {
 
     Tetromino *tempTetromino = [Tetromino randomBlockUsingBlockFrequency];
 
+    [field.board addTetrominoToBoard:tempTetromino];
+
+
+    [field addChild:tempTetromino];
+
+    [self newTetromino:tempTetromino];
 
     return tempTetromino;
 
 }
 
-//TODO: Add verification
-//TODO: Adjust the board
-//TODO: Notify
-- (void)moveTetrominoDown
+- (void)AdjustTetrominoPosition:(Tetromino* )tetromino
 {
-    //??? Instance Method or Class method?
-    [userTetromino moveTetrominoDown];
+
+    //tetromino.position.x = tetromino.position.x * field.TileSize;
+    //tetromino.position.y = tetromino.position.y
 }
 
+
+
 //TODO: Adjust the board
-//TODO: Notify
+- (void)moveTetrominoDown
+{
+    //TODO: Add verification
+    [userTetromino moveTetrominoDown];
+    [self notifyTretrominoPosition:userTetromino];
+}
+
 - (void)moveTetrominoLeft{
 
     if ([field canMoveTetrominoByXTetromino:userTetromino offSetX:-1])
     {
-        //field calls the board
-        //- (void)moveTetrominoInDirection:(Tetromino *)tetromino in:(MoveDirection)direction
+        //TODO: Move the blocks in the board
+        //[self insertBlockAt:currentBlock at:ccp(currentBlock.boardX,currentBlock.boardY)];
+        [userTetromino moveTetrominoInDirection:userTetromino inDirection:moveLeft];
+        [self notifyTretrominoPosition:userTetromino];
 
     }
 }
 
-//TODO: Adjust the board
-//TODO: Notify
 - (void)moveTetrominoRight{
 
     if ([field canMoveTetrominoByXTetromino:userTetromino offSetX:1])
     {
-        //field calls the board
-        //- (void)moveTetrominoInDirection:(Tetromino *)tetromino in:(MoveDirection)direction
+        //TODO: Move the blocks in the board
+        //[self insertBlockAt:currentBlock at:ccp(currentBlock.boardX,currentBlock.boardY)];
+        [userTetromino moveTetrominoInDirection:userTetromino inDirection:moveRight];
+        [self notifyTretrominoPosition:userTetromino];
     }
 }
 
@@ -132,16 +149,23 @@
     }
 }
 
-//TODO: Adjust the board
-//TODO: Notify
+- (void)newTetromino:(Tetromino *)tetromino {
+    for (id<GameControllerObserver> observer in _listObservers) {
+        if ([observer respondsToSelector:@selector(newTetromino:)]) {
+            //[observer newTetromino:tetromino];
+        }
+    }
+}
+
 - (void)rotateTetromino:(RotationDirection)direction {
 
     if([field isTetrominoInBounds:userTetromino]){
         Tetromino *rotatedTetromino = [Tetromino rotateTetromino:userTetromino in:direction];
+
+        [self notifyTretrominoPosition:userTetromino];
         //TODO: Move each block from userTetromino to rotatedTetromino
     }
 }
-
 
 - (void)viewTap:(CGPoint)location {
 

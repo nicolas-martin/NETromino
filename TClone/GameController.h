@@ -17,8 +17,6 @@
 @interface GameController : NSObject <NSCoding> {
 
     Field *field;
-
-
     Tetromino *userTetromino;
 
     enum touchTypes {

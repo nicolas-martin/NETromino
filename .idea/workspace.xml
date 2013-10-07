@@ -6,9 +6,14 @@
     <option name="CUSTOM_SCOPE_NAME" value="Project Files" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="785ff745-87e9-4d40-816f-7ee1ae389cd2" name="Default" comment="">
+    <list default="true" id="785ff745-87e9-4d40-816f-7ee1ae389cd2" name="Default" comment="it compiles!">
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/TClone/Block.h" afterPath="$PROJECT_DIR$/TClone/Block.h" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/TClone/Block.m" afterPath="$PROJECT_DIR$/TClone/Block.m" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/TClone/Board.h" afterPath="$PROJECT_DIR$/TClone/Board.h" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/TClone/Board.m" afterPath="$PROJECT_DIR$/TClone/Board.m" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/TClone/Field.h" afterPath="$PROJECT_DIR$/TClone/Field.h" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/TClone/Field.m" afterPath="$PROJECT_DIR$/TClone/Field.m" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/TClone/GameController.h" afterPath="$PROJECT_DIR$/TClone/GameController.h" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/TClone/GameController.m" afterPath="$PROJECT_DIR$/TClone/GameController.m" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/TClone/GameLogicLayer.h" afterPath="$PROJECT_DIR$/TClone/GameLogicLayer.h" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/TClone/GameLogicLayer.m" afterPath="$PROJECT_DIR$/TClone/GameLogicLayer.m" />
@@ -18,35 +23,36 @@
     </list>
     <ignored path="TClonegut.iws" />
     <ignored path=".idea/workspace.xml" />
-    <file path="/Dummy.txt" changelist="785ff745-87e9-4d40-816f-7ee1ae389cd2" time="1377660073299" ignored="false" />
-    <file path="/Tetromino.m" changelist="785ff745-87e9-4d40-816f-7ee1ae389cd2" time="1377660216716" ignored="false" />
+    <file path="/Dummy.txt" changelist="785ff745-87e9-4d40-816f-7ee1ae389cd2" time="1381027091837" ignored="false" />
+    <file path="/Tetromino.m" changelist="785ff745-87e9-4d40-816f-7ee1ae389cd2" time="1381102732766" ignored="false" />
     <file path="/a.mm" changelist="785ff745-87e9-4d40-816f-7ee1ae389cd2" time="1376605172506" ignored="false" />
     <file path="/IntroLayer.m" changelist="785ff745-87e9-4d40-816f-7ee1ae389cd2" time="1375915442450" ignored="false" />
-    <file path="/a.dummy" changelist="785ff745-87e9-4d40-816f-7ee1ae389cd2" time="1377652640709" ignored="false" />
-    <file path="/GameLogicLayer.m" changelist="785ff745-87e9-4d40-816f-7ee1ae389cd2" time="1377656012279" ignored="false" />
+    <file path="/a.dummy" changelist="785ff745-87e9-4d40-816f-7ee1ae389cd2" time="1381105716403" ignored="false" />
+    <file path="/GameLogicLayer.m" changelist="785ff745-87e9-4d40-816f-7ee1ae389cd2" time="1381109153265" ignored="false" />
     <file path="/oc-debug-editor-when-no-source-position-available.txt" changelist="785ff745-87e9-4d40-816f-7ee1ae389cd2" time="1376012557144" ignored="false" />
     <file path="/TetrisAppDelegate.m" changelist="785ff745-87e9-4d40-816f-7ee1ae389cd2" time="1376013610601" ignored="false" />
-    <file path="/fragment.m" changelist="785ff745-87e9-4d40-816f-7ee1ae389cd2" time="1377660121798" ignored="false" />
+    <file path="/fragment.m" changelist="785ff745-87e9-4d40-816f-7ee1ae389cd2" time="1380930919065" ignored="false" />
     <file path="$USER_HOME$/Desktop/TileGame/TileGame/HelloWorldLayer.m" changelist="785ff745-87e9-4d40-816f-7ee1ae389cd2" time="1376354519313" ignored="false" />
     <file path="$USER_HOME$/saf/saf/HelloWorldLayer.m" changelist="785ff745-87e9-4d40-816f-7ee1ae389cd2" time="1377051171247" ignored="false" />
     <file path="/HelloWorldLayer.m" changelist="785ff745-87e9-4d40-816f-7ee1ae389cd2" time="1376354334108" ignored="false" />
     <file path="$USER_HOME$/saf/saf/HelloWorldLayer.h" changelist="785ff745-87e9-4d40-816f-7ee1ae389cd2" time="1376274133512" ignored="false" />
     <file path="/HelloWorldLayer.h" changelist="785ff745-87e9-4d40-816f-7ee1ae389cd2" time="1376273836216" ignored="false" />
-    <file path="/Field.h" changelist="785ff745-87e9-4d40-816f-7ee1ae389cd2" time="1377645918776" ignored="false" />
-    <file path="/GameLogicLayer.h" changelist="785ff745-87e9-4d40-816f-7ee1ae389cd2" time="1377651684758" ignored="false" />
+    <file path="/Field.h" changelist="785ff745-87e9-4d40-816f-7ee1ae389cd2" time="1381107028365" ignored="false" />
+    <file path="/GameLogicLayer.h" changelist="785ff745-87e9-4d40-816f-7ee1ae389cd2" time="1380898663362" ignored="false" />
     <file path="$USER_HOME$/Documents/tiledDemo/tiledDemo/HelloWorldLayer.m" changelist="785ff745-87e9-4d40-816f-7ee1ae389cd2" time="1376600869555" ignored="false" />
     <file path="/a.html" changelist="785ff745-87e9-4d40-816f-7ee1ae389cd2" time="1376605189882" ignored="false" />
     <file path="/a.js" changelist="785ff745-87e9-4d40-816f-7ee1ae389cd2" time="1376605191347" ignored="false" />
     <file path="/a.xml" changelist="785ff745-87e9-4d40-816f-7ee1ae389cd2" time="1376605192287" ignored="false" />
-    <file path="/GameController.m" changelist="785ff745-87e9-4d40-816f-7ee1ae389cd2" time="1377660383395" ignored="false" />
-    <file path="/GameController.h" changelist="785ff745-87e9-4d40-816f-7ee1ae389cd2" time="1377055837409" ignored="false" />
+    <file path="/GameController.m" changelist="785ff745-87e9-4d40-816f-7ee1ae389cd2" time="1381107634043" ignored="false" />
+    <file path="/GameController.h" changelist="785ff745-87e9-4d40-816f-7ee1ae389cd2" time="1377743378107" ignored="false" />
     <file path="$PROJECT_DIR$/TClone/test.h" changelist="785ff745-87e9-4d40-816f-7ee1ae389cd2" time="1376610474966" ignored="false" />
-    <file path="/Field.m" changelist="785ff745-87e9-4d40-816f-7ee1ae389cd2" time="1377658525578" ignored="false" />
+    <file path="/Field.m" changelist="785ff745-87e9-4d40-816f-7ee1ae389cd2" time="1377744562478" ignored="false" />
     <file path="/Tetromino.h" changelist="785ff745-87e9-4d40-816f-7ee1ae389cd2" time="1376968830495" ignored="false" />
-    <file path="/Board.h" changelist="785ff745-87e9-4d40-816f-7ee1ae389cd2" time="1377053221215" ignored="false" />
-    <file path="/Board.m" changelist="785ff745-87e9-4d40-816f-7ee1ae389cd2" time="1377647695891" ignored="false" />
-    <file path="/Block.m" changelist="785ff745-87e9-4d40-816f-7ee1ae389cd2" time="1377645461345" ignored="false" />
+    <file path="/Board.h" changelist="785ff745-87e9-4d40-816f-7ee1ae389cd2" time="1381028552254" ignored="false" />
+    <file path="/Board.m" changelist="785ff745-87e9-4d40-816f-7ee1ae389cd2" time="1381104733746" ignored="false" />
+    <file path="/Block.m" changelist="785ff745-87e9-4d40-816f-7ee1ae389cd2" time="1381102821368" ignored="false" />
     <file path="/UnitTest.m" changelist="785ff745-87e9-4d40-816f-7ee1ae389cd2" time="1377652358876" ignored="false" />
+    <file path="/LLDB" changelist="785ff745-87e9-4d40-816f-7ee1ae389cd2" time="1380930458724" ignored="false" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -70,10 +76,21 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="Board.m" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/TClone/Board.m">
+      <file leaf-file-name="Field.m" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/TClone/Field.m">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="85" column="0" selection-start="1859" selection-end="1859" vertical-scroll-proportion="0.0">
+            <state line="19" column="19" selection-start="266" selection-end="279" vertical-scroll-proportion="0.0">
+              <folding>
+                <element signature="e#123#142#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Block.h" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/TClone/Block.h">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="10" column="11" selection-start="169" selection-end="169" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -82,46 +99,25 @@
       <file leaf-file-name="Tetromino.m" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/TClone/Tetromino.m">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="312" column="2" selection-start="7328" selection-end="7328" vertical-scroll-proportion="0.0">
+            <state line="188" column="26" selection-start="4677" selection-end="4677" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Tetromino.h" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/TClone/Tetromino.h">
+      <file leaf-file-name="Block.m" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/TClone/Block.m">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="60" column="46" selection-start="991" selection-end="991" vertical-scroll-proportion="0.0">
+            <state line="81" column="30" selection-start="1322" selection-end="1322" vertical-scroll-proportion="0.37391305">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="GameController.m" pinned="false" current="true" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/TClone/GameController.m">
+      <file leaf-file-name="Board.m" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/TClone/Board.m">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="101" column="0" selection-start="1877" selection-end="1877" vertical-scroll-proportion="0.26556993">
-              <folding>
-                <element signature="n#viewTap:#0;n#GameController#0" expanded="false" />
-                <element signature="n#processTaps#0;n#GameController#0" expanded="false" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="GameController.h" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/TClone/GameController.h">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="21" column="28" selection-start="367" selection-end="380" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Field.m" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/TClone/Field.m">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="79" column="36" selection-start="1493" selection-end="1521" vertical-scroll-proportion="0.0">
+            <state line="26" column="0" selection-start="377" selection-end="377" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -130,17 +126,28 @@
       <file leaf-file-name="Field.h" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/TClone/Field.h">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
+            <state line="18" column="20" selection-start="367" selection-end="367" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="GameLogicLayer.h" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/TClone/GameLogicLayer.h">
+      <file leaf-file-name="Board.h" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/TClone/Board.h">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="31" column="25" selection-start="539" selection-end="539" vertical-scroll-proportion="0.0">
+            <state line="12" column="11" selection-start="210" selection-end="210" vertical-scroll-proportion="0.0">
               <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="GameController.m" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/TClone/GameController.m">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="104" column="0" selection-start="2002" selection-end="2002" vertical-scroll-proportion="0.0">
+              <folding>
+                <element signature="n#processTaps#0;n#GameController#0" expanded="false" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -148,17 +155,10 @@
       <file leaf-file-name="GameLogicLayer.m" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/TClone/GameLogicLayer.m">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="116" column="0" selection-start="3974" selection-end="3974" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Block.m" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/TClone/Block.m">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="5" column="58" selection-start="132" selection-end="132" vertical-scroll-proportion="0.0">
-              <folding />
+            <state line="118" column="55" selection-start="4602" selection-end="4602" vertical-scroll-proportion="0.0">
+              <folding>
+                <element signature="e#142#168#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -219,27 +219,27 @@
         <option value="$PROJECT_DIR$/TClone/16.tmx" />
         <option value="$PROJECT_DIR$/TClone/32.tmx" />
         <option value="$PROJECT_DIR$/TClone/test.h" />
-        <option value="$PROJECT_DIR$/TClone/Block.h" />
-        <option value="$PROJECT_DIR$/TClone/Board.h" />
-        <option value="$PROJECT_DIR$/TClone/Block.m" />
-        <option value="$PROJECT_DIR$/TClone/Field.h" />
         <option value="$PROJECT_DIR$/UnitTest/UnitTest.m" />
         <option value="$PROJECT_DIR$/TClone/GameController.h" />
+        <option value="$PROJECT_DIR$/TClone/Board.h" />
         <option value="$PROJECT_DIR$/TClone/GameLogicLayer.h" />
+        <option value="$PROJECT_DIR$/TClone/Block.h" />
+        <option value="$PROJECT_DIR$/TClone/Tetromino.h" />
+        <option value="$PROJECT_DIR$/TClone/Block.m" />
+        <option value="$PROJECT_DIR$/TClone/Tetromino.m" />
+        <option value="$PROJECT_DIR$/TClone/Field.h" />
         <option value="$PROJECT_DIR$/TClone/Field.m" />
         <option value="$PROJECT_DIR$/TClone/Board.m" />
-        <option value="$PROJECT_DIR$/TClone/Tetromino.h" />
-        <option value="$PROJECT_DIR$/TClone/Tetromino.m" />
         <option value="$PROJECT_DIR$/TClone/GameLogicLayer.m" />
         <option value="$PROJECT_DIR$/TClone/GameController.m" />
       </list>
     </option>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="26" />
+    <option name="x" value="25" />
     <option name="y" value="22" />
-    <option name="width" value="1829" />
-    <option name="height" value="946" />
+    <option name="width" value="1885" />
+    <option name="height" value="965" />
   </component>
   <component name="ProjectInspectionProfilesVisibleTreeState">
     <entry key="Project Default">
@@ -249,14 +249,18 @@
             <id />
           </State>
           <State>
-            <id>Internationalization issues</id>
+            <id>Data flow issuesJavaScript</id>
           </State>
-        </expanded-state>
-        <selected-state>
+          <State>
+            <id>General</id>
+          </State>
           <State>
             <id>JavaScript</id>
           </State>
-        </selected-state>
+          <State>
+            <id>JavaScript validity issuesJavaScript</id>
+          </State>
+        </expanded-state>
       </profile-state>
     </entry>
   </component>
@@ -286,16 +290,6 @@
       <sortByType />
     </navigator>
     <panes>
-      <pane id="DirectoryView.Xcode">
-        <subPane>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="TClone" />
-              <option name="myItemType" value="com.jetbrains.cidr.projectView.XcodeDirectoryView$1$1" />
-            </PATH_ELEMENT>
-          </PATH>
-        </subPane>
-      </pane>
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -342,18 +336,28 @@
           </PATH>
         </subPane>
       </pane>
+      <pane id="DirectoryView.Xcode">
+        <subPane>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="TClone" />
+              <option name="myItemType" value="com.jetbrains.cidr.projectView.XcodeDirectoryView$1$1" />
+            </PATH_ELEMENT>
+          </PATH>
+        </subPane>
+      </pane>
     </panes>
   </component>
   <component name="PropertiesComponent">
     <property name="options.splitter.main.proportions" value="0.3" />
-    <property name="options.lastSelected" value="preferences.keymap" />
-    <property name="recentsLimit" value="5" />
     <property name="TODO_SCOPE" value="Default" />
+    <property name="recentsLimit" value="5" />
+    <property name="options.lastSelected" value="preferences.keymap" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/TClone.xcodeproj" />
     <property name="FullScreen" value="false" />
     <property name="OBJC.PRESERVED_TARGET_SELECTION" value="TClone" />
-    <property name="options.searchVisible" value="true" />
     <property name="options.splitter.details.proportions" value="0.2" />
+    <property name="options.searchVisible" value="true" />
   </component>
   <component name="RunManager" selected="Application.TClone">
     <configuration default="true" type="OCUnitRunConfiguration" factoryName="OCUnit" PROJECT_NAME="TClone" TARGET_NAME="UnitTest" CONFIG_NAME="Debug" PASS_PARENT_ENVS="FALSE">
@@ -431,24 +435,24 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="26" y="22" width="1829" height="946" extended-state="0" />
+    <frame x="25" y="22" width="1885" height="965" extended-state="0" />
     <editor active="true" />
     <layout>
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3274648" sideWeight="0.600395" order="11" side_tool="false" content_ui="tabs" />
-      <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3290398" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3286385" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3286385" sideWeight="0.49973363" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.14617044" sideWeight="0.5" order="0" side_tool="true" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.1676949" sideWeight="0.6713615" order="3" side_tool="false" content_ui="combo" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="true" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.39906102" sideWeight="0.62211984" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.1592821" sideWeight="0.6709602" order="1" side_tool="true" content_ui="tabs" />
-      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.39788732" sideWeight="0.5002664" order="8" side_tool="true" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="true" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.31807512" sideWeight="0.3778802" order="2" side_tool="false" content_ui="tabs" x="426" y="456" width="1185" height="409" />
-      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3298122" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32032147" sideWeight="0.600395" order="11" side_tool="false" content_ui="tabs" />
+      <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3283582" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
+      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3283582" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3283582" sideWeight="0.49973363" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.14573137" sideWeight="0.5" order="0" side_tool="true" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.1886895" sideWeight="0.6613088" order="3" side_tool="false" content_ui="combo" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33869115" sideWeight="0.62211984" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.15878195" sideWeight="0.67164177" order="1" side_tool="true" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.39788732" sideWeight="0.5002664" order="7" side_tool="true" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="true" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.31802526" sideWeight="0.3778802" order="2" side_tool="false" content_ui="tabs" x="426" y="456" width="1185" height="409" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3298122" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="REST Client" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3298122" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
+      <window_info id="REST Client" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3298122" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.39788732" sideWeight="0.49973363" order="5" side_tool="false" content_ui="tabs" />
@@ -515,116 +519,128 @@
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
-      <option name="time" value="50" />
+      <breakpoints-dialog>
+        <breakpoints-dialog />
+      </breakpoints-dialog>
+      <option name="time" value="74" />
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/TClone/libs/cocos2d/CCTransition.m">
+    <entry file="file://$PROJECT_DIR$/TClone/libs/cocos2d/CCTMXTiledMap.h">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="62" column="0" selection-start="2043" selection-end="2043" vertical-scroll-proportion="0.33268103" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/TClone/libs/cocos2d/Support/CCArray.m">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="261" column="0" selection-start="5794" selection-end="5794" vertical-scroll-proportion="0.33268103" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/TClone/libs/cocos2d/Support/ccCArray.m">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="243" column="0" selection-start="7184" selection-end="7184" vertical-scroll-proportion="0.33268103" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/TClone/IntroLayer.m">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="66" column="0" selection-start="1422" selection-end="1422" vertical-scroll-proportion="0.7064579">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/TClone/GameOverLayer.m">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/TClone/Field.h">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/TClone/libs/cocos2d/CCSprite.m">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="115" column="0" selection-start="3422" selection-end="3422" vertical-scroll-proportion="0.19976498">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/TClone/Block.m">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="5" column="58" selection-start="132" selection-end="132" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/TClone/Board.m">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="85" column="0" selection-start="1859" selection-end="1859" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/TClone/GameController.h">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="21" column="28" selection-start="367" selection-end="380" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/TClone/Tetromino.h">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="60" column="46" selection-start="991" selection-end="991" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/TClone/Tetromino.m">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="312" column="2" selection-start="7328" selection-end="7328" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/TClone/GameLogicLayer.m">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="116" column="0" selection-start="3974" selection-end="3974" vertical-scroll-proportion="0.0">
+        <state line="99" column="11" selection-start="3902" selection-end="3902" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/TClone/GameLogicLayer.h">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="31" column="25" selection-start="539" selection-end="539" vertical-scroll-proportion="0.0">
+        <state line="16" column="11" selection-start="282" selection-end="282" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/TClone/libs/cocos2d/CCNode.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="248" column="0" selection-start="8558" selection-end="8558" vertical-scroll-proportion="0.3321739">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/TClone/libs/cocos2d/CCNode.m">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="334" column="0" selection-start="8042" selection-end="8042" vertical-scroll-proportion="0.3321739">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/TClone/Tetromino.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="41" column="11" selection-start="546" selection-end="546" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/TClone/GameController.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="18" column="11" selection-start="343" selection-end="343" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/TClone/Block.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="10" column="11" selection-start="169" selection-end="169" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/TClone/Field.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="18" column="20" selection-start="367" selection-end="367" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/TClone/Board.m">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="26" column="0" selection-start="377" selection-end="377" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/TClone/main.m">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="14" column="0" selection-start="224" selection-end="224" vertical-scroll-proportion="0.3652174">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/TClone/Board.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="12" column="11" selection-start="210" selection-end="210" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/TClone/Field.m">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="79" column="36" selection-start="1493" selection-end="1521" vertical-scroll-proportion="0.0">
+        <state line="19" column="19" selection-start="266" selection-end="279" vertical-scroll-proportion="0.0">
+          <folding>
+            <element signature="e#123#142#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/TClone/GameLogicLayer.m">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="118" column="55" selection-start="4602" selection-end="4602" vertical-scroll-proportion="0.0">
+          <folding>
+            <element signature="e#142#168#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/TClone/Tetromino.m">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="188" column="26" selection-start="4677" selection-end="4677" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/TClone/GameController.m">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="101" column="0" selection-start="1877" selection-end="1877" vertical-scroll-proportion="0.26556993">
+        <state line="104" column="0" selection-start="2002" selection-end="2002" vertical-scroll-proportion="0.0">
           <folding>
-            <element signature="n#viewTap:#0;n#GameController#0" expanded="false" />
             <element signature="n#processTaps#0;n#GameController#0" expanded="false" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/TClone/Block.m">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="81" column="30" selection-start="1322" selection-end="1322" vertical-scroll-proportion="0.37391305">
+          <folding />
         </state>
       </provider>
     </entry>

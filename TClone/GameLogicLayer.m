@@ -24,71 +24,88 @@
 {
     CCScene *scene = [CCScene node];
 
-    Field *main = [Field node];
-    [scene addChild:main z:1];
-
-    Field *field1 = [Field node];
-    [scene addChild:field1 z:1];
-
-    Field *field2 = [Field node];
-    [scene addChild:field2 z:1];
-
-    Field *field3 = [Field node];
-    [scene addChild:field3 z:1];
-
-    Field *field4 = [Field node];
-    [scene addChild:field4 z:1];
-
-
-    GameLogicLayer *layer = [[GameLogicLayer alloc] initWithFields:main and:field1 and:field2 and:field3 and:field4];
+    GameLogicLayer *layer = [[GameLogicLayer alloc] init];
     [scene addChild: layer];
     
     return scene;
 }
 
-- (id)initWithFields:(Field *)mainFieldLayer and:(Field *)otherFieldLayer1 and:(Field *)otherFieldLayer2 and:(Field *)otherFieldLayer3 and:(Field *)otherFieldLayer4 {
+- (id)init {
 
 	if ((self = [super init]))
 	{
+        playerWidth = 160;
+        playerHeight = 320;
+        playerTileSize = 16;
 
-        _MainField = mainFieldLayer;
-        _FieldLayer1 = otherFieldLayer1;
-        _FieldLayer2 = otherFieldLayer2;
-        _FieldLayer3 = otherFieldLayer3;
-        _FieldLayer4 = otherFieldLayer4;
+        mainWidth = 320;
+        mainHeight = 740;
+        mainTileSize = 32;
 
-        [_MainField initWithTileMap:[CCTMXTiledMap tiledMapWithTMXFile:@"32.tmx"]];
-        [_FieldLayer1 initWithTileMap:[CCTMXTiledMap tiledMapWithTMXFile:@"16.tmx"]];
-        [_FieldLayer2 initWithTileMap:[CCTMXTiledMap tiledMapWithTMXFile:@"16.tmx"]];
-        [_FieldLayer3 initWithTileMap:[CCTMXTiledMap tiledMapWithTMXFile:@"16.tmx"]];
-        [_FieldLayer4 initWithTileMap:[CCTMXTiledMap tiledMapWithTMXFile:@"16.tmx"]];
+        _MainField = [Field node];
+        _FieldLayer1 = [Field node];
+        _FieldLayer2 = [Field node];
+        _FieldLayer3 = [Field node];
+        _FieldLayer4 = [Field node];
 
+        Board *mainBoard = [[Board alloc] init];
+        [_MainField initWithBoard:mainBoard FieldHeight:640 FieldWidth:320 TileSize:32];
+        [_FieldLayer1 init];
+        [_FieldLayer2 init];
+        [_FieldLayer3 init];
+        [_FieldLayer4 init];
 
 
         CGSize winSize = [CCDirector sharedDirector].winSize;
 
+        //Set the field position on screen
         [_MainField setPosition:ccp(0,0)];
-        [_FieldLayer1 setPosition:ccp(winSize.width - _FieldLayer1.tileMap.contentSize.width, 0)];
-        [_FieldLayer2 setPosition:ccp(winSize.width - _FieldLayer2.tileMap.contentSize.width,
-        winSize.height - _FieldLayer2.tileMap.contentSize.height)];
-        [_FieldLayer3 setPosition:ccp(winSize.width - (_FieldLayer3.tileMap.contentSize.width + 200), 0)];
-        [_FieldLayer4 setPosition:ccp(winSize.width - (_FieldLayer4.tileMap.contentSize.width + 200),
-        winSize.height - (_FieldLayer4.tileMap.contentSize.height))];
+        [_MainField setContentSize:CGSizeMake(mainWidth, mainHeight)];
+        CCLayerColor *layerColorMain = [CCLayerColor layerWithColor:ccc4(50, 50, 100, 128) width:_MainField.contentSize.width height:_MainField.contentSize.height];
+        [_MainField addChild:layerColorMain z:1];
+
+        [_FieldLayer1 setPosition:ccp(winSize.width - playerWidth, 0)];
+        [_FieldLayer1 setContentSize:CGSizeMake(playerWidth, playerHeight)];
+        CCLayerColor *layerColor1 = [CCLayerColor layerWithColor:ccc4(100, 150, 50, 128) width:_FieldLayer1.contentSize.width height:_FieldLayer1.contentSize.height];
+        [_FieldLayer1 addChild:layerColor1];
+
+        [_FieldLayer2 setPosition:ccp(winSize.width - playerWidth, winSize.height - playerHeight)];
+        [_FieldLayer2 setContentSize:CGSizeMake(playerWidth, playerHeight)];
+        CCLayerColor *layerColor2 = [CCLayerColor layerWithColor:ccc4(200, 50, 100, 128) width:_FieldLayer2.contentSize.width height:_FieldLayer2.contentSize.height];
+        [_FieldLayer2 addChild:layerColor2];
+
+        [_FieldLayer3 setPosition:ccp(winSize.width - (playerWidth + 200), 0)];
+        [_FieldLayer3 setContentSize:CGSizeMake(playerWidth, playerHeight)];
+        CCLayerColor *layerColor3 = [CCLayerColor layerWithColor:ccc4(200, 50, 100, 128) width:_FieldLayer3.contentSize.width height:_FieldLayer3.contentSize.height];
+        [_FieldLayer3 addChild:layerColor3];
+
+        [_FieldLayer4 setPosition:ccp(winSize.width - (playerWidth + 200), winSize.height - (playerHeight))];
+        _FieldLayer4.contentSize = CGSizeMake(playerWidth, playerHeight);
+        CCLayerColor *layerColor4 = [CCLayerColor layerWithColor:ccc4(200, 50, 100, 128) width:_FieldLayer4.contentSize.width height:_FieldLayer4.contentSize.height];
+        [_FieldLayer4 addChild:layerColor4];
+
+        [self addChild:_MainField z:1];
+        [self addChild:_FieldLayer1 z:1];
+        [self addChild:_FieldLayer2 z:1];
+        [self addChild:_FieldLayer3 z:1];
+        [self addChild:_FieldLayer4 z:1];
 
         self.isTouchEnabled = YES;
 
-		//creates gesture recognizer for the layer
+		//creates the swipeRight gesture recognizer for the layer
 		UISwipeGestureRecognizer *swipeRightGestureRecognizer = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(swipeRightGestureRecognizer:)];
 		swipeRightGestureRecognizer.direction = UISwipeGestureRecognizerDirectionRight;
 		swipeRightGestureRecognizer.delegate = self;
 		[self addGestureRecognizer:swipeRightGestureRecognizer];
-		
+
+        //creates the swipeLeft gesture recognizer for the layer
 		UISwipeGestureRecognizer *swipeLeftGestureRecognizer = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(swipeLeftGestureRecognizer:)];
 		swipeLeftGestureRecognizer.direction = UISwipeGestureRecognizerDirectionLeft;
 		swipeLeftGestureRecognizer.delegate = self;
 		[self addGestureRecognizer:swipeLeftGestureRecognizer];
 
 
+        //Creates a new controller with a field.
         _gameController = [[GameController alloc] initWithField:_MainField];
 
 		[self startGame];
@@ -96,9 +113,12 @@
 	}
 	return self;
 }
+
+//Returns the tileCoordinate from a X and Y position
 - (CGPoint)tileCoordForPosition:(CGPoint)position {
-    int x = (int) (position.x / _MainField.tileMap.tileSize.width);
-    int y = (int) (((_MainField.tileMap.mapSize.height * _MainField.tileMap.tileSize.height) - position.y) / _MainField.tileMap.tileSize.height);
+    int x = (int) (position.x / mainTileSize);//500,200
+    int y = (int) (((mainHeight) - position.y) / mainTileSize);
+    NSLog(@"position clicked on board x = %d and y = %d", x, y);
     return ccp(x, y);
 }
 - (void)swipeRightGestureRecognizer:(UISwipeGestureRecognizer*)aGestureRecognizer

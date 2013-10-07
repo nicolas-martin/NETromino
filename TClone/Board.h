@@ -30,4 +30,6 @@
 - (BOOL)boardRowEmpty:(int)y;
 
 - (void)clearFullRows;
+
+- (void)addTetrominoToBoard:(Tetromino *)tetromino;
 @end

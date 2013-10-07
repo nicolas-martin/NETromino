@@ -16,7 +16,13 @@
 
 @interface GameLogicLayer : CCLayer <UIGestureRecognizerDelegate>
 {
+    int playerWidth;
+    int playerHeight;
+    int playerTileSize;
 
+    int mainWidth;
+    int mainHeight;
+    int mainTileSize;
 
 
 	int frameCount;

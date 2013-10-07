@@ -43,9 +43,7 @@ typedef enum
 {
 	BOOL stuck;	
 	CGPoint leftMostPosition;
-	CGPoint rightMostPosition;	
-	int anchorX;
-	int anchorY;
+	CGPoint rightMostPosition;
 	tetrominoType type;
 	NSInteger orientation;
 	
@@ -70,6 +68,8 @@ typedef enum
 + (id)blockWithType:(tetrominoType)blockType Direction:(RotationDirection)blockOrientation BoardX:(NSInteger)positionX BoardY:(NSInteger)positionY CurrentOrientation:(NSInteger)CurrentOrientation;
 
 - (BOOL)isBlockInTetromino:(id)block;
+
+- (void)moveTetrominoInDirection:(Tetromino *)tetromino inDirection:(MoveDirection)direction;
 
 + (Tetromino *)rotateTetromino:(Tetromino *)userTetromino in:(RotationDirection)direction;
 

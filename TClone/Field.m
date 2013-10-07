@@ -7,7 +7,6 @@
 
 #import "CCLayer.h"
 #import "Field.h"
-#import "CCTMXTiledMap.h"
 #import "CGPointExtension.h"
 #import "Tetromino.h"
 
@@ -18,24 +17,21 @@ int Nbx;
 @implementation Field {
 
 }
-- (id)initWithTileMap:(CCTMXTiledMap *)tileMap {
+- (id)initWithBoard:(Board *)board FieldHeight:(int)FieldHeight FieldWidth:(int)FieldWidth TileSize:(int)TileSize {
     self = [super init];
     if (self) {
-        self.tileMap = tileMap;
-        [self addChild:tileMap];
-        _board = [[Board alloc] init];
-        self.layer = [tileMap layerNamed:@"Tile Layer 1"];
-        Nby = 20;
-        Nbx = 10;
+        self.board = board;
+        self.FieldHeight = FieldHeight;
+        self.FieldWidth = FieldWidth;
+        self.TileSize = TileSize;
     }
 
     return self;
 }
 
-+ (id)layerWithTileMap:(CCTMXTiledMap *)tileMap {
-    return [[self alloc] initWithTileMap:tileMap];
++ (id)fieldWithBoard:(Board *)board FieldHeight:(int)FieldHeight FieldWidth:(int)FieldWidth TileSize:(int)TileSize {
+    return [[self alloc] initWithBoard:board FieldHeight:FieldHeight FieldWidth:FieldWidth TileSize:TileSize];
 }
-
 
 
 - (void)checkForRowsToClear {
@@ -101,7 +97,6 @@ int Nbx;
     }
     return YES;
 
-
 }
 
 - (BOOL)isTetrominoInBounds:(Tetromino *)tetromino {
@@ -136,4 +131,5 @@ int Nbx;
     return [_board boardRowEmpty:y];
 
 }
+
 @end

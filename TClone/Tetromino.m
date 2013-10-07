@@ -146,6 +146,11 @@ static NSInteger orientationCount[7] = {2, 1, 4, 4, 2, 2, 4};
 	return &(blocks[type][orientation]);
 }
 
+- (BLOCK*)contents:(tetrominoType)currentType and:(NSUInteger)currentOrientation
+{
+    return &(blocks[currentType][currentOrientation]);
+}
+
 
 + (id)blockWithType:(tetrominoType)blockType Direction:(RotationDirection)blockOrientation BoardX:(NSInteger)positionX BoardY:(NSInteger)positionY CurrentOrientation:(NSInteger)CurrentOrientation;
 {
@@ -166,21 +171,21 @@ static NSInteger orientationCount[7] = {2, 1, 4, 4, 2, 2, 4};
 		_blocksInTetromino = [[NSMutableArray alloc] init];
 		
 		BLOCK* contents = [self contents];
-		
+
 		for (NSInteger row = 0; row < 4; row++)
 		{
 			for (NSInteger col = 0; col < 4; col++)
 			{
 				// Get the contents of this cell of the block
 				uint8_t cellType = (*contents)[(4 - 1) - row][col];
-				
+
 				// If the cell is empty, skip to the next iteration of the Ïloop
 				if (cellType == 0)
 					continue;
 				
 				Block *newBlock = [Block newEmptyBlockWithColorByType:type];
-				newBlock.boardX = (row + anchorX);
-				newBlock.boardY = col + anchorY;
+				newBlock.boardX = (row + _anchorX);
+				newBlock.boardY = col + _anchorY;
                 //copmute?
 				newBlock.position = ccp(newBlock.boardX, newBlock.boardY);
 				[self addChild:newBlock];
@@ -241,10 +246,10 @@ static NSInteger orientationCount[7] = {2, 1, 4, 4, 2, 2, 4};
 			
 
 				Block *newBlock = [Block newEmptyBlockWithColorByType:type];
-				newBlock.boardX = row + anchorX;
-				newBlock.boardY = col + anchorY;
-                //compute?
-				newBlock.position = ccp(newBlock.boardX, newBlock.boardY);
+				newBlock.boardX = row + _anchorX;
+				newBlock.boardY = col + _anchorY;
+
+				newBlock.position = ccp(newBlock.boardX, newBlock.boardY );
 				[self addChild:newBlock];
 				[_blocksInTetromino addObject:newBlock];
 				
@@ -304,17 +309,25 @@ static NSInteger orientationCount[7] = {2, 1, 4, 4, 2, 2, 4};
 	return NO;
 }
 
+- (void)moveTetrominoInDirection:(Tetromino *)tetromino inDirection:(MoveDirection)direction
+{
+//     CCArray *reversedBlockArray = [[CCArray alloc] initWithArray:tetromino.children];
+//    [reversedBlockArray reverseObjects];
+
+    //TODO: Add board verification
+    for (Block* currentBlock in tetromino.children)
+    {
+        [currentBlock moveByX:direction];
+    }
+
+    tetromino.anchorX += direction;
+}
+
 + (Tetromino *)rotateTetromino:(Tetromino *)userTetromino in:(RotationDirection)direction {
 
     //TODO: Create a new tetromino with the current tetromino position in the new direction
-    NSLog(@"Not implemented");
 
-//    Tetromino *rotated = [Tetromino blockWithType:userTetromino.type Direction:direction BoardX:userTetromino.anchorX BoardY:userTetromino.anchorY CurrentOrientation:userTetromino.orientation];
-//
-//    for(Block *block in rotated)
-//    {
-//
-//    }
+    //return [Tetromino blockWithType:userTetromino.type Direction:direction BoardX:userTetromino.anchorX BoardY:userTetromino.anchorY CurrentOrientation:userTetromino.orientation];
 
 }
 
@@ -383,7 +396,7 @@ static NSInteger orientationCount[7] = {2, 1, 4, 4, 2, 2, 4};
 
 - (NSString*)description
 {
-	return [NSString stringWithFormat:@"%@: type = %d, boardX = %d, boardY = %d, orientation = %d", [super description], type, anchorX, anchorY, orientation];
+	return [NSString stringWithFormat:@"%@: type = %d, boardX = %d, boardY = %d, orientation = %d", [super description], type, _anchorX, _anchorY, orientation];
 }
 
 

@@ -13,13 +13,23 @@
 @interface Field : CCLayer {//<GameControllerObserver> {
 
 }
-@property (strong) CCTMXTiledMap *tileMap;
-@property (strong) CCTMXLayer *layer;
 @property (nonatomic, strong) Board *board;
+@property (nonatomic) int FieldWidth;
+@property (nonatomic) int FieldHeight;
+@property (nonatomic) int TileSize;
 
-- (id)initWithTileMap:(CCTMXTiledMap *)tileMap;
 
-+ (id)layerWithTileMap:(CCTMXTiledMap *)tileMap;
+
+
+- (id)initWithBoard:(Board *)board;
+
+- (id)initWithBoard:(Board *)board FieldHeight:(int)FieldHeight FieldWidth:(int)FieldWidth TileSize:(int)TileSize;
+
++ (id)fieldWithBoard:(Board *)board FieldHeight:(int)FieldHeight FieldWidth:(int)FieldWidth TileSize:(int)TileSize;
+
+
++ (id)fieldWithBoard:(Board *)board;
+
 
 - (void)checkForRowsToClear;
 
@@ -28,4 +38,5 @@
 - (BOOL)isTetrominoInBounds:(Tetromino *)tetromino;
 
 - (BOOL)boardRowEmpty:(int)x;
+
 @end
