@@ -1,9 +1,7 @@
 //
-// Created by Nicolas Martin on 13-08-20.
+// Created by Nicolas Martin on 13-08-15.
 //
-// To change the template use AppCode | Preferences | File Templates.
 //
-
 
 #import <Foundation/Foundation.h>
 #import "Block.h"

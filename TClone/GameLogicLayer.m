@@ -1,9 +1,6 @@
 //
-//  GameLogicLayer.m
-//  Tetris
+// Created by Nicolas Martin on 13-08-15.
 //
-//  Created by Joshua Aburto on 9/26/09.
-//  Copyright 2009 __MyCompanyName__. All rights reserved.
 //
 
 #import "GameLogicLayer.h"
@@ -49,11 +46,16 @@
         _FieldLayer4 = [Field node];
 
         Board *mainBoard = [[Board alloc] init];
+        Board *player1Board = [[Board alloc] init];
+        Board *player2Board = [[Board alloc] init];
+        Board *player3Board = [[Board alloc] init];
+        Board *player4Board = [[Board alloc] init];
+
         [_MainField initWithBoard:mainBoard FieldHeight:640 FieldWidth:320 TileSize:32];
-        [_FieldLayer1 init];
-        [_FieldLayer2 init];
-        [_FieldLayer3 init];
-        [_FieldLayer4 init];
+        [_FieldLayer1 initWithBoard:player1Board FieldHeight:320 FieldWidth:160 TileSize:16];
+        [_FieldLayer2 initWithBoard:player2Board FieldHeight:320 FieldWidth:160 TileSize:16];
+        [_FieldLayer3 initWithBoard:player3Board FieldHeight:320 FieldWidth:160 TileSize:16];
+        [_FieldLayer4 initWithBoard:player4Board FieldHeight:320 FieldWidth:160 TileSize:16];
 
 
         CGSize winSize = [CCDirector sharedDirector].winSize;

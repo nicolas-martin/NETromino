@@ -1,9 +1,6 @@
 //
-//  Tetromino.m
-//  Tetris
+// Created by Nicolas Martin on 13-08-15.
 //
-//  Created by Joshua Aburto on 9/26/09.
-//  Copyright 2009 __MyCompanyName__. All rights reserved.
 //
 
 #import "Tetromino.h"

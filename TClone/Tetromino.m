@@ -1,9 +1,6 @@
 //
-//  Tetromino.m
-//  Tetris
+// Created by Nicolas Martin on 13-08-15.
 //
-//  Created by Joshua Aburto on 9/28/09.
-//  Copyright 2009 __MyCompanyName__. All rights reserved.
 //
 
 #import "Tetromino.h"
@@ -377,6 +374,7 @@ static NSInteger orientationCount[7] = {2, 1, 4, 4, 2, 2, 4};
 	for (Block *currentBlock in self.children) {
 		if ( myLeftPosition.y > currentBlock.boardY) {
 			myLeftPosition = ccp(currentBlock.boardX, currentBlock.boardY);
+
 		}
 	}
 	return myLeftPosition;
@@ -400,5 +398,16 @@ static NSInteger orientationCount[7] = {2, 1, 4, 4, 2, 2, 4};
 }
 
 
+- (void)setPositionUsingFieldValue:(Tetromino *)tetromino height:(int)height width:(int)width tileSize:(int)size
+{
+    //TODO: Figure out the oposite from the LogicLayer
+    //TODO: Take in consideration the position of the field on the screen.
+    for (Block *block in tetromino.children)
+    {
+        int x = block.boardX * size;
+        int y = 0;
+        [block setPosition:ccp(x, y)];
+    }
 
+}
 @end

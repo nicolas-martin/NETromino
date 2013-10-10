@@ -1,9 +1,6 @@
 //
-//  Tetromino.h
-//  Tetris
+// Created by Nicolas Martin on 13-08-15.
 //
-//  Created by Joshua Aburto on 9/28/09.
-//  Copyright 2009 __MyCompanyName__. All rights reserved.
 //
 
 #import "cocos2d.h"
@@ -74,4 +71,6 @@ typedef enum
 + (Tetromino *)rotateTetromino:(Tetromino *)userTetromino in:(RotationDirection)direction;
 
 - (void)moveTetrominoDown;
+
+- (void)setPositionUsingFieldValue:(Tetromino *)tetromino height:(int)height width:(int)width tileSize:(int)size;
 @end

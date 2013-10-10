@@ -1,7 +1,6 @@
 //
 // Created by Nicolas Martin on 13-08-15.
 //
-// To change the template use AppCode | Preferences | File Templates.
 //
 
 #import "Tetromino.h"

@@ -1,7 +1,6 @@
 //
 // Created by Nicolas Martin on 13-08-11.
 //
-// To change the template use AppCode | Preferences | File Templates.
 //
 
 
@@ -21,8 +20,8 @@ int Nbx;
     self = [super init];
     if (self) {
         self.board = board;
-        self.FieldHeight = FieldHeight;
-        self.FieldWidth = FieldWidth;
+        self.Height = FieldHeight;
+        self.Width = FieldWidth;
         self.TileSize = TileSize;
     }
 

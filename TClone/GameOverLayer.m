@@ -1,9 +1,6 @@
 //
-//  GameOverLayer.m
-//  TClone
+// Created by Nicolas Martin on 13-08-15.
 //
-//  Created by Nicolas Martin on 13-07-22.
-//  Copyright 2013 __MyCompanyName__. All rights reserved.
 //
 
 #import "GameOverLayer.h"

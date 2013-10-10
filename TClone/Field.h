@@ -1,7 +1,6 @@
 //
 // Created by Nicolas Martin on 13-08-11.
 //
-// To change the template use AppCode | Preferences | File Templates.
 //
 
 
@@ -14,8 +13,8 @@
 
 }
 @property (nonatomic, strong) Board *board;
-@property (nonatomic) int FieldWidth;
-@property (nonatomic) int FieldHeight;
+@property (nonatomic) int Width;
+@property (nonatomic) int Height;
 @property (nonatomic) int TileSize;
 
 

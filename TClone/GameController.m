@@ -1,7 +1,6 @@
 //
 // Created by Nicolas Martin on 13-08-15.
 //
-// To change the template use AppCode | Preferences | File Templates.
 //
 
 
@@ -102,9 +101,7 @@
 
 - (void)AdjustTetrominoPosition:(Tetromino* )tetromino
 {
-
-    //tetromino.position.x = tetromino.position.x * field.TileSize;
-    //tetromino.position.y = tetromino.position.y
+    [tetromino setPositionUsingFieldValue:tetromino height:field.Height width:field.Width tileSize:field.TileSize];
 }
 
 
