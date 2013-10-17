@@ -151,6 +151,7 @@
 		250B852BFB2B868DA7656F1A /* 16.tmx in Resources */ = {isa = PBXBuildFile; fileRef = 250B8B9B048EF0F350CA770E /* 16.tmx */; };
 		250B8A5E4224E7B27304F3ED /* GameController.m in Sources */ = {isa = PBXBuildFile; fileRef = 250B8A4420EA284F2A8A2B77 /* GameController.m */; };
 		250B8B25231ACA5E940AEBF4 /* Board.m in Sources */ = {isa = PBXBuildFile; fileRef = 250B804820F6ECB5C794643B /* Board.m */; };
+		250B8CBDFA6155DE3D59560A /* yellow.png in Resources */ = {isa = PBXBuildFile; fileRef = 250B82C5C86EF3B6434793C0 /* yellow.png */; };
 		250B8EA1B9637F7627E5EF20 /* 32.tmx in Resources */ = {isa = PBXBuildFile; fileRef = 250B85845376C26625E4BB8F /* 32.tmx */; };
 		250B8EE84B932B24957A3027 /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 250B88CF9EA5E7B7BC2EFE63 /* Default.png */; };
 /* End PBXBuildFile section */
@@ -437,6 +438,7 @@
 		0393C485179CEB72003AA6E4 /* GameOverLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GameOverLayer.m; sourceTree = "<group>"; };
 		250B804820F6ECB5C794643B /* Board.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Board.m; sourceTree = "<group>"; };
 		250B827691E2A44D55888BF4 /* GameController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GameController.h; sourceTree = "<group>"; };
+		250B82C5C86EF3B6434793C0 /* yellow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = yellow.png; sourceTree = "<group>"; };
 		250B85845376C26625E4BB8F /* 32.tmx */ = {isa = PBXFileReference; lastKnownFileType = file.tmx; path = 32.tmx; sourceTree = "<group>"; };
 		250B85F7F41708465CA946B9 /* Board.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Board.h; sourceTree = "<group>"; };
 		250B8857E36B4EF5E8645D9B /* Field.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Field.m; sourceTree = "<group>"; };
@@ -893,6 +895,7 @@
 				250B85845376C26625E4BB8F /* 32.tmx */,
 				250B88928643535FCEE13092 /* preview.jpg */,
 				250B88CF9EA5E7B7BC2EFE63 /* Default.png */,
+				250B82C5C86EF3B6434793C0 /* yellow.png */,
 			);
 			name = Sprites;
 			sourceTree = "<group>";
@@ -998,6 +1001,7 @@
 				250B8EA1B9637F7627E5EF20 /* 32.tmx in Resources */,
 				250B83922D44EFC51701CD5B /* preview.jpg in Resources */,
 				250B8EE84B932B24957A3027 /* Default.png in Resources */,
+				250B8CBDFA6155DE3D59560A /* yellow.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

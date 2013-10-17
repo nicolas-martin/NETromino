@@ -37,7 +37,8 @@
     {
         [self tryToCreateNewTetromino];
     }
-    else if([userTetromino lowestPosition].y != 9 && [field boardRowEmpty:(NSUInteger)[userTetromino lowestPosition].y])
+    //else if([userTetromino getLowestPosition].y != 9 && [field boardRowEmpty:(NSUInteger)[userTetromino getLowestPosition].y])
+    else if([userTetromino getLowestPosition].y != 9 && [field.board isBlockAt:[userTetromino getLowestPosition]])
     {
         [self moveTetrominoDown];
         userTetromino.stuck = NO;
@@ -89,6 +90,7 @@
     Tetromino *tempTetromino = [Tetromino randomBlockUsingBlockFrequency];
 
     [field.board addTetrominoToBoard:tempTetromino];
+    [tempTetromino setPositionUsingFieldValue:tempTetromino height:field.Height width:field.Width tileSize:field.TileSize];
 
 
     [field addChild:tempTetromino];
@@ -99,18 +101,14 @@
 
 }
 
-- (void)AdjustTetrominoPosition:(Tetromino* )tetromino
-{
-    [tetromino setPositionUsingFieldValue:tetromino height:field.Height width:field.Width tileSize:field.TileSize];
-}
-
-
 
 //TODO: Adjust the board
 - (void)moveTetrominoDown
 {
     //TODO: Add verification
     [userTetromino moveTetrominoDown];
+    [userTetromino setPositionUsingFieldValue:userTetromino height:field.Height width:field.Width tileSize:field.TileSize];
+
     [self notifyTretrominoPosition:userTetromino];
 }
 

@@ -4,7 +4,6 @@
 //
 
 #import "Tetromino.h"
-#import "Block.h"
 
 #define NSLog(FORMAT, ...) printf("%s\n", [[NSString stringWithFormat:FORMAT, ##__VA_ARGS__] UTF8String]);
 
@@ -326,6 +325,7 @@ static NSInteger orientationCount[7] = {2, 1, 4, 4, 2, 2, 4};
 
     //return [Tetromino blockWithType:userTetromino.type Direction:direction BoardX:userTetromino.anchorX BoardY:userTetromino.anchorY CurrentOrientation:userTetromino.orientation];
 
+    return nil;
 }
 
 - (void)moveTetrominoDown {
@@ -338,6 +338,8 @@ static NSInteger orientationCount[7] = {2, 1, 4, 4, 2, 2, 4};
 		//move each block down
 		[currentBlock moveDown];
 	}
+
+
 
 	self.anchorY += 1;	
 }
@@ -381,7 +383,7 @@ static NSInteger orientationCount[7] = {2, 1, 4, 4, 2, 2, 4};
 	
 }
 
-- (CGPoint)lowestPosition
+- (CGPoint)getLowestPosition
 {
 	CGPoint myRightPosition = ccp(-1, -1);
 	for (Block *currentBlock in self.children) {
@@ -397,15 +399,17 @@ static NSInteger orientationCount[7] = {2, 1, 4, 4, 2, 2, 4};
 	return [NSString stringWithFormat:@"%@: type = %d, boardX = %d, boardY = %d, orientation = %d", [super description], type, _anchorX, _anchorY, orientation];
 }
 
-
+//J'ai pas besoin du tetromino en parametre pcq c'est une instance method.
 - (void)setPositionUsingFieldValue:(Tetromino *)tetromino height:(int)height width:(int)width tileSize:(int)size
 {
-    //TODO: Figure out the oposite from the LogicLayer
     //TODO: Take in consideration the position of the field on the screen.
     for (Block *block in tetromino.children)
     {
+        //int x = (int) (position.x / mainTileSize);//500,200
+        //int y = (int) (((mainHeight) - position.y) / mainTileSize);
+
         int x = block.boardX * size;
-        int y = 0;
+        int y = (-(block.boardY * size) + height);
         [block setPosition:ccp(x, y)];
     }
 

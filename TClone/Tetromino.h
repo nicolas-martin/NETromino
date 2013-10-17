@@ -72,5 +72,8 @@ typedef enum
 
 - (void)moveTetrominoDown;
 
+- (CGPoint)getLowestPosition;
+
 - (void)setPositionUsingFieldValue:(Tetromino *)tetromino height:(int)height width:(int)width tileSize:(int)size;
+
 @end
