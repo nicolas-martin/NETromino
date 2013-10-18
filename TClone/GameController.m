@@ -38,9 +38,10 @@
         [self tryToCreateNewTetromino];
     }
     //else if([userTetromino getLowestPosition].y != 9 && [field boardRowEmpty:(NSUInteger)[userTetromino getLowestPosition].y])
-    else if([userTetromino getLowestPosition].y != 9 && [field.board isBlockAt:[userTetromino getLowestPosition]])
+    else if([userTetromino getLowestPosition].y != 19 && [field.board isBlockAt:[userTetromino getLowestPosition]])
     {
         [self moveTetrominoDown];
+        NSLog(@"Tetromino moved down at %d Y", [userTetromino anchorY]);
         userTetromino.stuck = NO;
     }
     else
@@ -67,7 +68,7 @@
 
 - (void)tryToCreateNewTetromino
 {
-    if(![field.board boardRowEmpty:18] && ![field.board boardRowEmpty:19])
+    if(![field.board boardRowEmpty:0] && ![field.board boardRowEmpty:1])
     {
         userTetromino = [self createNewTetromino];
     }
@@ -90,8 +91,8 @@
     Tetromino *tempTetromino = [Tetromino randomBlockUsingBlockFrequency];
 
     [field.board addTetrominoToBoard:tempTetromino];
-    [tempTetromino setPositionUsingFieldValue:tempTetromino height:field.Height width:field.Width tileSize:field.TileSize];
 
+    [tempTetromino setPositionUsingFieldValue:tempTetromino height:field.Height width:field.Width tileSize:field.TileSize];
 
     [field addChild:tempTetromino];
 
@@ -101,13 +102,16 @@
 
 }
 
-
-//TODO: Adjust the board
 - (void)moveTetrominoDown
 {
     //TODO: Add verification
     [userTetromino moveTetrominoDown];
     [userTetromino setPositionUsingFieldValue:userTetromino height:field.Height width:field.Width tileSize:field.TileSize];
+
+    for(Block *block in userTetromino.children)
+    {
+        [field.board MoveBlock:block from:ccp([block boardX], [block boardY] - 1) to:ccp([block boardX], [block boardY])];
+    }
 
     [self notifyTretrominoPosition:userTetromino];
 }

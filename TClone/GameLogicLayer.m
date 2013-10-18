@@ -119,7 +119,7 @@
 //Returns the tileCoordinate from a X and Y position
 - (CGPoint)tileCoordForPosition:(CGPoint)position {
     int x = (int) (position.x / mainTileSize);//500,200
-    int y = (int) (((mainHeight) - position.y) / mainTileSize);
+    int y = (int) 20-(((mainHeight) - position.y) / mainTileSize);
     NSLog(@"position clicked on board x = %d and y = %d", x, y);
     return ccp(x, y);
 }
@@ -140,7 +140,7 @@
 	[_gameController tryToCreateNewTetromino];
 
 	frameCount = 0;
-	moveCycleRatio = 40;
+	moveCycleRatio = 10;
 	[self schedule:@selector(updateBoard:) interval:(1.0/60.0)];
 }
 

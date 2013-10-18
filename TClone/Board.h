@@ -23,7 +23,7 @@
 
 - (Block *)getBlockAt:(CGPoint)point;
 
-- (void)MoveBlocksInBoard:(Tetromino *)tetromino in:(MoveDirection)direction;
+- (void)MoveBlock:(Block *)block from:(CGPoint)before to:(CGPoint)after;
 
 - (BOOL)boardRowEmpty:(int)y;
 

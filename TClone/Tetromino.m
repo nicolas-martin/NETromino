@@ -339,9 +339,7 @@ static NSInteger orientationCount[7] = {2, 1, 4, 4, 2, 2, 4};
 		[currentBlock moveDown];
 	}
 
-
-
-	self.anchorY += 1;	
+	self.anchorY += 1;
 }
 
 //TODO: Make sure these return the x and y like in "math"

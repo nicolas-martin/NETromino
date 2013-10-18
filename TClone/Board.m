@@ -70,6 +70,14 @@
     [[_array objectAtIndex:point.x] replaceObjectAtIndex:point.y withObject:block];
 }
 
+- (void)MoveBlock:(Block*)block from:(CGPoint)before to:(CGPoint)after
+{
+    //insert
+    [self insertBlockAt:block at:after];
+    //delete
+    [[_array objectAtIndex:before.x] replaceObjectAtIndex:before.y withObject:[NSNumber numberWithInt:0]];
+}
+
 
 - (BOOL)boardRowEmpty:(int)y
 {
@@ -92,4 +100,5 @@
     }
 
 }
+
 @end
