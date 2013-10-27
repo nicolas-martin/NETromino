@@ -5,33 +5,35 @@
 
 
 #import "Board.h"
-#import "CGPointExtension.h"
-#import "Block.h"
-#import "Tetromino.h"
+
 
 
 @implementation Board {
 
+@private
+    NSMutableArray *_array;
 }
-
 
 - (id)init {
     self = [super init];
     if (self) {
-        Nby = 20;
-        Nbx = 10;
-        _array = [self get20x10Array];
-
+        _array = self.get20x10Array;
+        self.Nbx = 10;
+        self.Nby = 20;
     }
 
     return self;
 }
 
++ (id)initBoard {
+    return [[self alloc] init];
+}
+
 -(NSMutableArray*)get20x10Array {
     NSMutableArray* arr = [NSMutableArray array];
-    for (int i = 0; i < Nbx; ++ i) {
+    for (int i = 0; i < self.Nbx; ++ i) {
         NSMutableArray* subarr = [NSMutableArray array];
-        for (int j = 0; j < Nby; ++ j)
+        for (int j = 0; j < self.Nby; ++ j)
             //insert at index??
             [subarr addObject:[NSNumber numberWithInt:0]];
         [arr addObject:subarr];
@@ -54,34 +56,39 @@
     }
 }
 
-- (Block *)getBlockAt:(CGPoint)point{
-    if ([self isBlockAt:point])
-    {
-        return (Block *)[[_array objectAtIndex:point.x] objectAtIndex:point.y];
-    }
-    else
-    {
-        return nil;
-    }
+- (Block *)getBlockAt:(CGPoint)point
+{
+
+    NSUInteger x = (NSUInteger)point.x;
+    NSUInteger y = (NSUInteger)point.y;
+
+    return [self isBlockAt:point] ? (Block *) [[_array objectAtIndex:x] objectAtIndex:y] : nil;
 }
 
 - (void)insertBlockAt:(Block *)block at:(CGPoint)point
 {
-    [[_array objectAtIndex:point.x] replaceObjectAtIndex:point.y withObject:block];
+    NSUInteger x = (NSUInteger)point.x;
+    NSUInteger y = (NSUInteger)point.y;
+
+    [[_array objectAtIndex:x] replaceObjectAtIndex:y withObject:block];
 }
 
 - (void)MoveBlock:(Block*)block from:(CGPoint)before to:(CGPoint)after
 {
+    NSUInteger x = (NSUInteger)before.x;
+    NSUInteger y = (NSUInteger)before.y;
+
+    //delete
+    [[_array objectAtIndex:x] replaceObjectAtIndex:y withObject:[NSNumber numberWithInt:0]];
     //insert
     [self insertBlockAt:block at:after];
-    //delete
-    [[_array objectAtIndex:before.x] replaceObjectAtIndex:before.y withObject:[NSNumber numberWithInt:0]];
+
 }
 
 
 - (BOOL)boardRowEmpty:(int)y
 {
-    for (int x = 0;x < Nbx; x++)
+    for (int x = 0;x < self.Nbx; x++)
     {
         if ([self isBlockAt:ccp(x, y)])
         {
@@ -92,7 +99,8 @@
 }
 
 
-- (void)addTetrominoToBoard:(Tetromino *)tetromino {
+- (void)addTetrominoToBoard:(Tetromino *)tetromino
+{
 
     for (Block *block in tetromino.children)
     {

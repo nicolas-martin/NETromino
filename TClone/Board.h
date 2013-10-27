@@ -8,16 +8,17 @@
 #import "Tetromino.h"
 
 
-@interface Board : NSObject {
-    int Nby;
-    int Nbx;
-
-}
+@interface Board : NSObject
 
 @property (readwrite, assign) int NbBlocks;
-@property (nonatomic, strong) NSMutableArray *array;
+
+@property(nonatomic) int Nby;
+
+@property(nonatomic) int Nbx;
 
 - (id)init;
+
++ (id)initBoard;
 
 - (BOOL)isBlockAt:(CGPoint)point;
 

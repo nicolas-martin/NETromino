@@ -45,11 +45,11 @@
         _FieldLayer3 = [Field node];
         _FieldLayer4 = [Field node];
 
-        Board *mainBoard = [[Board alloc] init];
-        Board *player1Board = [[Board alloc] init];
-        Board *player2Board = [[Board alloc] init];
-        Board *player3Board = [[Board alloc] init];
-        Board *player4Board = [[Board alloc] init];
+        Board *mainBoard = [Board initBoard];
+        Board *player1Board = [Board initBoard];
+        Board *player2Board = [Board initBoard];
+        Board *player3Board = [Board initBoard];
+        Board *player4Board = [Board initBoard];
 
         [_MainField initWithBoard:mainBoard FieldHeight:640 FieldWidth:320 TileSize:32];
         [_FieldLayer1 initWithBoard:player1Board FieldHeight:320 FieldWidth:160 TileSize:16];
@@ -106,9 +106,8 @@
 		swipeLeftGestureRecognizer.delegate = self;
 		[self addGestureRecognizer:swipeLeftGestureRecognizer];
 
-
         //Creates a new controller with a field.
-        _gameController = [[GameController alloc] initWithField:_MainField];
+        _gameController = [GameController controllerWithField:_MainField];
 
 		[self startGame];
 	
@@ -119,7 +118,7 @@
 //Returns the tileCoordinate from a X and Y position
 - (CGPoint)tileCoordForPosition:(CGPoint)position {
     int x = (int) (position.x / mainTileSize);//500,200
-    int y = (int) 20-(((mainHeight) - position.y) / mainTileSize);
+    int y = (int) ((int) 20-(((mainHeight) - position.y) / mainTileSize));
     NSLog(@"position clicked on board x = %d and y = %d", x, y);
     return ccp(x, y);
 }
@@ -136,6 +135,7 @@
 }
 
 - (void)startGame{
+
 
 	[_gameController tryToCreateNewTetromino];
 
