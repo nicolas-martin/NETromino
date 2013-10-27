@@ -24,7 +24,7 @@
 
     return self;
 }
-
+//ok
 + (id)initBoard {
     return [[self alloc] init];
 }
