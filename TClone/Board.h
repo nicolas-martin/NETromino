@@ -24,9 +24,11 @@
 
 - (Block *)getBlockAt:(CGPoint)point;
 
+- (void)DeleteBlock:(Tetromino *)tetromino;
+
 - (void)MoveBlock:(Block *)block from:(CGPoint)before to:(CGPoint)after;
 
-- (BOOL)boardRowEmpty:(int)y;
+- (BOOL)boardRowFull:(int)y;
 
 - (void)clearFullRows;
 

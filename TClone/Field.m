@@ -127,7 +127,7 @@ int Nbx;
 
 - (BOOL)boardRowEmpty:(int)y {
 
-    return [_board boardRowEmpty:y];
+    return [_board boardRowFull:y];
 
 }
 

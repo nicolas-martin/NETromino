@@ -29,12 +29,13 @@
 
 - (void)moveDownOrCreate {
     //Perhaps set all tetromino to stuck by default?
+
     if(userTetromino.stuck || userTetromino == NULL)
     {
         [self tryToCreateNewTetromino];
     }
-    //else if([userTetromino getLowestPosition].y != 9 && [field boardRowEmpty:(NSUInteger)[userTetromino getLowestPosition].y])
-    else if([userTetromino getLowestPosition].y != 19 && [field.board isBlockAt:[userTetromino getLowestPosition]])
+
+    else if([userTetromino getLowestPosition].y != 19 && ![field.board isBlockAt:ccp([userTetromino getLowestPosition].x, [userTetromino getLowestPosition].y+1)])
     {
         [self moveTetrominoDown];
         NSLog(@"Tetromino moved down at %d Y", [userTetromino anchorY]);
@@ -64,7 +65,7 @@
 
 - (void)tryToCreateNewTetromino
 {
-    if(![field.board boardRowEmpty:0] && ![field.board boardRowEmpty:1])
+    if(![field.board boardRowFull:0] && ![field.board boardRowFull:1])
     {
         userTetromino = [self createNewTetromino];
     }
@@ -84,6 +85,7 @@
 //TODO: Notify views
 - (Tetromino *)createNewTetromino {
 
+
     Tetromino *tempTetromino = [Tetromino randomBlockUsingBlockFrequency];
 
     [field.board addTetrominoToBoard:tempTetromino];
@@ -100,26 +102,24 @@
 
 - (void)moveTetrominoDown
 {
-    //TODO: Add verification
+
+    [field.board DeleteBlock:userTetromino];
+
     [userTetromino moveTetrominoDown];
-    [userTetromino setPositionUsingFieldValue:userTetromino height:field.Height width:field.Width tileSize:field.TileSize];
 
-    for(Block *block in userTetromino.children)
-    {
-        [field.board MoveBlock:block from:ccp([block boardX], [block boardY] - 1) to:ccp([block boardX], [block boardY])];
-    }
-
-    [self notifyTretrominoPosition:userTetromino];
+    [self UpdatesNewTetromino:userTetromino];
 }
 
 - (void)moveTetrominoLeft{
 
     if ([field canMoveTetrominoByXTetromino:userTetromino offSetX:-1])
     {
-        //TODO: Move the blocks in the board
-        //[self insertBlockAt:currentBlock at:ccp(currentBlock.boardX,currentBlock.boardY)];
+
+        [field.board DeleteBlock:userTetromino];
+
         [userTetromino moveTetrominoInDirection:userTetromino inDirection:moveLeft];
-        [self notifyTretrominoPosition:userTetromino];
+
+        [self UpdatesNewTetromino:userTetromino];
 
     }
 }
@@ -128,12 +128,36 @@
 
     if ([field canMoveTetrominoByXTetromino:userTetromino offSetX:1])
     {
-        //TODO: Move the blocks in the board
-        //[self insertBlockAt:currentBlock at:ccp(currentBlock.boardX,currentBlock.boardY)];
+        [field.board DeleteBlock:userTetromino];
+
         [userTetromino moveTetrominoInDirection:userTetromino inDirection:moveRight];
-        [self notifyTretrominoPosition:userTetromino];
+
+        [self UpdatesNewTetromino:userTetromino];
+
     }
 }
+
+- (void)rotateTetromino:(RotationDirection)direction {
+
+    if([field isTetrominoInBounds:userTetromino])
+    {
+        [field.board DeleteBlock:userTetromino];
+
+        Tetromino *rotatedTetromino = [Tetromino rotateTetromino:userTetromino in:direction];
+
+        [self UpdatesNewTetromino:rotatedTetromino];
+    }
+}
+
+-(void)UpdatesNewTetromino:(Tetromino *)userTetromino
+{
+    [userTetromino setPositionUsingFieldValue:userTetromino height:field.Height width:field.Width tileSize:field.TileSize];
+
+    [field.board addTetrominoToBoard:userTetromino];
+
+    [self notifyTretrominoPosition:userTetromino];
+}
+
 
 
 - (void)notifyTretrominoPosition:(Tetromino *)tetromino {
@@ -149,16 +173,6 @@
         if ([observer respondsToSelector:@selector(newTetromino:)]) {
             //[observer newTetromino:tetromino];
         }
-    }
-}
-
-- (void)rotateTetromino:(RotationDirection)direction {
-
-    if([field isTetrominoInBounds:userTetromino]){
-        Tetromino *rotatedTetromino = [Tetromino rotateTetromino:userTetromino in:direction];
-
-        [self notifyTretrominoPosition:userTetromino];
-        //TODO: Move each block from userTetromino to rotatedTetromino
     }
 }
 

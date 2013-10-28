@@ -139,7 +139,7 @@ static NSInteger orientationCount[7] = {2, 1, 4, 4, 2, 2, 4};
 
 - (BLOCK*)contents
 {
-	return &(blocks[type][orientation]);
+	return &(blocks[self.type][orientation]);
 }
 
 - (BLOCK*)contents:(tetrominoType)currentType and:(NSUInteger)currentOrientation
@@ -159,7 +159,7 @@ static NSInteger orientationCount[7] = {2, 1, 4, 4, 2, 2, 4};
 	{
 		self.anchorX = positionX;
 		self.anchorY = positionY;
-		type = blockType;
+		self.type = blockType;
 		orientation = CurrentOrientation;
 
 		orientation = (orientation + blockDirection + [self numOrientations]) % [self numOrientations];
@@ -179,7 +179,7 @@ static NSInteger orientationCount[7] = {2, 1, 4, 4, 2, 2, 4};
 				if (cellType == 0)
 					continue;
 				
-				Block *newBlock = [Block newEmptyBlockWithColorByType:type];
+				Block *newBlock = [Block newEmptyBlockWithColorByType:self.type];
 				newBlock.boardX = (row + _anchorX);
 				newBlock.boardY = col + _anchorY;
                 //copmute?
@@ -199,7 +199,7 @@ static NSInteger orientationCount[7] = {2, 1, 4, 4, 2, 2, 4};
 
 - (NSInteger)numOrientations
 {
-	return orientationCount[type];
+	return orientationCount[self.type];
 }
 
 
@@ -216,8 +216,8 @@ static NSInteger orientationCount[7] = {2, 1, 4, 4, 2, 2, 4};
 	{
 		
 		int blockFrequency = arc4random() % 7;
-		type = (tetrominoType)blockFrequency;
-		int randomOrientation = arc4random() % orientationCount[type];
+		self.type = (tetrominoType)blockFrequency;
+		int randomOrientation = arc4random() % orientationCount[self.type];
 				
 		
 		
@@ -241,7 +241,7 @@ static NSInteger orientationCount[7] = {2, 1, 4, 4, 2, 2, 4};
 					continue;
 			
 
-				Block *newBlock = [Block newEmptyBlockWithColorByType:type];
+				Block *newBlock = [Block newEmptyBlockWithColorByType:self.type];
 				newBlock.boardX = row + _anchorX;
 				newBlock.boardY = col + _anchorY;
 
@@ -261,8 +261,8 @@ static NSInteger orientationCount[7] = {2, 1, 4, 4, 2, 2, 4};
 - (id)initWithType:(tetrominoType)blockType
 	   orientation:(NSInteger)blockOrientation
 {
-	type = blockType;
-	orientation = (blockOrientation % orientationCount[type]);
+	self.type = blockType;
+	orientation = (blockOrientation % orientationCount[self.type]);
 	
 	return self;
 }
@@ -321,18 +321,14 @@ static NSInteger orientationCount[7] = {2, 1, 4, 4, 2, 2, 4};
 
 + (Tetromino *)rotateTetromino:(Tetromino *)userTetromino in:(RotationDirection)direction {
 
-    //TODO: Create a new tetromino with the current tetromino position in the new direction
-
-    //return [Tetromino blockWithType:userTetromino.type Direction:direction BoardX:userTetromino.anchorX BoardY:userTetromino.anchorY CurrentOrientation:userTetromino.orientation];
-
-    return nil;
+    return [Tetromino blockWithType:userTetromino.type Direction:direction BoardX:userTetromino.anchorX BoardY:userTetromino.anchorY CurrentOrientation:userTetromino.orientation];
 }
 
 - (void)moveTetrominoDown {
 
 	CCArray *reversedChildren = [[CCArray alloc] initWithArray:self.children];  // make copy
 	[reversedChildren reverseObjects]; // reverse contents
-	
+
 	for (Block *currentBlock in reversedChildren)
 	{
 		//move each block down
@@ -394,13 +390,13 @@ static NSInteger orientationCount[7] = {2, 1, 4, 4, 2, 2, 4};
 
 - (NSString*)description
 {
-	return [NSString stringWithFormat:@"%@: type = %d, boardX = %d, boardY = %d, orientation = %d", [super description], type, _anchorX, _anchorY, orientation];
+	return [NSString stringWithFormat:@"%@: type = %d, boardX = %d, boardY = %d, orientation = %d", [super description], self.type, _anchorX, _anchorY, orientation];
 }
 
-//J'ai pas besoin du tetromino en parametre pcq c'est une instance method.
+//TODO: Take in consideration the position of the field on the screen.
 - (void)setPositionUsingFieldValue:(Tetromino *)tetromino height:(int)height width:(int)width tileSize:(int)size
 {
-    //TODO: Take in consideration the position of the field on the screen.
+
     for (Block *block in tetromino.children)
     {
         //int x = (int) (position.x / mainTileSize);//500,200

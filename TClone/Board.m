@@ -17,9 +17,10 @@
 - (id)init {
     self = [super init];
     if (self) {
-        _array = self.get20x10Array;
         self.Nbx = 10;
         self.Nby = 20;
+        _array = self.get20x10Array;
+
     }
 
     return self;
@@ -43,10 +44,14 @@
 
 - (BOOL)isBlockAt:(CGPoint)point {
 
+    //TODO: Fix onclick event
+    if (point.x == 20)
+    {
+        point.x = 19;
+    }
     NSMutableArray *inner = [_array objectAtIndex:(NSUInteger)point.x];
 
-    //TODO: Test if this test really works with the empty array.
-    if([inner objectAtIndex:(NSUInteger)point.y])
+    if([inner objectAtIndex:(NSUInteger)point.y] != [NSNumber numberWithChar:0])
     {
         return YES;
     }
@@ -73,6 +78,18 @@
     [[_array objectAtIndex:x] replaceObjectAtIndex:y withObject:block];
 }
 
+- (void)DeleteBlock:(Tetromino*) tetromino
+{
+
+    for(Block *block in tetromino.children)
+    {
+        [[_array objectAtIndex:block.boardX] replaceObjectAtIndex:block.boardY withObject:[NSNumber numberWithInt:0]];
+    }
+
+}
+
+
+
 - (void)MoveBlock:(Block*)block from:(CGPoint)before to:(CGPoint)after
 {
     NSUInteger x = (NSUInteger)before.x;
@@ -86,11 +103,11 @@
 }
 
 
-- (BOOL)boardRowEmpty:(int)y
+- (BOOL)boardRowFull:(int)y
 {
     for (int x = 0;x < self.Nbx; x++)
     {
-        if ([self isBlockAt:ccp(x, y)])
+        if (![self isBlockAt:ccp(x, y)])
         {
             return NO;
         }

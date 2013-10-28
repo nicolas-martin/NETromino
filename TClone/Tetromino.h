@@ -41,8 +41,7 @@ typedef enum
 	BOOL stuck;	
 	CGPoint leftMostPosition;
 	CGPoint rightMostPosition;
-	tetrominoType type;
-	NSInteger orientation;
+    NSInteger orientation;
 	
 }
 
@@ -57,7 +56,7 @@ typedef enum
 @property (readonly) CGPoint rightMostPosition;
 @property (readonly) CGPoint highestPosition;
 @property (readonly) CGPoint lowestPosition;
-
+@property(nonatomic) tetrominoType type;
 
 + (id)randomBlockUsingBlockFrequency;
 - (id)initWithRandomTypeAndOrientationUsingFrequency;
