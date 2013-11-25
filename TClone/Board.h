@@ -26,6 +26,8 @@
 
 - (void)DeleteBlock:(Tetromino *)tetromino;
 
+- (void)MoveTetromino:(Tetromino *)FromTetromino to:(Tetromino *)ToTetromino;
+
 - (void)MoveBlock:(Block *)block from:(CGPoint)before to:(CGPoint)after;
 
 - (BOOL)boardRowFull:(int)y;

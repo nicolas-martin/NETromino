@@ -37,6 +37,8 @@
 
 - (void)rotateTetromino:(RotationDirection)direction;
 
+- (void)UpdatesNewTetromino:(Tetromino *)FromTetromino to:(Tetromino *)ToTetromino;
+
 - (void)viewTap:(CGPoint)location;
 
 - (void)moveDownOrCreate;

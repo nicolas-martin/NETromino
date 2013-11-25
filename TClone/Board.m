@@ -67,7 +67,12 @@
     NSUInteger x = (NSUInteger)point.x;
     NSUInteger y = (NSUInteger)point.y;
 
-    return [self isBlockAt:point] ? (Block *) [[_array objectAtIndex:x] objectAtIndex:y] : nil;
+    if ([self isBlockAt:point]) {
+        return (Block *) [[_array objectAtIndex:x] objectAtIndex:y];
+    }
+    else {
+        return nil;
+    }
 }
 
 - (void)insertBlockAt:(Block *)block at:(CGPoint)point
@@ -85,6 +90,19 @@
     {
         [[_array objectAtIndex:block.boardX] replaceObjectAtIndex:block.boardY withObject:[NSNumber numberWithInt:0]];
     }
+
+}
+
+- (void)MoveTetromino:(Tetromino*) FromTetromino to:(Tetromino*) ToTetromino
+{
+
+    //delete
+    for(Block *block in FromTetromino.children)
+    {
+        [[_array objectAtIndex:block.boardX] replaceObjectAtIndex:block.boardY withObject:[NSNumber numberWithInt:0]];
+    }
+    //insert
+    [self addTetrominoToBoard:ToTetromino];
 
 }
 

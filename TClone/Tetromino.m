@@ -139,7 +139,7 @@ static NSInteger orientationCount[7] = {2, 1, 4, 4, 2, 2, 4};
 
 - (BLOCK*)contents
 {
-	return &(blocks[self.type][orientation]);
+	return &(blocks[self.type][_orientation]);
 }
 
 - (BLOCK*)contents:(tetrominoType)currentType and:(NSUInteger)currentOrientation
@@ -160,9 +160,9 @@ static NSInteger orientationCount[7] = {2, 1, 4, 4, 2, 2, 4};
 		self.anchorX = positionX;
 		self.anchorY = positionY;
 		self.type = blockType;
-		orientation = CurrentOrientation;
+		_orientation = CurrentOrientation;
 
-		orientation = (orientation + blockDirection + [self numOrientations]) % [self numOrientations];
+		_orientation = (_orientation + blockDirection + [self numOrientations]) % [self numOrientations];
 
 		_blocksInTetromino = [[NSMutableArray alloc] init];
 		
@@ -221,7 +221,7 @@ static NSInteger orientationCount[7] = {2, 1, 4, 4, 2, 2, 4};
 				
 		
 		
-		orientation = randomOrientation;
+		_orientation = randomOrientation;
 		_blocksInTetromino = [[NSMutableArray alloc] init];
 				
 		BLOCK* contents = [self contents];
@@ -262,7 +262,7 @@ static NSInteger orientationCount[7] = {2, 1, 4, 4, 2, 2, 4};
 	   orientation:(NSInteger)blockOrientation
 {
 	self.type = blockType;
-	orientation = (blockOrientation % orientationCount[self.type]);
+	_orientation = (blockOrientation % orientationCount[self.type]);
 	
 	return self;
 }
@@ -348,6 +348,7 @@ static NSInteger orientationCount[7] = {2, 1, 4, 4, 2, 2, 4};
 			myLeftPosition = ccp(currentBlock.boardX, currentBlock.boardY);
 		}
 	}
+    [self setLeftMostPosition:myLeftPosition];
 	return myLeftPosition;
 	
 }
@@ -360,6 +361,7 @@ static NSInteger orientationCount[7] = {2, 1, 4, 4, 2, 2, 4};
 			myRightPosition = ccp(currentBlock.boardX, currentBlock.boardY);
 		}
 	}
+    [self setRightMostPosition:myRightPosition];
 	return myRightPosition;
 }
 
@@ -373,11 +375,12 @@ static NSInteger orientationCount[7] = {2, 1, 4, 4, 2, 2, 4};
 
 		}
 	}
+    [self setHighestPosition:myLeftPosition];
 	return myLeftPosition;
 	
 }
 
-- (CGPoint)getLowestPosition
+- (CGPoint)lowestPosition
 {
 	CGPoint myRightPosition = ccp(-1, -1);
 	for (Block *currentBlock in self.children) {
@@ -385,13 +388,25 @@ static NSInteger orientationCount[7] = {2, 1, 4, 4, 2, 2, 4};
 			myRightPosition = ccp(currentBlock.boardX, currentBlock.boardY);
 		}
 	}
+    [self setLowestPosition:myRightPosition];
 	return myRightPosition;
 }
 
-- (NSString*)description
+-(void)MoveBoardPosition:(Tetromino *)ToTetromino
 {
-	return [NSString stringWithFormat:@"%@: type = %d, boardX = %d, boardY = %d, orientation = %d", [super description], self.type, _anchorX, _anchorY, orientation];
+    int i = 0;
+    for (Block *block in self.children)
+    {
+        Block *child = [ToTetromino.children objectAtIndex:i];
+        NSInteger newBoardX = child.boardX;
+        NSInteger newBoardY = child.boardY;
+        [block setBoardX: newBoardX];
+        [block setBoardY: newBoardY];
+
+        i++;
+    }
 }
+
 
 //TODO: Take in consideration the position of the field on the screen.
 - (void)setPositionUsingFieldValue:(Tetromino *)tetromino height:(int)height width:(int)width tileSize:(int)size
@@ -408,4 +423,21 @@ static NSInteger orientationCount[7] = {2, 1, 4, 4, 2, 2, 4};
     }
 
 }
+
+- (NSString *)description {
+    NSMutableString *description = [NSMutableString string];
+    [description appendFormat:@"self.type=%d", self.type];
+    [description appendFormat:@", self.orientation=%i", self.orientation];
+    [description appendFormat:@", self.lowestPosition.x=%f", self.lowestPosition.x];
+    [description appendFormat:@", self.lowestPosition.y=%f", self.lowestPosition.y];
+    [description appendFormat:@", self.anchorX=%i", self.anchorX];
+    [description appendFormat:@", self.anchorY=%i", self.anchorY];
+
+
+
+    return [NSString stringWithFormat:@"<%@: %@>", NSStringFromClass([self class]), description];
+
+}
+
+
 @end

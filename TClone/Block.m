@@ -121,4 +121,14 @@
 	[self redrawPositionOnBoard];
 }
 
+- (NSString *)description {
+    NSMutableString *description = [NSMutableString string];
+    [description appendFormat:@"self.boardX=%i", self.boardX];
+    [description appendFormat:@", self.boardY=%i", self.boardY];
+
+    return [NSString stringWithFormat:@"<%@: %@>", NSStringFromClass([self class]), description];
+
+}
+
+
 @end

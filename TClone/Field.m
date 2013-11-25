@@ -10,8 +10,8 @@
 #import "Tetromino.h"
 
 int Nby;
-
 int Nbx;
+#define NSLog(FORMAT, ...) printf("%s\n", [[NSString stringWithFormat:FORMAT, ##__VA_ARGS__] UTF8String]);
 
 @implementation Field {
 

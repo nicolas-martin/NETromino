@@ -9,7 +9,7 @@
 
 
 
-
+#define NSLog(FORMAT, ...) printf("%s\n", [[NSString stringWithFormat:FORMAT, ##__VA_ARGS__] UTF8String]);
 @implementation GameController {
 
 
@@ -29,22 +29,20 @@
 
 - (void)moveDownOrCreate {
     //Perhaps set all tetromino to stuck by default?
-
+    //[userTetromino getLowestPosition];
     if(userTetromino.stuck || userTetromino == NULL)
     {
         [self tryToCreateNewTetromino];
     }
-
-    else if([userTetromino getLowestPosition].y != 19 && ![field.board isBlockAt:ccp([userTetromino getLowestPosition].x, [userTetromino getLowestPosition].y+1)])
+    else if(userTetromino.lowestPosition.y != 19 && ![field.board isBlockAt:ccp(userTetromino.lowestPosition.x, userTetromino.lowestPosition.y+1)])
     {
         [self moveTetrominoDown];
-        NSLog(@"Tetromino moved down at %d Y", [userTetromino anchorY]);
         userTetromino.stuck = NO;
     }
     else
     {
         userTetromino.stuck = YES;
-        [field checkForRowsToClear];
+        //[field checkForRowsToClear];
     }
 
 }
@@ -82,7 +80,6 @@
     [[CCDirector sharedDirector] replaceScene:gameOverScene];
 }
 
-//TODO: Notify views
 - (Tetromino *)createNewTetromino {
 
 
@@ -143,22 +140,25 @@
     {
         [field.board DeleteBlock:userTetromino];
 
-        Tetromino *rotatedTetromino = [Tetromino rotateTetromino:userTetromino in:direction];
+        Tetromino *rotated = [Tetromino rotateTetromino:userTetromino in:direction];
 
-        [self UpdatesNewTetromino:rotatedTetromino];
+        [userTetromino MoveBoardPosition:rotated];
+        [userTetromino setOrientation:rotated.orientation];
+
+        [self UpdatesNewTetromino:userTetromino];
+
+
     }
 }
 
--(void)UpdatesNewTetromino:(Tetromino *)userTetromino
+-(void)UpdatesNewTetromino:(Tetromino*) ToTetromino
 {
-    [userTetromino setPositionUsingFieldValue:userTetromino height:field.Height width:field.Width tileSize:field.TileSize];
+    [ToTetromino setPositionUsingFieldValue:ToTetromino height:field.Height width:field.Width tileSize:field.TileSize];
 
-    [field.board addTetrominoToBoard:userTetromino];
+    [field.board addTetrominoToBoard:ToTetromino];
 
-    [self notifyTretrominoPosition:userTetromino];
+    [self notifyTretrominoPosition:ToTetromino];
 }
-
-
 
 - (void)notifyTretrominoPosition:(Tetromino *)tetromino {
     for (id<GameControllerObserver> observer in _listObservers) {
