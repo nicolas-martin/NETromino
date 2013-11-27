@@ -7,6 +7,7 @@
 #import "Board.h"
 
 
+#define NSLog(FORMAT, ...) printf("%s\n", [[NSString stringWithFormat:FORMAT, ##__VA_ARGS__] UTF8String]);
 
 @implementation Board {
 
@@ -61,6 +62,8 @@
     }
 }
 
+
+
 - (Block *)getBlockAt:(CGPoint)point
 {
 
@@ -68,13 +71,13 @@
     NSUInteger y = (NSUInteger)point.y;
 
     if ([self isBlockAt:point]) {
-        return (Block *) [[_array objectAtIndex:x] objectAtIndex:y];
+        return [[_array objectAtIndex:x] objectAtIndex:y];
     }
     else {
         return nil;
     }
 }
-
+//TODO: bug here when insert out of bound
 - (void)insertBlockAt:(Block *)block at:(CGPoint)point
 {
     NSUInteger x = (NSUInteger)point.x;
@@ -88,7 +91,7 @@
 
     for(Block *block in tetromino.children)
     {
-        [[_array objectAtIndex:block.boardX] replaceObjectAtIndex:block.boardY withObject:[NSNumber numberWithInt:0]];
+        [[_array objectAtIndex:(NSUInteger) block.boardX] replaceObjectAtIndex:(NSUInteger) block.boardY withObject:[NSNumber numberWithInt:0]];
     }
 
 }
@@ -142,6 +145,45 @@
         [self insertBlockAt:block at:ccp(block.boardX,block.boardY)];
     }
 
+}
+
+- (void)printCurrentBoardStatus:(BOOL *)withPosition
+{
+    NSLog(@"--------------------------------------------------------------------");
+    for (int j = 0; j < 20; ++ j)
+    {
+        NSMutableString *row = [NSMutableString string];
+        for (int i = 0 ;i < 10; ++i)
+        {
+
+            if ([self isBlockAt:ccp(i,j)])
+            {
+                if (withPosition)
+                {
+                    [row appendFormat: @"(%02d,%02d) ", i,j];
+                }
+                else
+                {
+                    [row appendFormat: @"X "];
+                }
+            }
+            else
+            {
+                if (withPosition)
+                {
+                    [row appendFormat: @"(  ,  ) "];
+                }
+                else
+                {
+                    [row appendFormat: @"  "];
+                }
+            }
+
+        }
+
+        NSLog(@"%@",row);
+
+    }
 }
 
 @end

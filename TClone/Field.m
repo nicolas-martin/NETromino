@@ -9,8 +9,6 @@
 #import "CGPointExtension.h"
 #import "Tetromino.h"
 
-int Nby;
-int Nbx;
 #define NSLog(FORMAT, ...) printf("%s\n", [[NSString stringWithFormat:FORMAT, ##__VA_ARGS__] UTF8String]);
 
 @implementation Field {
@@ -33,18 +31,16 @@ int Nbx;
 }
 
 
-- (void)checkForRowsToClear {
-
-//Return the row to clear or clear it myself?
+- (void)checkForRowsToClear:(Tetromino *)tetromino {
 
     BOOL occupied = NO;
-    for (int y = 0;y < Nby; y++)
+    for (Block *block in tetromino.children)
     {
 
-        for (int x = 0; x < Nbx; x++)
+        for (int x = block.boardX; x < [_board Nbx]; x++)
         {
 
-            if(![_board isBlockAt:ccp(x, y)])
+            if(![_board isBlockAt:ccp(x, block.boardY)])
             {
                 occupied = NO;
                 //Since there's an empty block on this column there's no need to look at the others
@@ -72,6 +68,34 @@ int Nbx;
 
 }
 
+- (BOOL)canMoveTetrominoByYTetromino:(Tetromino *)userTetromino offSetY:(int)offSetY {
+
+    // Sort blocks by x value if moving left, reverse order if moving right
+    CCArray *reversedChildren = [[CCArray alloc] initWithArray:userTetromino.children];
+
+    if (offSetY > 0)
+    {
+        [reversedChildren reverseObjects];
+    }
+
+    for (Block *currentBlock in reversedChildren)
+    {
+        //dont compare yourself
+        if (!([userTetromino isBlockInTetromino:[_board getBlockAt:ccp(currentBlock.boardX, currentBlock.boardY + offSetY)]]))
+        {
+            //if there's another block at the position you're looking at, you can't move
+            if ([_board isBlockAt:ccp(currentBlock.boardX, currentBlock.boardY + offSetY)])
+            {
+                return NO;
+            }
+        }
+    }
+    return YES;
+
+}
+
+
+
 - (BOOL)canMoveTetrominoByXTetromino:(Tetromino *)userTetromino offSetX:(int)offSetX {
 
     // Sort blocks by x value if moving left, reverse order if moving right
@@ -98,28 +122,44 @@ int Nbx;
 
 }
 
-- (BOOL)isTetrominoInBounds:(Tetromino *)tetromino {
+- (BOOL)isTetrominoInBounds:(Tetromino *)tetromino noCollisionWith:(Tetromino *)with {
 
     for (Block *currentBlock in tetromino.children)
     {
         //check if the new block is within the bounds and
-        if(currentBlock.boardX < 0 || currentBlock.boardX > kLastColumn || currentBlock.boardY < 0 || currentBlock.boardY > kLastRow )
+        if(currentBlock.boardX < 0 || currentBlock.boardX >= [self.board Nbx]
+                    || currentBlock.boardY < 0 || currentBlock.boardY >= [self.board Nby] )
         {
-            NSLog(@"DENIED");
+            NSLog(@"DENIED - OUT OF BOUNDS");
             return NO;
 
         }
 
         //if the current block is NOT part of the currentTetromino
-        if (!([tetromino isBlockInTetromino:[_board getBlockAt:ccp(currentBlock.boardX, currentBlock.boardY)]]))
+        /*if (!([tetromino isBlockInTetromino:[_board getBlockAt:ccp(currentBlock.boardX, currentBlock.boardY)]]))
         {
-            //and is not empty
             if ([_board isBlockAt:ccp(currentBlock.boardX, currentBlock.boardY)])
             {
-                NSLog(@"DENIED");
+                NSLog(@"DENIED - COLLISION");
                 return NO;
             }
+        }*/
+
+
+
+        for(Block *old in with.children)
+        {
+            if(!([old boardX] == [currentBlock boardX]) && ![old boardY] == [currentBlock boardY]) {
+                if ([_board isBlockAt:ccp(currentBlock.boardX, currentBlock.boardY)])
+                {
+                    NSLog(@"DENIED - COLLISION");
+                    return NO;
+                }
+            }
         }
+
+
+        //}
     }
     return YES;
 }

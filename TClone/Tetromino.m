@@ -297,12 +297,15 @@ static NSInteger orientationCount[7] = {2, 1, 4, 4, 2, 2, 4};
 
 - (BOOL)isBlockInTetromino:(id)block
 {
-	for (Block *currentBlock in self.children) {
-		if ([currentBlock isEqual:block]) {
-			return YES;
-		}
-	}
-	return NO;
+    if (block != nil)
+    {
+        for (Block *currentBlock in self.children) {
+            if ([currentBlock isEqual:block]) {
+                return YES;
+            }
+        }
+    }
+    return NO;
 }
 
 - (void)moveTetrominoInDirection:(Tetromino *)tetromino inDirection:(MoveDirection)direction

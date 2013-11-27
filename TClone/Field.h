@@ -30,11 +30,13 @@
 + (id)fieldWithBoard:(Board *)board;
 
 
-- (void)checkForRowsToClear;
+- (void)checkForRowsToClear:(Tetromino *)array;
+
+- (BOOL)canMoveTetrominoByYTetromino:(Tetromino *)userTetromino offSetY:(int)offSetY;
 
 - (BOOL)canMoveTetrominoByXTetromino:(Tetromino *)userTetromino offSetX:(int)offSetX;
 
-- (BOOL)isTetrominoInBounds:(Tetromino *)tetromino;
+- (BOOL)isTetrominoInBounds:(Tetromino *)tetromino noCollisionWith:(Tetromino *)with;
 
 - (BOOL)boardRowEmpty:(int)x;
 

@@ -22,7 +22,7 @@
 
 - (BOOL)isBlockAt:(CGPoint)point;
 
-- (Block *)getBlockAt:(CGPoint)point;
+- (id)getBlockAt:(CGPoint)point;
 
 - (void)DeleteBlock:(Tetromino *)tetromino;
 
@@ -35,4 +35,6 @@
 - (void)clearFullRows;
 
 - (void)addTetrominoToBoard:(Tetromino *)tetromino;
+
+- (void)printCurrentBoardStatus:(BOOL *)withPosition;
 @end

@@ -14,6 +14,7 @@
 
 
 }
+
 - (id)initWithField:(Field *)aField {
     self = [super init];
     if (self) {
@@ -34,7 +35,7 @@
     {
         [self tryToCreateNewTetromino];
     }
-    else if(userTetromino.lowestPosition.y != 19 && ![field.board isBlockAt:ccp(userTetromino.lowestPosition.x, userTetromino.lowestPosition.y+1)])
+    else if(userTetromino.lowestPosition.y != 19 && [field canMoveTetrominoByYTetromino:userTetromino offSetY:1])
     {
         [self moveTetrominoDown];
         userTetromino.stuck = NO;
@@ -42,10 +43,13 @@
     else
     {
         userTetromino.stuck = YES;
-        //[field checkForRowsToClear];
+        [field.board printCurrentBoardStatus:(BOOL *) TRUE];
+        [field checkForRowsToClear:userTetromino];
     }
 
 }
+
+
 
 - (id)init {
     if (self = [super init]) {
@@ -136,11 +140,11 @@
 
 - (void)rotateTetromino:(RotationDirection)direction {
 
-    if([field isTetrominoInBounds:userTetromino])
+    Tetromino *rotated = [Tetromino rotateTetromino:userTetromino in:direction];
+
+    if([field isTetrominoInBounds:rotated noCollisionWith:userTetromino])
     {
         [field.board DeleteBlock:userTetromino];
-
-        Tetromino *rotated = [Tetromino rotateTetromino:userTetromino in:direction];
 
         [userTetromino MoveBoardPosition:rotated];
         [userTetromino setOrientation:rotated.orientation];
