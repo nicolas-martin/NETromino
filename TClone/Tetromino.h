@@ -41,26 +41,26 @@ typedef enum
 	BOOL stuck;	
 	CGPoint leftMostPosition;
 	CGPoint rightMostPosition;
-    //NSInteger orientation;
+    //NSUInteger orientation;
 
 }
 
-@property (readwrite, assign) NSInteger orientation;
+@property (readwrite, assign) NSUInteger orientation;
 @property (readwrite, strong) NSMutableArray *blocksInTetromino;
 @property (assign) BOOL stuck;
-@property (readwrite, assign) int anchorX;
-@property (readwrite, assign) int anchorY;
-@property (readwrite, assign) CGPoint leftMostPosition;
-@property (readwrite, assign) CGPoint rightMostPosition;
-@property (readwrite, assign) CGPoint highestPosition;
-@property (readwrite, assign) CGPoint lowestPosition;
+@property (readwrite, assign) NSUInteger anchorX;
+@property (readwrite, assign) NSUInteger anchorY;
+@property (readwrite, assign, nonatomic) CGPoint leftMostPosition;
+@property (readwrite, assign, nonatomic) CGPoint rightMostPosition;
+@property (readwrite, assign, nonatomic) CGPoint highestPosition;
+@property (readwrite, assign, nonatomic) CGPoint lowestPosition;
 @property (nonatomic) tetrominoType type;
 
 + (id)randomBlockUsingBlockFrequency;
 
 - (id)initWithRandomTypeAndOrientationUsingFrequency;
 
-+ (id)blockWithType:(tetrominoType)blockType Direction:(RotationDirection)blockOrientation BoardX:(NSInteger)positionX BoardY:(NSInteger)positionY CurrentOrientation:(NSInteger)CurrentOrientation;
++ (id)blockWithType:(tetrominoType)blockType Direction:(RotationDirection)blockOrientation BoardX:(NSUInteger)positionX BoardY:(NSUInteger)positionY CurrentOrientation:(NSUInteger)CurrentOrientation;
 
 - (BOOL)isBlockInTetromino:(id)block;
 
@@ -71,8 +71,6 @@ typedef enum
 - (void)moveTetrominoDown;
 
 - (void)MoveBoardPosition:(Tetromino *)ToTetromino;
-
-- (void)setPositionUsingFieldValue:(Tetromino *)tetromino height:(int)height width:(int)width tileSize:(int)size;
 
 - (NSString *)description;
 

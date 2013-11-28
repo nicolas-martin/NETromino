@@ -132,7 +132,7 @@ static BLOCK bT[4] = {
 };
 //This is a 2D array
 static BLOCK *blocks[7] = {bI, bO, bJ, bL, bZ, bS, bT};
-static NSInteger orientationCount[7] = {2, 1, 4, 4, 2, 2, 4};
+static NSUInteger orientationCount[7] = {2, 1, 4, 4, 2, 2, 4};
 
 
 
@@ -148,12 +148,12 @@ static NSInteger orientationCount[7] = {2, 1, 4, 4, 2, 2, 4};
 }
 
 
-+ (id)blockWithType:(tetrominoType)blockType Direction:(RotationDirection)blockOrientation BoardX:(NSInteger)positionX BoardY:(NSInteger)positionY CurrentOrientation:(NSInteger)CurrentOrientation;
++ (id)blockWithType:(tetrominoType)blockType Direction:(RotationDirection)blockOrientation BoardX:(NSUInteger)positionX BoardY:(NSUInteger)positionY CurrentOrientation:(NSUInteger)CurrentOrientation;
 {
 	return [[self alloc] initWithTypeRotationPosition:blockType rotationDirection:blockOrientation BoardX:positionX BoardY:positionY CurrentOrientation:CurrentOrientation];
 }
 
-- (id)initWithTypeRotationPosition:(tetrominoType)blockType rotationDirection:(RotationDirection)blockDirection BoardX:(NSInteger)positionX BoardY:(NSInteger)positionY CurrentOrientation:(NSInteger)CurrentOrientation;
+- (id)initWithTypeRotationPosition:(tetrominoType)blockType rotationDirection:(RotationDirection)blockDirection BoardX:(NSUInteger)positionX BoardY:(NSUInteger)positionY CurrentOrientation:(NSUInteger)CurrentOrientation;
 {
 	if (self = [super init])
 	{
@@ -168,9 +168,9 @@ static NSInteger orientationCount[7] = {2, 1, 4, 4, 2, 2, 4};
 		
 		BLOCK* contents = [self contents];
 
-		for (NSInteger row = 0; row < 4; row++)
+		for (NSUInteger row = 0; row < 4; row++)
 		{
-			for (NSInteger col = 0; col < 4; col++)
+			for (NSUInteger col = 0; col < 4; col++)
 			{
 				// Get the contents of this cell of the block
 				uint8_t cellType = (*contents)[(4 - 1) - row][col];
@@ -197,7 +197,7 @@ static NSInteger orientationCount[7] = {2, 1, 4, 4, 2, 2, 4};
 
 }
 
-- (NSInteger)numOrientations
+- (NSUInteger)numOrientations
 {
 	return orientationCount[self.type];
 }
@@ -214,10 +214,10 @@ static NSInteger orientationCount[7] = {2, 1, 4, 4, 2, 2, 4};
 
 	if (self = [super init])
 	{
-		
-		int blockFrequency = arc4random() % 7;
+
+        NSUInteger blockFrequency = arc4random() % 7;
 		self.type = (tetrominoType)blockFrequency;
-		int randomOrientation = arc4random() % orientationCount[self.type];
+        NSUInteger randomOrientation = arc4random() % orientationCount[self.type];
 				
 		
 		
@@ -229,9 +229,9 @@ static NSInteger orientationCount[7] = {2, 1, 4, 4, 2, 2, 4};
 		self.anchorX = rowoffset;
 		self.anchorY = 0;
 		
-		for (NSInteger row = 0; row < 4; row++)
+		for (NSUInteger row = 0; row < 4; row++)
 		{
-			for (NSInteger col = 0; col < 4; col++)
+			for (NSUInteger col = 0; col < 4; col++)
 			{
 				// Get the contents of this cell of the block
 				uint8_t cellType = (*contents)[(4 - 1) - row][col];
@@ -259,7 +259,7 @@ static NSInteger orientationCount[7] = {2, 1, 4, 4, 2, 2, 4};
 }
 
 - (id)initWithType:(tetrominoType)blockType
-	   orientation:(NSInteger)blockOrientation
+	   orientation:(NSUInteger)blockOrientation
 {
 	self.type = blockType;
 	_orientation = (blockOrientation % orientationCount[self.type]);
@@ -297,12 +297,15 @@ static NSInteger orientationCount[7] = {2, 1, 4, 4, 2, 2, 4};
 
 - (BOOL)isBlockInTetromino:(id)block
 {
-	for (Block *currentBlock in self.children) {
-		if ([currentBlock isEqual:block]) {
-			return YES;
-		}
-	}
-	return NO;
+    if (block != nil)
+    {
+        for (Block *currentBlock in self.children) {
+            if ([currentBlock isEqual:block]) {
+                return YES;
+            }
+        }
+    }
+    return NO;
 }
 
 - (void)moveTetrominoInDirection:(Tetromino *)tetromino inDirection:(MoveDirection)direction
@@ -394,12 +397,12 @@ static NSInteger orientationCount[7] = {2, 1, 4, 4, 2, 2, 4};
 
 -(void)MoveBoardPosition:(Tetromino *)ToTetromino
 {
-    int i = 0;
+    NSUInteger i = 0;
     for (Block *block in self.children)
     {
         Block *child = [ToTetromino.children objectAtIndex:i];
-        NSInteger newBoardX = child.boardX;
-        NSInteger newBoardY = child.boardY;
+        NSUInteger newBoardX = child.boardX;
+        NSUInteger newBoardY = child.boardY;
         [block setBoardX: newBoardX];
         [block setBoardY: newBoardY];
 
@@ -407,22 +410,6 @@ static NSInteger orientationCount[7] = {2, 1, 4, 4, 2, 2, 4};
     }
 }
 
-
-//TODO: Take in consideration the position of the field on the screen.
-- (void)setPositionUsingFieldValue:(Tetromino *)tetromino height:(int)height width:(int)width tileSize:(int)size
-{
-
-    for (Block *block in tetromino.children)
-    {
-        //int x = (int) (position.x / mainTileSize);//500,200
-        //int y = (int) (((mainHeight) - position.y) / mainTileSize);
-
-        int x = block.boardX * size;
-        int y = (-(block.boardY * size) + height);
-        [block setPosition:ccp(x, y)];
-    }
-
-}
 
 - (NSString *)description {
     NSMutableString *description = [NSMutableString string];

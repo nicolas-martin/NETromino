@@ -117,8 +117,8 @@
 
 //Returns the tileCoordinate from a X and Y position
 - (CGPoint)tileCoordForPosition:(CGPoint)position {
-    int x = (int) (position.x / mainTileSize);//500,200
-    int y = (int) ((int) 20-(((mainHeight) - position.y) / mainTileSize));
+    NSUInteger x = (NSUInteger) (position.x / mainTileSize);//500,200
+    NSUInteger y = (NSUInteger) (20-(((mainHeight) - position.y) / mainTileSize));
     //NSLog(@"position clicked on board x = %d and y = %d", x, y);
     return ccp(x, y);
 }

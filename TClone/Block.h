@@ -9,17 +9,17 @@
 	BOOL stuck;
 	BOOL disappearing;
 }
-@property (readwrite, assign) int boardX;
-@property (readwrite, assign) int boardY;
+@property (readwrite, assign) NSUInteger boardX;
+@property (readwrite, assign) NSUInteger boardY;
 @property BOOL stuck;
 @property BOOL disappearing;
 
-+ (Block *)newEmptyBlockWithColorByType:(int)blockType;
++ (Block *)newEmptyBlockWithColorByType:(NSUInteger)blockType;
 - (void)moveUp;
 - (void)moveDown;
 - (void)moveLeft;
 - (void)moveRight;
-- (void)moveByX:(int)offsetX;
+- (void)moveByX:(NSUInteger)offsetX;
 - (NSComparisonResult)compareWithBlock:(Block *)block;
 -(void)MoveTo:(Block *)block;
 

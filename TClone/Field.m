@@ -9,14 +9,12 @@
 #import "CGPointExtension.h"
 #import "Tetromino.h"
 
-int Nby;
-int Nbx;
 #define NSLog(FORMAT, ...) printf("%s\n", [[NSString stringWithFormat:FORMAT, ##__VA_ARGS__] UTF8String]);
 
 @implementation Field {
 
 }
-- (id)initWithBoard:(Board *)board FieldHeight:(int)FieldHeight FieldWidth:(int)FieldWidth TileSize:(int)TileSize {
+- (id)initWithBoard:(Board *)board FieldHeight:(NSUInteger)FieldHeight FieldWidth:(NSUInteger)FieldWidth TileSize:(NSUInteger)TileSize {
     self = [super init];
     if (self) {
         self.board = board;
@@ -28,68 +26,68 @@ int Nbx;
     return self;
 }
 
-+ (id)fieldWithBoard:(Board *)board FieldHeight:(int)FieldHeight FieldWidth:(int)FieldWidth TileSize:(int)TileSize {
++ (id)fieldWithBoard:(Board *)board FieldHeight:(NSUInteger)FieldHeight FieldWidth:(NSUInteger)FieldWidth TileSize:(NSUInteger)TileSize {
     return [[self alloc] initWithBoard:board FieldHeight:FieldHeight FieldWidth:FieldWidth TileSize:TileSize];
 }
 
 
-- (void)checkForRowsToClear {
-
-//Return the row to clear or clear it myself?
+- (void)checkForRowsToClear:(Tetromino *)tetromino {
 
     BOOL occupied = NO;
-    for (int y = 0;y < Nby; y++)
-    {
+    NSUInteger deletedRow = (NSUInteger) nil;
+    for (Block *block in tetromino.children) {
+        //Skip row already processed
+        if ([block boardY] == (NSUInteger) deletedRow) {
+            continue;
+        }
 
-        for (int x = 0; x < Nbx; x++)
-        {
+        for (int x = 0; x < [_board Nbx]; x++) {
 
-            if(![_board isBlockAt:ccp(x, y)])
-            {
+            if (![_board isBlockAt:ccp(x, block.boardY)]) {
                 occupied = NO;
                 //Since there's an empty block on this column there's no need to look at the others
                 //Exits both loops and get the next row
                 break;
 
             }
-            else
-            {
+            else {
                 occupied = YES;
             }
         }
 
-        if(occupied)
-        {
-            //TODO: remove row from the board using Tetromino shape?
-            //TODO: Notify the views
+        if (occupied) {
+            deletedRow = [block boardY];
+            NSLog(@"Delete row %u", deletedRow);
+
+            [_board DeleteRow:(NSUInteger)deletedRow];
+            [_board printCurrentBoardStatus:(BOOL *) YES];
+
+            [self setPositionUsingFieldValue:[_board MoveBoardDown:(NSUInteger) (deletedRow - 1)]];
+            [_board printCurrentBoardStatus:(BOOL *) YES];
+
 
         }
-        else
-        {
+        else {
             continue;
         }
     }
 
 }
 
-- (BOOL)canMoveTetrominoByXTetromino:(Tetromino *)userTetromino offSetX:(int)offSetX {
+- (BOOL)canMoveTetrominoByYTetromino:(Tetromino *)userTetromino offSetY:(NSUInteger)offSetY {
 
     // Sort blocks by x value if moving left, reverse order if moving right
     CCArray *reversedChildren = [[CCArray alloc] initWithArray:userTetromino.children];
 
-    if (offSetX > 0)
-    {
+    if (offSetY > 0) {
         [reversedChildren reverseObjects];
     }
 
-    for (Block *currentBlock in reversedChildren)
-    {
+    for (Block *currentBlock in reversedChildren) {
         //dont compare yourself
-        if (!([userTetromino isBlockInTetromino:[_board getBlockAt:ccp(currentBlock.boardX + offSetX, currentBlock.boardY)]]))
-        {
+        if (!([userTetromino isBlockInTetromino:[_board getBlockAt:ccp(currentBlock.boardX, currentBlock.boardY + offSetY)]])) {
             //if there's another block at the position you're looking at, you can't move
-            if ([_board isBlockAt:ccp(currentBlock.boardX + offSetX, currentBlock.boardY)])
-            {
+            if ([_board isBlockAt:ccp(currentBlock.boardX, currentBlock.boardY + offSetY)]) {
                 return NO;
             }
         }
@@ -98,37 +96,88 @@ int Nbx;
 
 }
 
-- (BOOL)isTetrominoInBounds:(Tetromino *)tetromino {
 
-    for (Block *currentBlock in tetromino.children)
-    {
+- (BOOL)canMoveTetrominoByXTetromino:(Tetromino *)userTetromino offSetX:(NSUInteger)offSetX {
+
+    // Sort blocks by x value if moving left, reverse order if moving right
+    CCArray *reversedChildren = [[CCArray alloc] initWithArray:userTetromino.children];
+
+    if (offSetX > 0) {
+        [reversedChildren reverseObjects];
+    }
+
+    for (Block *currentBlock in reversedChildren) {
+        //dont compare yourself
+        if (!([userTetromino isBlockInTetromino:[_board getBlockAt:ccp(currentBlock.boardX + offSetX, currentBlock.boardY)]])) {
+            //if there's another block at the position you're looking at, you can't move
+            if ([_board isBlockAt:ccp(currentBlock.boardX + offSetX, currentBlock.boardY)]) {
+                return NO;
+            }
+        }
+    }
+    return YES;
+
+}
+
+- (BOOL)isTetrominoInBounds:(Tetromino *)tetromino noCollisionWith:(Tetromino *)with {
+
+    for (Block *currentBlock in tetromino.children) {
         //check if the new block is within the bounds and
-        if(currentBlock.boardX < 0 || currentBlock.boardX > kLastColumn || currentBlock.boardY < 0 || currentBlock.boardY > kLastRow )
-        {
-            NSLog(@"DENIED");
+        if (currentBlock.boardX < 0 || currentBlock.boardX >= [self.board Nbx]
+                || currentBlock.boardY < 0 || currentBlock.boardY >= [self.board Nby]) {
+            NSLog(@"DENIED - OUT OF BOUNDS");
             return NO;
 
         }
 
         //if the current block is NOT part of the currentTetromino
-        if (!([tetromino isBlockInTetromino:[_board getBlockAt:ccp(currentBlock.boardX, currentBlock.boardY)]]))
+        /*if (!([tetromino isBlockInTetromino:[_board getBlockAt:ccp(currentBlock.boardX, currentBlock.boardY)]]))
         {
-            //and is not empty
             if ([_board isBlockAt:ccp(currentBlock.boardX, currentBlock.boardY)])
             {
-                NSLog(@"DENIED");
+                NSLog(@"DENIED - COLLISION");
                 return NO;
             }
+        }*/
+
+
+
+        for (Block *old in with.children) {
+            if (!([old boardX] == [currentBlock boardX]) && ![old boardY] == [currentBlock boardY]) {
+                if ([_board isBlockAt:ccp(currentBlock.boardX, currentBlock.boardY)]) {
+                    NSLog(@"DENIED - COLLISION");
+                    return NO;
+                }
+            }
         }
+
+
+        //}
     }
     return YES;
 }
 
 
-- (BOOL)boardRowEmpty:(int)y {
+- (BOOL)boardRowEmpty:(NSUInteger)y {
 
     return [_board boardRowFull:y];
 
 }
 
+//TODO: Take in consideration the position of the field on the screen.
+- (void)setPositionUsingFieldValue:(NSMutableArray *) arrayOfBlocks
+{
+    CGPoint fieldPositionInView = [self position];
+
+    for (Block *block in arrayOfBlocks)
+    {
+        //int x = (NSUInteger) (position.x / mainTileSize);//500,200
+        //int y = (NSUInteger) (((mainHeight) - position.y) / mainTileSize);
+
+        NSUInteger x = (NSUInteger) ((block.boardX * _TileSize) + fieldPositionInView.x);
+        NSUInteger y = (NSUInteger) ((-(block.boardY * _TileSize) + _Height) + fieldPositionInView.y);
+        [block setPosition:ccp(x, y)];
+    }
+
+}
 @end

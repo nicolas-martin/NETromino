@@ -16,7 +16,7 @@
 
 
 
-+ (Block *)newEmptyBlockWithColorByType:(int)blockType
++ (Block *)newEmptyBlockWithColorByType:(NSUInteger)blockType
 {
 	NSString *filename = nil, *color = nil;
 	Block *temp = nil;
@@ -103,7 +103,7 @@
 	[self redrawPositionOnBoard];
 }
 
-- (void)moveByX:(int)offsetX
+- (void)moveByX:(NSUInteger)offsetX
 {
 	_boardX += offsetX;
 	[self redrawPositionOnBoard];

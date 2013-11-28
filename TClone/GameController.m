@@ -8,12 +8,12 @@
 #import "GameOverLayer.h"
 
 
-
 #define NSLog(FORMAT, ...) printf("%s\n", [[NSString stringWithFormat:FORMAT, ##__VA_ARGS__] UTF8String]);
 @implementation GameController {
 
 
 }
+
 - (id)initWithField:(Field *)aField {
     self = [super init];
     if (self) {
@@ -34,7 +34,7 @@
     {
         [self tryToCreateNewTetromino];
     }
-    else if(userTetromino.lowestPosition.y != 19 && ![field.board isBlockAt:ccp(userTetromino.lowestPosition.x, userTetromino.lowestPosition.y+1)])
+    else if(userTetromino.lowestPosition.y != 19 && [field canMoveTetrominoByYTetromino:userTetromino offSetY:1])
     {
         [self moveTetrominoDown];
         userTetromino.stuck = NO;
@@ -42,10 +42,13 @@
     else
     {
         userTetromino.stuck = YES;
-        //[field checkForRowsToClear];
+        [field.board printCurrentBoardStatus:(BOOL *) TRUE];
+        [field checkForRowsToClear:userTetromino];
     }
 
 }
+
+
 
 - (id)init {
     if (self = [super init]) {
@@ -87,7 +90,7 @@
 
     [field.board addTetrominoToBoard:tempTetromino];
 
-    [tempTetromino setPositionUsingFieldValue:tempTetromino height:field.Height width:field.Width tileSize:field.TileSize];
+    [field setPositionUsingFieldValue:tempTetromino.children];
 
     [field addChild:tempTetromino];
 
@@ -136,11 +139,11 @@
 
 - (void)rotateTetromino:(RotationDirection)direction {
 
-    if([field isTetrominoInBounds:userTetromino])
+    Tetromino *rotated = [Tetromino rotateTetromino:userTetromino in:direction];
+
+    if([field isTetrominoInBounds:rotated noCollisionWith:userTetromino])
     {
         [field.board DeleteBlock:userTetromino];
-
-        Tetromino *rotated = [Tetromino rotateTetromino:userTetromino in:direction];
 
         [userTetromino MoveBoardPosition:rotated];
         [userTetromino setOrientation:rotated.orientation];
@@ -153,7 +156,7 @@
 
 -(void)UpdatesNewTetromino:(Tetromino*) ToTetromino
 {
-    [ToTetromino setPositionUsingFieldValue:ToTetromino height:field.Height width:field.Width tileSize:field.TileSize];
+    [field setPositionUsingFieldValue:ToTetromino.children];
 
     [field.board addTetrominoToBoard:ToTetromino];
 
@@ -189,10 +192,10 @@
     lowestY = [userTetromino lowestPosition].y;
     highestY = [userTetromino highestPosition].y;
 
-    location = [[CCDirector sharedDirector] convertToGL:location];
+    //location = [[CCDirector sharedDirector] convertToGL:location];
 
-    //Drop only if touched right under the piece
-    if (location.y < lowestY)
+    //TODO: Maybe change this so that the bottom left == (0,0 instead of (0,19)?
+    if (location.y > lowestY)
     {
         touchType = kDropBlocks;
     }
@@ -217,7 +220,7 @@
 
         while (!userTetromino.stuck)
         {
-            [self moveTetrominoDown];
+            [self moveDownOrCreate];
         }
     }
     else if (touchType == kMoveLeft)

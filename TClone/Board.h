@@ -12,9 +12,9 @@
 
 @property (readwrite, assign) int NbBlocks;
 
-@property(nonatomic) int Nby;
+@property(nonatomic) NSUInteger Nby;
 
-@property(nonatomic) int Nbx;
+@property(nonatomic) NSUInteger Nbx;
 
 - (id)init;
 
@@ -22,17 +22,19 @@
 
 - (BOOL)isBlockAt:(CGPoint)point;
 
-- (Block *)getBlockAt:(CGPoint)point;
+- (id)getBlockAt:(CGPoint)point;
 
 - (void)DeleteBlock:(Tetromino *)tetromino;
 
 - (void)MoveTetromino:(Tetromino *)FromTetromino to:(Tetromino *)ToTetromino;
 
-- (void)MoveBlock:(Block *)block from:(CGPoint)before to:(CGPoint)after;
+- (BOOL)boardRowFull:(NSUInteger)y;
 
-- (BOOL)boardRowFull:(int)y;
+- (void)DeleteRow:(NSUInteger)y;
 
-- (void)clearFullRows;
+- (NSMutableArray *)MoveBoardDown:(NSUInteger)y;
 
 - (void)addTetrominoToBoard:(Tetromino *)tetromino;
+
+- (void)printCurrentBoardStatus:(BOOL *)withPosition;
 @end
