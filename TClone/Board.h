@@ -36,5 +36,5 @@
 
 - (void)addTetrominoToBoard:(NSMutableArray *)blocksToAdd;
 
-- (void)printCurrentBoardStatus:(BOOL *)withPosition;
+- (void)printCurrentBoardStatus:(BOOL)withPosition;
 @end

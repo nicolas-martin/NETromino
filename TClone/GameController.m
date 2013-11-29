@@ -22,7 +22,7 @@
 - (id)initWithField:(Field *)aField {
     self = [super init];
     if (self) {
-        field = aField;
+        self.field = aField;
     }
 
     return self;
@@ -37,9 +37,9 @@
     //[userTetromino getLowestPosition];
     if(userTetromino.stuck || userTetromino == NULL)
     {
-        [self tryToCreateNewTetromino];
+        [self createNewTetromino];
     }
-    else if(userTetromino.lowestPosition.y != 19 && [field canMoveTetrominoByYTetromino:userTetromino offSetY:1])
+    else if(userTetromino.lowestPosition.y != 19 && [self.field canMoveTetrominoByYTetromino:userTetromino offSetY:1])
     {
         [self moveTetrominoDown];
         userTetromino.stuck = NO;
@@ -47,8 +47,8 @@
     else
     {
         userTetromino.stuck = YES;
-        [field.board printCurrentBoardStatus:(BOOL *) TRUE];
-        [field checkForRowsToClear:userTetromino.children];
+        [self.field checkForRowsToClear:userTetromino.children];
+        [self.field.board printCurrentBoardStatus:YES];
     }
 
 }
@@ -69,16 +69,26 @@
 }
 
 
-- (void)tryToCreateNewTetromino
+- (void)VerifyNewBlockCollision:(Tetromino *)new
 {
-    if(![field.board boardRowFull:0] && ![field.board boardRowFull:1])
+
+    BOOL collision = NO;
+
+    for (Block *block in new.children)
     {
-        userTetromino = [self createNewTetromino];
+        if ([self.field.board isBlockAt:ccp(block.boardX, block.boardY)])
+        {
+            collision = YES;
+            continue;
+        }
     }
-    else
+
+    if (collision)
     {
-        [self gameOver:YES];
+        [self gameOver:NO];
     }
+
+
 }
 
 
@@ -91,40 +101,42 @@
 - (void)addBlocks:(NSMutableArray *)blocksToAdd
 {
 
-    [field.board addTetrominoToBoard:blocksToAdd];
+    [self.field.board addTetrominoToBoard:blocksToAdd];
 
-    [field setPositionUsingFieldValue:blocksToAdd];
+    [self.field setPositionUsingFieldValue:blocksToAdd];
 
     for (Block * blocks in blocksToAdd)
     {
-        [field addChild:blocks];
+        [self.field addChild:blocks];
     }
 
     //[self newTetromino:blocksToAdd];
 
 }
 
-- (Tetromino *)createNewTetromino {
+- (void)createNewTetromino {
 
 
     Tetromino *tempTetromino = [Tetromino randomBlockUsingBlockFrequency];
 
-    [field.board addTetrominoToBoard:tempTetromino.children];
+    [self VerifyNewBlockCollision:tempTetromino];
 
-    [field setPositionUsingFieldValue:tempTetromino.children];
+    [self.field.board addTetrominoToBoard:tempTetromino.children];
 
-    [field addChild:tempTetromino];
+    [self.field setPositionUsingFieldValue:tempTetromino.children];
+
+    [self.field addChild:tempTetromino];
 
     [self newTetromino:tempTetromino];
 
-    return tempTetromino;
+    userTetromino = tempTetromino;
 
 }
 
 - (void)moveTetrominoDown
 {
 
-    [field.board DeleteBlock:userTetromino];
+    [self.field.board DeleteBlock:userTetromino];
 
     [userTetromino moveTetrominoDown];
 
@@ -133,10 +145,10 @@
 
 - (void)moveTetrominoLeft{
 
-    if ([field canMoveTetrominoByXTetromino:userTetromino offSetX:-1])
+    if ([self.field canMoveTetrominoByXTetromino:userTetromino offSetX:-1])
     {
 
-        [field.board DeleteBlock:userTetromino];
+        [self.field.board DeleteBlock:userTetromino];
 
         [userTetromino moveTetrominoInDirection:userTetromino inDirection:moveLeft];
 
@@ -147,9 +159,9 @@
 
 - (void)moveTetrominoRight{
 
-    if ([field canMoveTetrominoByXTetromino:userTetromino offSetX:1])
+    if ([self.field canMoveTetrominoByXTetromino:userTetromino offSetX:1])
     {
-        [field.board DeleteBlock:userTetromino];
+        [self.field.board DeleteBlock:userTetromino];
 
         [userTetromino moveTetrominoInDirection:userTetromino inDirection:moveRight];
 
@@ -162,9 +174,9 @@
 
     Tetromino *rotated = [Tetromino rotateTetromino:userTetromino in:direction];
 
-    if([field isTetrominoInBounds:rotated noCollisionWith:userTetromino])
+    if([self.field isTetrominoInBounds:rotated noCollisionWith:userTetromino])
     {
-        [field.board DeleteBlock:userTetromino];
+        [self.field.board DeleteBlock:userTetromino];
 
         [userTetromino MoveBoardPosition:rotated];
         [userTetromino setOrientation:rotated.orientation];
@@ -177,9 +189,9 @@
 
 -(void)UpdatesNewTetromino:(Tetromino*) ToTetromino
 {
-    [field setPositionUsingFieldValue:ToTetromino.children];
+    [self.field setPositionUsingFieldValue:ToTetromino.children];
 
-    [field.board addTetrominoToBoard:ToTetromino.children];
+    [self.field.board addTetrominoToBoard:ToTetromino.children];
 
     [self notifyTretrominoPosition:ToTetromino];
 }

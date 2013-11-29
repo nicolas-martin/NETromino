@@ -46,7 +46,6 @@
 
 - (BOOL)isBlockAt:(CGPoint)point {
 
-    //TODO: Fix onclick event
     if (point.x == 20) {
         point.x = 19;
     }
@@ -96,7 +95,7 @@
         [[_array objectAtIndex:block.boardX] replaceObjectAtIndex:block.boardY withObject:[NSNumber numberWithInt:0]];
     }
     //insert
-    [self addTetrominoToBoard:ToTetromino];
+    [self addTetrominoToBoard:ToTetromino.children];
 
 }
 
@@ -113,12 +112,28 @@
 
 
 - (BOOL)boardRowFull:(NSUInteger)y {
-    for (int x = 0; x < self.Nbx; x++) {
+    BOOL occupied;
+    for (int x = 0; x < [self Nbx]; x++) {
+
         if (![self isBlockAt:ccp(x, y)]) {
-            return NO;
+            occupied = NO;
+            //Since there's an empty block on this column there's no need to look at the others
+            //Exits both loops and get the next row
+            break;
+
+        }
+        else {
+            occupied = YES;
         }
     }
-    return YES;
+    if (occupied)
+    {
+        return YES;
+    }
+    else
+    {
+        return NO;
+    }
 }
 
 //And removes the sprite
@@ -139,7 +154,7 @@
             Block *current = [self getBlockAt:ccp(x, y)];
             if (current != nil) {
 
-                [self MoveBlock:current to:ccp(x, y+1)];
+                [self MoveBlock:current to:ccp(x, y + 1)];
 
                 [current moveDown];
 
@@ -160,7 +175,7 @@
 
 }
 
-- (void)printCurrentBoardStatus:(BOOL *)withPosition {
+- (void)printCurrentBoardStatus:(BOOL)withPosition {
     NSLog(@"--------------------------------------------------------------------");
     for (int j = 0; j < 20; ++j) {
         NSMutableString *row = [NSMutableString string];

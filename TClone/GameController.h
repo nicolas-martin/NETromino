@@ -15,7 +15,6 @@
 
 @interface GameController : NSObject <NSCoding> {
 
-    Field *field;
     Tetromino *userTetromino;
 
     enum touchTypes {
@@ -29,13 +28,17 @@
 
 @property (nonatomic, strong) NSMutableArray* listObservers;
 
+@property(nonatomic, strong) Field *field;
+
 - (id)initWithField:(Field *)aField;
 
 + (id)controllerWithField:(Field *)aField;
 
+- (void)VerifyNewBlockCollision:(Tetromino *)new;
+
 - (void)addBlocks:(NSMutableArray *)blocksToAdd;
 
-- (void)tryToCreateNewTetromino;
+- (void) createNewTetromino;
 
 - (void)rotateTetromino:(RotationDirection)direction;
 

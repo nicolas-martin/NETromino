@@ -38,11 +38,11 @@ GameController *gameController4;
 	if ((self = [super init]))
 	{
         playerWidth = 160;
-        playerHeight = 320;
+        playerHeight = 336;
         playerTileSize = 16;
 
         mainWidth = 320;
-        mainHeight = 740;
+        mainHeight = 672;
         mainTileSize = 32;
 
         _MainField = [Field node];
@@ -134,6 +134,11 @@ GameController *gameController4;
 	return self;
 }
 
+-(void)AddBlocksToPlayer:(GameController *)controller blocksToAdd:(NSMutableArray *)blocks
+{
+
+}
+
 //Returns the tileCoordinate from a X and Y position
 - (CGPoint)tileCoordForPosition:(CGPoint)position {
     NSUInteger x = (NSUInteger) (position.x / mainTileSize);//500,200
@@ -156,11 +161,11 @@ GameController *gameController4;
 - (void)startGame{
 
 
-	[_gameController tryToCreateNewTetromino];
-    [gameController1 tryToCreateNewTetromino];
-    [gameController2 tryToCreateNewTetromino];
-    [gameController3 tryToCreateNewTetromino];
-    [gameController4 tryToCreateNewTetromino];
+	[_gameController createNewTetromino];
+    [gameController1 createNewTetromino];
+    [gameController2 createNewTetromino];
+    [gameController3 createNewTetromino];
+    [gameController4 createNewTetromino];
 
 	frameCount = 0;
 	moveCycleRatio = 10;
@@ -176,10 +181,11 @@ GameController *gameController4;
     if (frameCount % moveCycleRatio == 0)
     {
         [_gameController moveDownOrCreate];
-        [gameController1 moveDownOrCreate];
-        [gameController2 moveDownOrCreate];
-        [gameController3 moveDownOrCreate];
-        [gameController4 moveDownOrCreate];
+        //[gameController1 moveDownOrCreate];
+        //[gameController2 moveDownOrCreate];
+        //[gameController3 moveDownOrCreate];
+        //[gameController3.field.board printCurrentBoardStatus:YES];
+        //[gameController4 moveDownOrCreate];
 
     }
 }
