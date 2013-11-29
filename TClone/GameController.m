@@ -9,6 +9,11 @@
 
 
 #define NSLog(FORMAT, ...) printf("%s\n", [[NSString stringWithFormat:FORMAT, ##__VA_ARGS__] UTF8String]);
+
+@interface GameController ()
+
+@end
+
 @implementation GameController {
 
 
@@ -43,7 +48,7 @@
     {
         userTetromino.stuck = YES;
         [field.board printCurrentBoardStatus:(BOOL *) TRUE];
-        [field checkForRowsToClear:userTetromino];
+        [field checkForRowsToClear:userTetromino.children];
     }
 
 }
@@ -83,12 +88,28 @@
     [[CCDirector sharedDirector] replaceScene:gameOverScene];
 }
 
+- (void)addBlocks:(NSMutableArray *)blocksToAdd
+{
+
+    [field.board addTetrominoToBoard:blocksToAdd];
+
+    [field setPositionUsingFieldValue:blocksToAdd];
+
+    for (Block * blocks in blocksToAdd)
+    {
+        [field addChild:blocks];
+    }
+
+    //[self newTetromino:blocksToAdd];
+
+}
+
 - (Tetromino *)createNewTetromino {
 
 
     Tetromino *tempTetromino = [Tetromino randomBlockUsingBlockFrequency];
 
-    [field.board addTetrominoToBoard:tempTetromino];
+    [field.board addTetrominoToBoard:tempTetromino.children];
 
     [field setPositionUsingFieldValue:tempTetromino.children];
 
@@ -158,7 +179,7 @@
 {
     [field setPositionUsingFieldValue:ToTetromino.children];
 
-    [field.board addTetrominoToBoard:ToTetromino];
+    [field.board addTetrominoToBoard:ToTetromino.children];
 
     [self notifyTretrominoPosition:ToTetromino];
 }

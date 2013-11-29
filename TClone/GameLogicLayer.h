@@ -36,11 +36,11 @@
     Field * _FieldLayer2;
     Field * _FieldLayer3;
     Field * _FieldLayer4;
+
+
 	
 }
 - (id)initWithFields:(Field *)mainFieldLayer and:(Field *)otherFieldLayer1 and:(Field *)otherFieldLayer2 and:(Field *)otherFieldLayer3 and:(Field *)otherFieldLayer4;
-
-- (void)updateBoard:(ccTime)dt;
 
 +(CCScene *) scene;
 

@@ -8,6 +8,12 @@
 #import "Field.h"
 
 #define NSLog(FORMAT, ...) printf("%s\n", [[NSString stringWithFormat:FORMAT, ##__VA_ARGS__] UTF8String]);
+GameController *gameController1;
+GameController *gameController2;
+GameController *gameController3;
+
+GameController *gameController4;
+
 @interface GameLogicLayer (private)
 
 - (void)startGame;
@@ -64,33 +70,33 @@
         [_MainField setPosition:ccp(0,0)];
         [_MainField setContentSize:CGSizeMake(mainWidth, mainHeight)];
         CCLayerColor *layerColorMain = [CCLayerColor layerWithColor:ccc4(50, 50, 100, 128) width:_MainField.contentSize.width height:_MainField.contentSize.height];
-        [_MainField addChild:layerColorMain z:1];
+        [_MainField addChild:layerColorMain z:-1];
 
         [_FieldLayer1 setPosition:ccp(winSize.width - playerWidth, 0)];
         [_FieldLayer1 setContentSize:CGSizeMake(playerWidth, playerHeight)];
         CCLayerColor *layerColor1 = [CCLayerColor layerWithColor:ccc4(100, 150, 50, 128) width:_FieldLayer1.contentSize.width height:_FieldLayer1.contentSize.height];
-        [_FieldLayer1 addChild:layerColor1];
+        [_FieldLayer1 addChild:layerColor1 z:-1];
 
         [_FieldLayer2 setPosition:ccp(winSize.width - playerWidth, winSize.height - playerHeight)];
         [_FieldLayer2 setContentSize:CGSizeMake(playerWidth, playerHeight)];
         CCLayerColor *layerColor2 = [CCLayerColor layerWithColor:ccc4(200, 50, 100, 128) width:_FieldLayer2.contentSize.width height:_FieldLayer2.contentSize.height];
-        [_FieldLayer2 addChild:layerColor2];
+        [_FieldLayer2 addChild:layerColor2 z:-1];
 
         [_FieldLayer3 setPosition:ccp(winSize.width - (playerWidth + 200), 0)];
         [_FieldLayer3 setContentSize:CGSizeMake(playerWidth, playerHeight)];
         CCLayerColor *layerColor3 = [CCLayerColor layerWithColor:ccc4(200, 50, 100, 128) width:_FieldLayer3.contentSize.width height:_FieldLayer3.contentSize.height];
-        [_FieldLayer3 addChild:layerColor3];
+        [_FieldLayer3 addChild:layerColor3 z:-1];
 
         [_FieldLayer4 setPosition:ccp(winSize.width - (playerWidth + 200), winSize.height - (playerHeight))];
         _FieldLayer4.contentSize = CGSizeMake(playerWidth, playerHeight);
         CCLayerColor *layerColor4 = [CCLayerColor layerWithColor:ccc4(200, 50, 100, 128) width:_FieldLayer4.contentSize.width height:_FieldLayer4.contentSize.height];
-        [_FieldLayer4 addChild:layerColor4];
+        [_FieldLayer4 addChild:layerColor4 z:-1];
 
-        [self addChild:_MainField z:1];
-        [self addChild:_FieldLayer1 z:1];
-        [self addChild:_FieldLayer2 z:1];
-        [self addChild:_FieldLayer3 z:1];
-        [self addChild:_FieldLayer4 z:1];
+        [self addChild:_MainField z:-1];
+        [self addChild:_FieldLayer1 z:-1];
+        [self addChild:_FieldLayer2 z:-1];
+        [self addChild:_FieldLayer3 z:-1];
+        [self addChild:_FieldLayer4 z:-1];
 
         self.isTouchEnabled = YES;
 
@@ -109,7 +115,20 @@
         //Creates a new controller with a field.
         _gameController = [GameController controllerWithField:_MainField];
 
-		[self startGame];
+        //////// TESTING ////////
+        gameController1 = [GameController controllerWithField:_FieldLayer1];
+        gameController2 = [GameController controllerWithField:_FieldLayer2];
+        gameController3 = [GameController controllerWithField:_FieldLayer3];
+        gameController4 = [GameController controllerWithField:_FieldLayer4];
+        Block *block = [Block newEmptyBlockWithColorByType:2];
+        [block setBoardX:5];
+        [block setBoardY:10];
+        NSMutableArray *bArray = [NSMutableArray array];
+        [bArray addObject:block];
+        [gameController1 addBlocks:bArray];
+        //////// TESTING ////////
+
+        [self startGame];
 	
 	}
 	return self;
@@ -138,20 +157,33 @@
 
 
 	[_gameController tryToCreateNewTetromino];
+    [gameController1 tryToCreateNewTetromino];
+    [gameController2 tryToCreateNewTetromino];
+    [gameController3 tryToCreateNewTetromino];
+    [gameController4 tryToCreateNewTetromino];
 
 	frameCount = 0;
 	moveCycleRatio = 10;
-	[self schedule:@selector(updateBoard:) interval:(1.0/60.0)];
+    [self schedule:@selector(updateBoard:) interval:(1.0 / 60.0)];
 }
 
-- (void)updateBoard:(ccTime)dt{
-	frameCount += 1;
-	if (frameCount % moveCycleRatio == 0)
-	{
+- (id)initWithFields:(Field *)mainFieldLayer and:(Field *)otherFieldLayer1 and:(Field *)otherFieldLayer2 and:(Field *)otherFieldLayer3 and:(Field *)otherFieldLayer4 {
+    return nil;
+}
+
+- (void)updateBoard:(ccTime)dt  {
+    frameCount += 1;
+    if (frameCount % moveCycleRatio == 0)
+    {
         [_gameController moveDownOrCreate];
+        [gameController1 moveDownOrCreate];
+        [gameController2 moveDownOrCreate];
+        [gameController3 moveDownOrCreate];
+        [gameController4 moveDownOrCreate];
 
-	}
+    }
 }
+
 
 - (void)ccTouchesEnded:(NSSet *)touches withEvent:(UIEvent *)event{
     UITouch *touch = [touches anyObject];

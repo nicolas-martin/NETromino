@@ -152,9 +152,9 @@
 }
 
 
-- (void)addTetrominoToBoard:(Tetromino *)tetromino {
+- (void)addTetrominoToBoard:(NSMutableArray *)blocksToAdd {
 
-    for (Block *block in tetromino.children) {
+    for (Block *block in blocksToAdd) {
         [self insertBlockAt:block at:ccp(block.boardX, block.boardY)];
     }
 

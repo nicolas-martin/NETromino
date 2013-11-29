@@ -19,17 +19,11 @@
 @property (nonatomic) NSUInteger TileSize;
 
 
-
-
-- (id)initWithBoard:(Board *)board;
-
 - (id)initWithBoard:(Board *)board FieldHeight:(NSUInteger)FieldHeight FieldWidth:(NSUInteger)FieldWidth TileSize:(NSUInteger)TileSize;
 
 + (id)fieldWithBoard:(Board *)board FieldHeight:(NSUInteger)FieldHeight FieldWidth:(NSUInteger)FieldWidth TileSize:(NSUInteger)TileSize;
 
-+ (id)fieldWithBoard:(Board *)board;
-
-- (void)checkForRowsToClear:(Tetromino *)array;
+- (void)checkForRowsToClear:(NSMutableArray *)array;
 
 - (BOOL)canMoveTetrominoByYTetromino:(Tetromino *)userTetromino offSetY:(NSUInteger)offSetY;
 

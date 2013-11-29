@@ -33,11 +33,11 @@
 
 + (id)controllerWithField:(Field *)aField;
 
+- (void)addBlocks:(NSMutableArray *)blocksToAdd;
+
 - (void)tryToCreateNewTetromino;
 
 - (void)rotateTetromino:(RotationDirection)direction;
-
-- (void)UpdatesNewTetromino:(Tetromino *)FromTetromino to:(Tetromino *)ToTetromino;
 
 - (void)viewTap:(CGPoint)location;
 

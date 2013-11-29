@@ -31,11 +31,12 @@
 }
 
 //TODO: Change to NSMutableArray of blocks
-- (void)checkForRowsToClear:(Tetromino *)tetromino {
+- (void)checkForRowsToClear:(NSMutableArray *)blocksToCheck {
 
     BOOL occupied = NO;
     NSUInteger deletedRow = (NSUInteger) nil;
-    for (Block *block in tetromino.children) {
+    for (Block *block in blocksToCheck) {
+
         //Skip row already processed
         if ([block boardY] == (NSUInteger) deletedRow) {
             continue;
@@ -56,15 +57,10 @@
         }
 
         if (occupied) {
+
             deletedRow = [block boardY];
-            NSLog(@"Delete row %u", deletedRow);
-
             [_board DeleteRow:(NSUInteger)deletedRow];
-            [_board printCurrentBoardStatus:(BOOL *) YES];
-
             [self setPositionUsingFieldValue:[_board MoveBoardDown:(NSUInteger) (deletedRow - 1)]];
-            [_board printCurrentBoardStatus:(BOOL *) YES];
-
 
         }
         else {
@@ -163,7 +159,7 @@
         NSInteger boardYTimeSize = boardY * _TileSize;
 
         NSInteger x = (boardX * _TileSize);// + fieldPositionInView.x);
-        NSInteger y = -boardYTimeSize + _Height;// + fieldPositionInView.y);
+        NSInteger y = (-boardYTimeSize + _Height);// + fieldPositionInView.y);
         [block setPosition:ccp(x, y)];
     }
 
