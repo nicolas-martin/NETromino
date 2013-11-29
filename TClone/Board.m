@@ -109,9 +109,6 @@
     [[_array objectAtIndex:x] replaceObjectAtIndex:y withObject:[NSNumber numberWithInt:0]];
     //insert
     [self insertBlockAt:block at:after];
-    [block setBoardX:(NSUInteger) after.x];
-    [block setBoardY:(NSUInteger) after.y];
-
 }
 
 
@@ -124,9 +121,12 @@
     return YES;
 }
 
+//And removes the sprite
 - (void)DeleteRow:(NSUInteger)y {
     for (NSUInteger x = 0; x < _Nbx; x++) {
+        [[self getBlockAt:ccp(x, y)] removeFromParentAndCleanup:YES];
         [[_array objectAtIndex:x] replaceObjectAtIndex:y withObject:[NSNumber numberWithInt:0]];
+
     }
 
 }
@@ -138,8 +138,11 @@
         for (NSUInteger x = 0; x < _Nbx; x++) {
             Block *current = [self getBlockAt:ccp(x, y)];
             if (current != nil) {
+
                 [self MoveBlock:current to:ccp(x, y+1)];
+
                 [current moveDown];
+
                 [blocksToSetPosition addObject:current];
 
             }

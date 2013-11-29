@@ -30,7 +30,7 @@
     return [[self alloc] initWithBoard:board FieldHeight:FieldHeight FieldWidth:FieldWidth TileSize:TileSize];
 }
 
-
+//TODO: Change to NSMutableArray of blocks
 - (void)checkForRowsToClear:(Tetromino *)tetromino {
 
     BOOL occupied = NO;
@@ -130,18 +130,6 @@
 
         }
 
-        //if the current block is NOT part of the currentTetromino
-        /*if (!([tetromino isBlockInTetromino:[_board getBlockAt:ccp(currentBlock.boardX, currentBlock.boardY)]]))
-        {
-            if ([_board isBlockAt:ccp(currentBlock.boardX, currentBlock.boardY)])
-            {
-                NSLog(@"DENIED - COLLISION");
-                return NO;
-            }
-        }*/
-
-
-
         for (Block *old in with.children) {
             if (!([old boardX] == [currentBlock boardX]) && ![old boardY] == [currentBlock boardY]) {
                 if ([_board isBlockAt:ccp(currentBlock.boardX, currentBlock.boardY)]) {
@@ -164,18 +152,18 @@
 
 }
 
-//TODO: Take in consideration the position of the field on the screen.
 - (void)setPositionUsingFieldValue:(NSMutableArray *) arrayOfBlocks
 {
-    CGPoint fieldPositionInView = [self position];
+    //CGPoint fieldPositionInView = [self position];
 
     for (Block *block in arrayOfBlocks)
     {
-        //int x = (NSUInteger) (position.x / mainTileSize);//500,200
-        //int y = (NSUInteger) (((mainHeight) - position.y) / mainTileSize);
+        NSInteger boardX = [block boardX];
+        NSInteger boardY = [block boardY];
+        NSInteger boardYTimeSize = boardY * _TileSize;
 
-        NSUInteger x = (NSUInteger) ((block.boardX * _TileSize) + fieldPositionInView.x);
-        NSUInteger y = (NSUInteger) ((-(block.boardY * _TileSize) + _Height) + fieldPositionInView.y);
+        NSInteger x = (boardX * _TileSize);// + fieldPositionInView.x);
+        NSInteger y = -boardYTimeSize + _Height;// + fieldPositionInView.y);
         [block setPosition:ccp(x, y)];
     }
 
