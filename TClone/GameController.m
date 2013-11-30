@@ -6,6 +6,7 @@
 
 #import "GameController.h"
 #import "GameOverLayer.h"
+#import "HudLayer.h"
 
 
 #define NSLog(FORMAT, ...) printf("%s\n", [[NSString stringWithFormat:FORMAT, ##__VA_ARGS__] UTF8String]);
@@ -23,6 +24,11 @@
     self = [super init];
     if (self) {
         self.field = aField;
+        //change to init?
+        HudLayer *hud = [HudLayer initLayer];
+        [_field addChild:hud];
+        [hud setPosition:ccp(_field.Width + 10, _field.Height + 10)];
+        self.hudLayer = hud;
     }
 
     return self;
@@ -47,8 +53,12 @@
     else
     {
         userTetromino.stuck = YES;
-        [self.field checkForRowsToClear:userTetromino.children];
-        [self.field.board printCurrentBoardStatus:YES];
+        if([self.field checkForRowsToClear:userTetromino.children])
+        {
+            self.numRowClearedd++;
+            [_hudLayer numRowClearedChanged:_numRowClearedd];
+        }
+
     }
 
 }

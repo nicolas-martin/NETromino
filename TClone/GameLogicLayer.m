@@ -6,6 +6,7 @@
 #import "GameLogicLayer.h"
 #import "CCNode+SFGestureRecognizers.h"
 #import "Field.h"
+#import "HudLayer.h"
 
 #define NSLog(FORMAT, ...) printf("%s\n", [[NSString stringWithFormat:FORMAT, ##__VA_ARGS__] UTF8String]);
 GameController *gameController1;
@@ -21,6 +22,9 @@ GameController *gameController4;
 @end
 
 @implementation GameLogicLayer
+{
+}
+
 
 
 +(CCScene *) scene
@@ -29,7 +33,11 @@ GameController *gameController4;
 
     GameLogicLayer *layer = [[GameLogicLayer alloc] init];
     [scene addChild: layer];
-    
+
+
+
+
+
     return scene;
 }
 
@@ -65,29 +73,34 @@ GameController *gameController4;
 
 
         CGSize winSize = [CCDirector sharedDirector].winSize;
+        NSUInteger rightMargin = 50;
+        NSUInteger topMargin = 20;
+        NSUInteger bottomMargin = 20;
+        NSUInteger padBetweenField = 250;
+
 
         //Set the field position on screen
-        [_MainField setPosition:ccp(0,0)];
+        [_MainField setPosition:ccp(20,20)];
         [_MainField setContentSize:CGSizeMake(mainWidth, mainHeight)];
         CCLayerColor *layerColorMain = [CCLayerColor layerWithColor:ccc4(50, 50, 100, 128) width:_MainField.contentSize.width height:_MainField.contentSize.height];
         [_MainField addChild:layerColorMain z:-1];
 
-        [_FieldLayer1 setPosition:ccp(winSize.width - playerWidth, 0)];
+        [_FieldLayer1 setPosition:ccp((winSize.width - rightMargin) - playerWidth, bottomMargin)];
         [_FieldLayer1 setContentSize:CGSizeMake(playerWidth, playerHeight)];
         CCLayerColor *layerColor1 = [CCLayerColor layerWithColor:ccc4(100, 150, 50, 128) width:_FieldLayer1.contentSize.width height:_FieldLayer1.contentSize.height];
         [_FieldLayer1 addChild:layerColor1 z:-1];
 
-        [_FieldLayer2 setPosition:ccp(winSize.width - playerWidth, winSize.height - playerHeight)];
+        [_FieldLayer2 setPosition:ccp((winSize.width - rightMargin) - playerWidth, (winSize.height - topMargin) - playerHeight)];
         [_FieldLayer2 setContentSize:CGSizeMake(playerWidth, playerHeight)];
         CCLayerColor *layerColor2 = [CCLayerColor layerWithColor:ccc4(200, 50, 100, 128) width:_FieldLayer2.contentSize.width height:_FieldLayer2.contentSize.height];
         [_FieldLayer2 addChild:layerColor2 z:-1];
 
-        [_FieldLayer3 setPosition:ccp(winSize.width - (playerWidth + 200), 0)];
+        [_FieldLayer3 setPosition:ccp((winSize.width - rightMargin) - (playerWidth + padBetweenField), bottomMargin)];
         [_FieldLayer3 setContentSize:CGSizeMake(playerWidth, playerHeight)];
         CCLayerColor *layerColor3 = [CCLayerColor layerWithColor:ccc4(200, 50, 100, 128) width:_FieldLayer3.contentSize.width height:_FieldLayer3.contentSize.height];
         [_FieldLayer3 addChild:layerColor3 z:-1];
 
-        [_FieldLayer4 setPosition:ccp(winSize.width - (playerWidth + 200), winSize.height - (playerHeight))];
+        [_FieldLayer4 setPosition:ccp((winSize.width - rightMargin) - (playerWidth + padBetweenField), (winSize.height - topMargin) - (playerHeight))];
         _FieldLayer4.contentSize = CGSizeMake(playerWidth, playerHeight);
         CCLayerColor *layerColor4 = [CCLayerColor layerWithColor:ccc4(200, 50, 100, 128) width:_FieldLayer4.contentSize.width height:_FieldLayer4.contentSize.height];
         [_FieldLayer4 addChild:layerColor4 z:-1];
@@ -113,7 +126,10 @@ GameController *gameController4;
 		[self addGestureRecognizer:swipeLeftGestureRecognizer];
 
         //Creates a new controller with a field.
-        _gameController = [GameController controllerWithField:_MainField];
+
+
+
+        _gameController = [GameController controllerWithField:_MainField ];
 
         //////// TESTING ////////
         gameController1 = [GameController controllerWithField:_FieldLayer1];
@@ -122,7 +138,7 @@ GameController *gameController4;
         gameController4 = [GameController controllerWithField:_FieldLayer4];
         Block *block = [Block newEmptyBlockWithColorByType:2];
         [block setBoardX:5];
-        [block setBoardY:10];
+        [block setBoardY:7];
         NSMutableArray *bArray = [NSMutableArray array];
         [bArray addObject:block];
         [gameController1 addBlocks:bArray];
@@ -162,10 +178,12 @@ GameController *gameController4;
 
 
 	[_gameController createNewTetromino];
+    //////// TESTING ////////
     [gameController1 createNewTetromino];
     [gameController2 createNewTetromino];
     [gameController3 createNewTetromino];
     [gameController4 createNewTetromino];
+    //////// TESTING ////////
 
 	frameCount = 0;
 	moveCycleRatio = 10;
@@ -181,11 +199,12 @@ GameController *gameController4;
     if (frameCount % moveCycleRatio == 0)
     {
         [_gameController moveDownOrCreate];
-        //[gameController1 moveDownOrCreate];
-        //[gameController2 moveDownOrCreate];
-        //[gameController3 moveDownOrCreate];
-        //[gameController3.field.board printCurrentBoardStatus:YES];
-        //[gameController4 moveDownOrCreate];
+        //////// TESTING ////////
+//        [gameController1 moveDownOrCreate];
+//        [gameController2 moveDownOrCreate];
+//        [gameController3 moveDownOrCreate];
+//        [gameController4 moveDownOrCreate];
+        //////// TESTING ////////
 
     }
 }

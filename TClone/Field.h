@@ -9,21 +9,24 @@
 #import "Tetromino.h"
 #import "cocos2d.h"
 
-
 @interface Field : CCLayer {//<GameControllerObserver> {
 
+
 }
+
 @property (nonatomic, strong) Board *board;
 @property (nonatomic) NSUInteger Width;
 @property (nonatomic) NSUInteger Height;
 @property (nonatomic) NSUInteger TileSize;
 
 
+
+
 - (id)initWithBoard:(Board *)board FieldHeight:(NSUInteger)FieldHeight FieldWidth:(NSUInteger)FieldWidth TileSize:(NSUInteger)TileSize;
 
 + (id)fieldWithBoard:(Board *)board FieldHeight:(NSUInteger)FieldHeight FieldWidth:(NSUInteger)FieldWidth TileSize:(NSUInteger)TileSize;
 
-- (void)checkForRowsToClear:(NSMutableArray *)array;
+- (BOOL)checkForRowsToClear:(NSMutableArray *)array;
 
 - (BOOL)canMoveTetrominoByYTetromino:(Tetromino *)userTetromino offSetY:(NSUInteger)offSetY;
 

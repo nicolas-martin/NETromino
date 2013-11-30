@@ -8,12 +8,16 @@
 #import "Field.h"
 #import "CGPointExtension.h"
 #import "Tetromino.h"
+#import "HudLayer.h"
 
 #define NSLog(FORMAT, ...) printf("%s\n", [[NSString stringWithFormat:FORMAT, ##__VA_ARGS__] UTF8String]);
 
 @implementation Field {
 
+
 }
+
+
 - (id)initWithBoard:(Board *)board FieldHeight:(NSUInteger)FieldHeight FieldWidth:(NSUInteger)FieldWidth TileSize:(NSUInteger)TileSize {
     self = [super init];
     if (self) {
@@ -21,6 +25,7 @@
         self.Height = FieldHeight;
         self.Width = FieldWidth;
         self.TileSize = TileSize;
+
     }
 
     return self;
@@ -31,7 +36,7 @@
 }
 
 //TODO: Change to NSMutableArray of blocks
-- (void)checkForRowsToClear:(NSMutableArray *)blocksToCheck {
+- (BOOL)checkForRowsToClear:(NSMutableArray *)blocksToCheck {
 
     BOOL occupied = NO;
     NSUInteger deletedRow = (NSUInteger) nil;
@@ -61,12 +66,14 @@
             deletedRow = [block boardY];
             [_board DeleteRow:(NSUInteger)deletedRow];
             [self setPositionUsingFieldValue:[_board MoveBoardDown:(NSUInteger) (deletedRow - 1)]];
+            return YES;
 
         }
         else {
             continue;
         }
     }
+    return NO;
 
 }
 

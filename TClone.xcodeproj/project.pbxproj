@@ -154,6 +154,7 @@
 		250B8CBDFA6155DE3D59560A /* yellow.png in Resources */ = {isa = PBXBuildFile; fileRef = 250B82C5C86EF3B6434793C0 /* yellow.png */; };
 		250B8EA1B9637F7627E5EF20 /* 32.tmx in Resources */ = {isa = PBXBuildFile; fileRef = 250B85845376C26625E4BB8F /* 32.tmx */; };
 		250B8EE84B932B24957A3027 /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 250B88CF9EA5E7B7BC2EFE63 /* Default.png */; };
+		7A7A2158AC2C04C777F15813 /* HudLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A7A2EB0C00BECD54EB0AA82 /* HudLayer.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -447,6 +448,8 @@
 		250B8A4420EA284F2A8A2B77 /* GameController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GameController.m; sourceTree = "<group>"; };
 		250B8B9B048EF0F350CA770E /* 16.tmx */ = {isa = PBXFileReference; lastKnownFileType = file.tmx; path = 16.tmx; sourceTree = "<group>"; };
 		250B8DEEBC626C5C822C8CFA /* Field.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Field.h; sourceTree = "<group>"; };
+		7A7A2A53A9996D69E683416C /* HudLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HudLayer.h; sourceTree = "<group>"; };
+		7A7A2EB0C00BECD54EB0AA82 /* HudLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HudLayer.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -921,6 +924,8 @@
 				250B827691E2A44D55888BF4 /* GameController.h */,
 				250B85F7F41708465CA946B9 /* Board.h */,
 				250B804820F6ECB5C794643B /* Board.m */,
+				7A7A2EB0C00BECD54EB0AA82 /* HudLayer.m */,
+				7A7A2A53A9996D69E683416C /* HudLayer.h */,
 			);
 			name = Source;
 			sourceTree = "<group>";
@@ -1123,6 +1128,7 @@
 				250B81B6877D074EC23CDF8E /* Field.m in Sources */,
 				250B8A5E4224E7B27304F3ED /* GameController.m in Sources */,
 				250B8B25231ACA5E940AEBF4 /* Board.m in Sources */,
+				7A7A2158AC2C04C777F15813 /* HudLayer.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

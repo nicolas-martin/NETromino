@@ -6,6 +6,8 @@
 #import "Tetromino.h"
 #import "Field.h"
 
+@class HudLayer;
+
 @protocol GameControllerObserver <NSObject>
 
 @optional
@@ -27,12 +29,15 @@
 }
 
 @property (nonatomic, strong) NSMutableArray* listObservers;
-
-@property(nonatomic, strong) Field *field;
+@property (assign) NSUInteger numRowClearedd;
+@property (nonatomic, strong) Field *field;
+@property (strong) HudLayer * hudLayer;
 
 - (id)initWithField:(Field *)aField;
 
 + (id)controllerWithField:(Field *)aField;
+
+- (void)numCollectedChanged:(int)numCollected;
 
 - (void)VerifyNewBlockCollision:(Tetromino *)new;
 
