@@ -63,7 +63,8 @@
         if (occupied) {
 
             deletedRow = [block boardY];
-            [_board DeleteRow:(NSUInteger)deletedRow];
+            _spellArray = [_board DeleteRow:(NSUInteger)deletedRow];
+
             [self setPositionUsingFieldValue:[_board MoveBoardDown:(NSUInteger) (deletedRow - 1)]];
             return YES;
 

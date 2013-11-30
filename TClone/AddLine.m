@@ -31,15 +31,15 @@
     return @"AddLine";
 }
 
-- (void)CreateBlockLine{
+- (void)CreateBlockLine:(Field *)targetField {
     NSMutableArray *bArray = [NSMutableArray array];
 
-    for (NSUInteger x = 0; x < _targetField.board.Nbx; x++) {
+    for (NSUInteger x = 0; x < targetField.board.Nbx; x++) {
         NSUInteger random = arc4random();
 
         if ((random % 3) > 0)
         {
-            Block *block = [Block newEmptyBlockWithColorByType:random % 7];
+            Block *block = [Block blockWithBlockType:random % 7];
             [block setBoardX:x];
             [block setBoardY:19];
 
@@ -48,13 +48,13 @@
 
     }
 
-    [_targetField addBlocks:bArray];
+    [targetField addBlocks:bArray];
 }
 
-- (void)CastSpell {
+- (void)CastSpell:(Field *)targetField {
     NSLog(@"ADD LINE CALLED!!!!!!");
 
-    Board *board = _targetField.board;
+    Board *board = targetField.board;
 
     NSMutableArray *blocksToSetPosition = [NSMutableArray array];
 
@@ -73,15 +73,16 @@
         }
     }
 
-    [_targetField setPositionUsingFieldValue:blocksToSetPosition];
+    [targetField setPositionUsingFieldValue:blocksToSetPosition];
 
-    [self CreateBlockLine];
+    [self CreateBlockLine:targetField ];
 
 
 }
 
+//add field
 - (NSString *)LogSpell {
-    NSString *Output = [NSString stringWithFormat:@"%@ was casted on %@", _spellName, _targetField.Name];
+    NSString *Output = [NSString stringWithFormat:@"%@ was casted on...", _spellName];
     return Output;
 }
 

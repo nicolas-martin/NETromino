@@ -59,12 +59,12 @@
         [_field.board printCurrentBoardStatus:YES];
         if([self.field checkForRowsToClear:userTetromino.children])
         {
-            self.numRowClearedd++;
-            [_hudLayer numRowClearedChanged:_numRowClearedd];
+            self.numRowCleared++;
+            [_hudLayer numRowClearedChanged:_numRowCleared];
 //            AddLine *line = [AddLine lineWithTargetField:_field];
-//            [line CastSpell];
-//            [line CastSpell];
-//            [line CastSpell];
+//            [line CastSpell:];
+//            [line CastSpell:];
+//            [line CastSpell:];
         }
 
     }

@@ -9,7 +9,6 @@
 
 @interface Block (private)
 
-- (void)initializeDefaults;
 - (void)redrawPositionOnBoard;
 
 @end
@@ -17,68 +16,77 @@
 
 @implementation Block
 
+- (instancetype)initWithBlockType:(NSUInteger)blockType {
+    Block *temp = nil;
+    NSString *filename = nil, *color = nil;
+
+    self = [super init];
+    if (self) {
+        self.blockType = blockType;
 
 
-+ (Block *)newEmptyBlockWithColorByType:(NSUInteger)blockType
-{
-	NSString *filename = nil, *color = nil;
-	Block *temp = nil;
+        switch (blockType) {
+            case I_block:
+                color = @"cyan";
+                break;
+            case O_block:
+                color = @"yellow";
+                break;
+            case J_block:
+                color = @"green";
+                break;
+            case L_block:
+                color = @"red";
+                break;
+            case Z_block:
+                color = @"orange";
+                break;
+            case S_block:
+                color = @"blue";
+                break;
+            case T_block:
+                color = @"magenta";
+                break;
+            default:
+                break;
+        }
 
-	switch (blockType) {
-		case I_block:
-			color = @"cyan";
-			break;
-		case O_block:
-			color = @"yellow";
-			break;
-		case J_block:
-			color = @"green";
-			break;
-		case L_block:
-			color = @"red";
-			break;
-		case Z_block:
-			color = @"orange";
-			break;
-		case S_block:
-			color = @"blue";
-			break;
-		case T_block:
-			color = @"magenta";
-			break;
-		default:
-			break;
-	}
-	
-	if (color) {
-		filename = [[NSString alloc] initWithFormat:@"%@.png", color];
-		temp = [self spriteWithFile:filename];
-		[temp initializeDefaults];
-		
-	}
-	return temp;
-	
+
+
+        self.anchorPoint = ccp(0,0);
+        self.position = ccp(0,0);
+        self.opacity = 255;
+        self.stuck = NO;
+        self.disappearing = NO;
+        _boardX = 0;
+        _boardY = 0;
+        _spell = [AddLine initStuff];
+
+
+//        if (color) {
+//            filename = [[NSString alloc] initWithFormat:@"%@.png", color];
+//            temp = [self initWithFile:filename];
+//
+//        }
+        filename = [[NSString alloc] initWithFormat:@"%@.png", color];
+
+
+    }
+
+    return  [self initWithFile:filename];
 }
+
++ (instancetype)blockWithBlockType:(NSUInteger)blockType {
+    return [[self alloc] initWithBlockType:blockType];
+}
+
 
 - (NSComparisonResult)compareWithBlock:(Block *)block
 {
 	return [[NSNumber numberWithInt:self.boardX]
 			compare:[NSNumber numberWithInt:block.boardX]];
 }
-			
 
-- (void)initializeDefaults
-{
-	
-	self.anchorPoint = ccp(0,0);
-	self.position = ccp(0,0);
-	self.opacity = 255;
-	self.stuck = NO;
-	self.disappearing = NO;
-	_boardY = 0;
-	_boardY = 0;
-    _spell = [AddLine initStuff];
-}
 
 - (void)redrawPositionOnBoard
 {

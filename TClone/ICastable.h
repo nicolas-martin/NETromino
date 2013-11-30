@@ -10,9 +10,8 @@
 @protocol ICastable
 
 @property (nonatomic, strong) NSString *spellName;
-@property (nonatomic, strong) Field *targetField;
 
--(void)CastSpell;
+- (void)CastSpell:(Field *)targetField;
 -(NSString *)LogSpell;
 
 @end

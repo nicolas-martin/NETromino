@@ -32,7 +32,7 @@
 
 - (BOOL)boardRowFull:(NSUInteger)y;
 
-- (void)DeleteRow:(NSUInteger)y;
+- (NSMutableArray *)DeleteRow:(NSUInteger)y;
 
 - (NSMutableArray *)MoveBoardDown:(NSUInteger)y;
 

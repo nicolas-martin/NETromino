@@ -134,7 +134,7 @@ GameController *gameController4;
         gameController2 = [GameController controllerWithField:_FieldLayer2];
         gameController3 = [GameController controllerWithField:_FieldLayer3];
         gameController4 = [GameController controllerWithField:_FieldLayer4];
-        Block *block = [Block newEmptyBlockWithColorByType:2];
+        Block *block = [Block blockWithBlockType:2];
         [block setBoardX:5];
         [block setBoardY:7];
         NSMutableArray *bArray = [NSMutableArray array];
@@ -180,10 +180,10 @@ GameController *gameController4;
 
 	[_gameController createNewTetromino];
     //////// TESTING ////////
-    [gameController1 createNewTetromino];
-    [gameController2 createNewTetromino];
-    [gameController3 createNewTetromino];
-    [gameController4 createNewTetromino];
+//    [gameController1 createNewTetromino];
+//    [gameController2 createNewTetromino];
+//    [gameController3 createNewTetromino];
+//    [gameController4 createNewTetromino];
     //////// TESTING ////////
 
 	frameCount = 0;

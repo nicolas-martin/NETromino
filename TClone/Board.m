@@ -5,8 +5,8 @@
 
 
 #import "Board.h"
-#import "Block.h"
 #import "Tetromino.h"
+#import "ICastable.h"
 
 #define NSLog(FORMAT, ...) printf("%s\n", [[NSString stringWithFormat:FORMAT, ##__VA_ARGS__] UTF8String]);
 
@@ -137,20 +137,27 @@
     }
 }
 
-- (void)DeleteRow:(NSUInteger)y {
+- (NSMutableArray *)DeleteRow:(NSUInteger)y {
+    NSMutableArray *blocksWithSpell = [NSMutableArray init];
+
     for (NSUInteger x = 0; x < _Nbx; x++) {
+
         Block *block = [self getBlockAt:ccp(x, y)];
         //TODO: Check for blocks with spell and add them to the inventory
+
+        if (block.spell != Nil)
+        {
+            [blocksWithSpell addObject:block.spell];
+        }
 
         [block removeFromParentAndCleanup:YES];
         [[_array objectAtIndex:x] replaceObjectAtIndex:y withObject:[NSNumber numberWithInt:0]];
 
     }
 
+    return blocksWithSpell;
+
 }
-
-
-
 
 - (NSMutableArray *)MoveBoardDown:(NSUInteger)y {
     NSMutableArray *blocksToSetPosition = [NSMutableArray array];

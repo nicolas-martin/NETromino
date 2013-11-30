@@ -180,7 +180,7 @@ static NSUInteger orientationCount[7] = {2, 1, 4, 4, 2, 2, 4};
 				if (cellType == 0)
 					continue;
 				
-				Block *newBlock = [Block newEmptyBlockWithColorByType:self.type];
+				Block *newBlock = [Block blockWithBlockType:self.type];
 				newBlock.boardX = (row + _anchorX);
 				newBlock.boardY = col + _anchorY;
                 //copmute?
@@ -219,9 +219,7 @@ static NSUInteger orientationCount[7] = {2, 1, 4, 4, 2, 2, 4};
         NSUInteger blockFrequency = arc4random() % 7;
 		self.type = (tetrominoType)blockFrequency;
         NSUInteger randomOrientation = arc4random() % orientationCount[self.type];
-				
-		
-		
+
 		_orientation = randomOrientation;
 		_blocksInTetromino = [[NSMutableArray alloc] init];
 				
@@ -242,7 +240,7 @@ static NSUInteger orientationCount[7] = {2, 1, 4, 4, 2, 2, 4};
 					continue;
 			
 
-				Block *newBlock = [Block newEmptyBlockWithColorByType:self.type];
+				Block *newBlock = [Block blockWithBlockType:self.type];
 				newBlock.boardX = row + _anchorX;
 				newBlock.boardY = col + _anchorY;
 
@@ -267,8 +265,6 @@ static NSUInteger orientationCount[7] = {2, 1, 4, 4, 2, 2, 4};
 	
 	return self;
 }
-
-
 
 - (void)initializeTetromino
 {
@@ -421,11 +417,7 @@ static NSUInteger orientationCount[7] = {2, 1, 4, 4, 2, 2, 4};
     [description appendFormat:@", self.anchorX=%i", self.anchorX];
     [description appendFormat:@", self.anchorY=%i", self.anchorY];
 
-
-
     return [NSString stringWithFormat:@"<%@: %@>", NSStringFromClass([self class]), description];
 
 }
-
-
 @end

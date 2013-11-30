@@ -6,9 +6,9 @@
 #import <Foundation/Foundation.h>
 #import "ICastable.h"
 
-@interface AddLine : NSObject <ICastable>
+@class Field;
 
-@property(nonatomic, strong) Field *targetField;
+@interface AddLine : NSObject <ICastable>
 
 @property(nonatomic, copy) NSString *spellName;
 
@@ -17,7 +17,7 @@
 + (AddLine *)initStuff;
 
 
-- (void)CastSpell;
+- (void)CastSpell:(Field *)targetField;
 
 - (NSString *)LogSpell;
 

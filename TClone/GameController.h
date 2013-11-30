@@ -30,7 +30,7 @@
 }
 
 @property (nonatomic, strong) NSMutableArray* listObservers;
-@property (assign) NSUInteger numRowClearedd;
+@property (assign) NSUInteger numRowCleared;
 @property (nonatomic, strong) Field *field;
 @property (strong) HudLayer * hudLayer;
 

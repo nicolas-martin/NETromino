@@ -17,7 +17,9 @@
 @property (nonatomic) NSUInteger Width;
 @property (nonatomic) NSUInteger Height;
 @property (nonatomic) NSUInteger TileSize;
-@property(nonatomic, strong) NSObject *Name;
+@property (nonatomic, strong) NSObject *Name;
+@property (strong) NSMutableArray *spellArray;
+
 
 - (id)initWithBoard:(Board *)board FieldHeight:(NSUInteger)FieldHeight FieldWidth:(NSUInteger)FieldWidth TileSize:(NSUInteger)TileSize;
 

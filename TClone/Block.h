@@ -14,11 +14,15 @@
 }
 @property (readwrite, assign) NSUInteger boardX;
 @property (readwrite, assign) NSUInteger boardY;
-@property (readwrite, assign) NSObject<ICastable> *spell;
+@property (readwrite, strong) id <ICastable> spell;
 @property BOOL stuck;
 @property BOOL disappearing;
+@property (readwrite, assign) NSUInteger blockType;
 
-+ (Block *)newEmptyBlockWithColorByType:(NSUInteger)blockType;
+- (instancetype)initWithBlockType:(NSUInteger)blockType;
+
++ (instancetype)blockWithBlockType:(NSUInteger)blockType;
+
 - (void)moveUp;
 - (void)moveDown;
 - (void)moveLeft;
