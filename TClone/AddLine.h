@@ -6,16 +6,15 @@
 #import <Foundation/Foundation.h>
 #import "ICastable.h"
 
-
 @interface AddLine : NSObject <ICastable>
 
 @property(nonatomic, strong) Field *targetField;
 
 @property(nonatomic, copy) NSString *spellName;
 
-- (instancetype)initWithTargetField:(Field *)targetField;
+- (AddLine *)initWith;
 
-+ (instancetype)lineWithTargetField:(Field *)targetField;
++ (AddLine *)initStuff;
 
 
 - (void)CastSpell;

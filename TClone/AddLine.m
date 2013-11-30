@@ -4,6 +4,8 @@
 
 
 #import "AddLine.h"
+#import "Field.h"
+#import "Board.h"
 
 #define NSLog(FORMAT, ...) printf("%s\n", [[NSString stringWithFormat:FORMAT, ##__VA_ARGS__] UTF8String]);
 
@@ -11,17 +13,18 @@
 
 }
 
-- (instancetype)initWithTargetField:(Field *)targetField {
+
+- (AddLine *)initWith {
     self = [super init];
     if (self) {
-        self.targetField = targetField;
+
     }
 
     return self;
 }
 
-+ (instancetype)lineWithTargetField:(Field *)targetField {
-    return [[self alloc] initWithTargetField:targetField];
++ (AddLine *)initStuff {
+    return [[self alloc] initWith];
 }
 
 - (NSString *)spellName {
@@ -32,10 +35,11 @@
     NSMutableArray *bArray = [NSMutableArray array];
 
     for (NSUInteger x = 0; x < _targetField.board.Nbx; x++) {
+        NSUInteger random = arc4random();
 
-        if ((arc4random() % 3) > 0)
+        if ((random % 3) > 0)
         {
-            Block *block = [Block newEmptyBlockWithColorByType:2];
+            Block *block = [Block newEmptyBlockWithColorByType:random % 7];
             [block setBoardX:x];
             [block setBoardY:19];
 

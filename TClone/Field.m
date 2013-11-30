@@ -6,9 +6,8 @@
 
 #import "CCLayer.h"
 #import "Field.h"
-#import "CGPointExtension.h"
+#import "Board.h"
 #import "Tetromino.h"
-#import "HudLayer.h"
 
 #define NSLog(FORMAT, ...) printf("%s\n", [[NSString stringWithFormat:FORMAT, ##__VA_ARGS__] UTF8String]);
 

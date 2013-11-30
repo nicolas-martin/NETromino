@@ -4,7 +4,8 @@
 
 
 #import <Foundation/Foundation.h>
-#import "Field.h"
+
+@class Field;
 
 @protocol ICastable
 

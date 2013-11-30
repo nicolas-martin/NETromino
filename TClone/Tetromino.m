@@ -4,6 +4,7 @@
 //
 
 #import "Tetromino.h"
+#import "Block.h"
 
 #define NSLog(FORMAT, ...) printf("%s\n", [[NSString stringWithFormat:FORMAT, ##__VA_ARGS__] UTF8String]);
 

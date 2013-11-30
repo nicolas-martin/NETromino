@@ -5,12 +5,16 @@
 
 #import "cocos2d.h"
 
+@protocol ICastable;
+
+
 @interface Block : CCSprite {
 	BOOL stuck;
 	BOOL disappearing;
 }
 @property (readwrite, assign) NSUInteger boardX;
 @property (readwrite, assign) NSUInteger boardY;
+@property (readwrite, assign) NSObject<ICastable> *spell;
 @property BOOL stuck;
 @property BOOL disappearing;
 
@@ -21,8 +25,7 @@
 - (void)moveRight;
 - (void)moveByX:(NSUInteger)offsetX;
 - (NSComparisonResult)compareWithBlock:(Block *)block;
--(void)MoveTo:(Block *)block;
-
+- (void)MoveTo:(Block *)block;
 - (NSString *)description;
 
 @end

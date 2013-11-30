@@ -5,7 +5,8 @@
 
 
 #import "Board.h"
-
+#import "Block.h"
+#import "Tetromino.h"
 
 #define NSLog(FORMAT, ...) printf("%s\n", [[NSString stringWithFormat:FORMAT, ##__VA_ARGS__] UTF8String]);
 
@@ -138,12 +139,19 @@
 
 - (void)DeleteRow:(NSUInteger)y {
     for (NSUInteger x = 0; x < _Nbx; x++) {
-        [[self getBlockAt:ccp(x, y)] removeFromParentAndCleanup:YES];
+        Block *block = [self getBlockAt:ccp(x, y)];
+        //TODO: Check for blocks with spell and add them to the inventory
+
+        [block removeFromParentAndCleanup:YES];
         [[_array objectAtIndex:x] replaceObjectAtIndex:y withObject:[NSNumber numberWithInt:0]];
 
     }
 
 }
+
+
+
+
 - (NSMutableArray *)MoveBoardDown:(NSUInteger)y {
     NSMutableArray *blocksToSetPosition = [NSMutableArray array];
 

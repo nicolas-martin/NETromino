@@ -3,11 +3,10 @@
 //
 //
 
-
-
-#import "Board.h"
-#import "Tetromino.h"
 #import "cocos2d.h"
+
+@class Board;
+@class Tetromino;
 
 @interface Field : CCLayer {//<GameControllerObserver> {
 

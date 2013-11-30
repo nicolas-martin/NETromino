@@ -3,9 +3,10 @@
 //
 //
 
-#import "Tetromino.h"
-#import "Field.h"
 
+#import "Tetromino.h"
+
+@class Field;
 @class HudLayer;
 
 @protocol GameControllerObserver <NSObject>

@@ -2,12 +2,10 @@
 // Created by Nicolas Martin on 13-08-15.
 //
 //
-#import "Tetromino.h"
-#import "Block.h"
-#import "Field.h"
-#import "GameController.h"
+#import "CCScene.h"
 
-
+@class Field;
+@class GameController;
 #define kLastColumn 9
 #define kLastRow 19
 
@@ -47,7 +45,7 @@
 
 - (id)initWithFields:(Field *)mainFieldLayer and:(Field *)otherFieldLayer1 and:(Field *)otherFieldLayer2 and:(Field *)otherFieldLayer3 and:(Field *)otherFieldLayer4;
 
-+(CCScene *) scene;
++ (CCScene *) scene;
 
 
 

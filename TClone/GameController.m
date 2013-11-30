@@ -7,7 +7,8 @@
 #import "GameController.h"
 #import "GameOverLayer.h"
 #import "HudLayer.h"
-#import "AddLine.h"
+#import "Field.h"
+#import "Board.h"
 
 
 #define NSLog(FORMAT, ...) printf("%s\n", [[NSString stringWithFormat:FORMAT, ##__VA_ARGS__] UTF8String]);
@@ -60,6 +61,10 @@
         {
             self.numRowClearedd++;
             [_hudLayer numRowClearedChanged:_numRowClearedd];
+//            AddLine *line = [AddLine lineWithTargetField:_field];
+//            [line CastSpell];
+//            [line CastSpell];
+//            [line CastSpell];
         }
 
     }

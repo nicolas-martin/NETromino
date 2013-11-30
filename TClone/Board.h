@@ -5,8 +5,8 @@
 
 #import <Foundation/Foundation.h>
 #import "Block.h"
-#import "Tetromino.h"
 
+@class Tetromino;
 
 @interface Board : NSObject
 

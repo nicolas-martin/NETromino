@@ -3,11 +3,12 @@
 //
 //
 
+#import "CCLayer.h"
 #import "GameLogicLayer.h"
 #import "CCNode+SFGestureRecognizers.h"
 #import "Field.h"
-#import "HudLayer.h"
-#import "AddLine.h"
+#import "GameController.h"
+#import "Board.h"
 
 #define NSLog(FORMAT, ...) printf("%s\n", [[NSString stringWithFormat:FORMAT, ##__VA_ARGS__] UTF8String]);
 GameController *gameController1;
@@ -34,10 +35,6 @@ GameController *gameController4;
 
     GameLogicLayer *layer = [[GameLogicLayer alloc] init];
     [scene addChild: layer];
-
-
-
-
 
     return scene;
 }
@@ -145,10 +142,7 @@ GameController *gameController4;
         [gameController1.field addBlocks:bArray];
 
 
-        AddLine *line = [AddLine lineWithTargetField:_MainField];
-        [line CastSpell];
-        [line CastSpell];
-        [line CastSpell];
+
         //////// TESTING ////////
 
         [self startGame];

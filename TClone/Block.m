@@ -4,6 +4,9 @@
 //
 
 #import "Tetromino.h"
+#import "AddLine.h"
+#import "Block.h"
+
 @interface Block (private)
 
 - (void)initializeDefaults;
@@ -74,6 +77,7 @@
 	self.disappearing = NO;
 	_boardY = 0;
 	_boardY = 0;
+    _spell = [AddLine initStuff];
 }
 
 - (void)redrawPositionOnBoard
