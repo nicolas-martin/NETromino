@@ -76,7 +76,7 @@
 	_boardY = 0;
 }
 
-- (void)redrawPositionOnBoard 
+- (void)redrawPositionOnBoard
 {
     //compute
 	self.position = ccp(_boardX, _boardY);

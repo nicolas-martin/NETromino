@@ -37,11 +37,7 @@
 
 + (id)controllerWithField:(Field *)aField;
 
-- (void)numCollectedChanged:(int)numCollected;
-
 - (void)VerifyNewBlockCollision:(Tetromino *)new;
-
-- (void)addBlocks:(NSMutableArray *)blocksToAdd;
 
 - (void) createNewTetromino;
 

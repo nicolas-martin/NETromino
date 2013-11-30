@@ -18,9 +18,7 @@
 @property (nonatomic) NSUInteger Width;
 @property (nonatomic) NSUInteger Height;
 @property (nonatomic) NSUInteger TileSize;
-
-
-
+@property(nonatomic, strong) NSObject *Name;
 
 - (id)initWithBoard:(Board *)board FieldHeight:(NSUInteger)FieldHeight FieldWidth:(NSUInteger)FieldWidth TileSize:(NSUInteger)TileSize;
 
@@ -35,6 +33,8 @@
 - (BOOL)isTetrominoInBounds:(Tetromino *)tetromino noCollisionWith:(Tetromino *)with;
 
 - (BOOL)boardRowEmpty:(NSUInteger)x;
+
+- (void)addBlocks:(NSMutableArray *)blocksToAdd;
 
 - (void)setPositionUsingFieldValue:(NSMutableArray *)arrayOfBlocks;
 

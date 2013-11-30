@@ -155,6 +155,22 @@
 
 }
 
+- (void)addBlocks:(NSMutableArray *)blocksToAdd
+{
+
+    [self.board addTetrominoToBoard:blocksToAdd];
+
+    [self setPositionUsingFieldValue:blocksToAdd];
+
+    for (Block * blocks in blocksToAdd)
+    {
+        [self addChild:blocks];
+    }
+
+    //[self newTetromino:blocksToAdd];
+
+}
+
 - (void)setPositionUsingFieldValue:(NSMutableArray *) arrayOfBlocks
 {
     //CGPoint fieldPositionInView = [self position];

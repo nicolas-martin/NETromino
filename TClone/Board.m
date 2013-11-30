@@ -136,7 +136,6 @@
     }
 }
 
-//And removes the sprite
 - (void)DeleteRow:(NSUInteger)y {
     for (NSUInteger x = 0; x < _Nbx; x++) {
         [[self getBlockAt:ccp(x, y)] removeFromParentAndCleanup:YES];
@@ -145,7 +144,6 @@
     }
 
 }
-
 - (NSMutableArray *)MoveBoardDown:(NSUInteger)y {
     NSMutableArray *blocksToSetPosition = [NSMutableArray array];
 

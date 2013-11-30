@@ -7,6 +7,7 @@
 #import "GameController.h"
 #import "GameOverLayer.h"
 #import "HudLayer.h"
+#import "AddLine.h"
 
 
 #define NSLog(FORMAT, ...) printf("%s\n", [[NSString stringWithFormat:FORMAT, ##__VA_ARGS__] UTF8String]);
@@ -29,6 +30,7 @@
         [_field addChild:hud];
         [hud setPosition:ccp(_field.Width + 10, _field.Height + 10)];
         self.hudLayer = hud;
+
     }
 
     return self;
@@ -53,6 +55,7 @@
     else
     {
         userTetromino.stuck = YES;
+        [_field.board printCurrentBoardStatus:YES];
         if([self.field checkForRowsToClear:userTetromino.children])
         {
             self.numRowClearedd++;
@@ -108,21 +111,7 @@
     [[CCDirector sharedDirector] replaceScene:gameOverScene];
 }
 
-- (void)addBlocks:(NSMutableArray *)blocksToAdd
-{
 
-    [self.field.board addTetrominoToBoard:blocksToAdd];
-
-    [self.field setPositionUsingFieldValue:blocksToAdd];
-
-    for (Block * blocks in blocksToAdd)
-    {
-        [self.field addChild:blocks];
-    }
-
-    //[self newTetromino:blocksToAdd];
-
-}
 
 - (void)createNewTetromino {
 

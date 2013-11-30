@@ -18,7 +18,7 @@
     self = [super init];
     if (self) {
         CGSize winSize = [CCDirector sharedDirector].winSize;
-        _label = [CCLabelTTF labelWithString:@"0" fontName:@"Verdana-Bold" fontSize:18.0];
+        _label = [CCLabelTTF labelWithString:@"0" fontName:@"Helvetica" fontSize:18.0];
         _label.color = ccc3(255,255,255);
         NSUInteger margin = 10;
         //_label.position = ccp(winSize.width - (_label.contentSize.width/2) - margin, _label.contentSize.height/2 + margin);

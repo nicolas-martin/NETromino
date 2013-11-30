@@ -28,6 +28,8 @@
 
 - (void)MoveTetromino:(Tetromino *)FromTetromino to:(Tetromino *)ToTetromino;
 
+- (void)MoveBlock:(Block *)block to:(CGPoint)after;
+
 - (BOOL)boardRowFull:(NSUInteger)y;
 
 - (void)DeleteRow:(NSUInteger)y;

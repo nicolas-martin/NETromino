@@ -7,6 +7,7 @@
 #import "CCNode+SFGestureRecognizers.h"
 #import "Field.h"
 #import "HudLayer.h"
+#import "AddLine.h"
 
 #define NSLog(FORMAT, ...) printf("%s\n", [[NSString stringWithFormat:FORMAT, ##__VA_ARGS__] UTF8String]);
 GameController *gameController1;
@@ -141,7 +142,13 @@ GameController *gameController4;
         [block setBoardY:7];
         NSMutableArray *bArray = [NSMutableArray array];
         [bArray addObject:block];
-        [gameController1 addBlocks:bArray];
+        [gameController1.field addBlocks:bArray];
+
+
+        AddLine *line = [AddLine lineWithTargetField:_MainField];
+        [line CastSpell];
+        [line CastSpell];
+        [line CastSpell];
         //////// TESTING ////////
 
         [self startGame];
@@ -200,7 +207,7 @@ GameController *gameController4;
     {
         [_gameController moveDownOrCreate];
         //////// TESTING ////////
-//        [gameController1 moveDownOrCreate];
+        //[gameController1 moveDownOrCreate];
 //        [gameController2 moveDownOrCreate];
 //        [gameController3 moveDownOrCreate];
 //        [gameController4 moveDownOrCreate];
