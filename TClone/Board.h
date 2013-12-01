@@ -17,6 +17,9 @@
 - (id)init;
 + (id)initBoard;
 - (BOOL)isBlockAt:(CGPoint)point;
+
+- (NSMutableArray *)getAllBlocksInBoard;
+
 - (id)getBlockAt:(CGPoint)point;
 - (void)DeleteBlock:(Tetromino *)tetromino;
 - (void)MoveTetromino:(Tetromino *)FromTetromino to:(Tetromino *)ToTetromino;

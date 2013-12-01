@@ -68,7 +68,8 @@
 - (void) addSpellToBlock
 {
     self.spell = [AddLine initStuff];
-    [self initWithFile:self.spell.spriteFileName];
+    [self setTexture:[[CCTextureCache sharedTextureCache] addImage:_spell.spriteFileName]];
+
 
 }
 

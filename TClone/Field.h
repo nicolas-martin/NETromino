@@ -27,6 +27,11 @@
 
 - (BOOL)checkForRowsToClear:(NSMutableArray *)array;
 
+
+- (BOOL)randomBoolWithPercentage:(NSUInteger)percentage;
+
+- (void)addSpellToField;
+
 - (BOOL)canMoveTetrominoByYTetromino:(Tetromino *)userTetromino offSetY:(NSUInteger)offSetY;
 
 - (BOOL)canMoveTetrominoByXTetromino:(Tetromino *)userTetromino offSetX:(NSUInteger)offSetX;

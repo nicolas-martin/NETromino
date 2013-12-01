@@ -148,6 +148,7 @@
 		7A7A2006E823B70E1F7DAB4C /* IntroLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A7A2CCD3813F97926FA53D4 /* IntroLayer.m */; };
 		7A7A2047A42EF970A40C4C01 /* GameLogicLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A7A2887596424A5D8CC15F3 /* GameLogicLayer.m */; };
 		7A7A21AC0625C25E3160E905 /* Field.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A7A22F571F5B61F648AD5F2 /* Field.m */; };
+		7A7A21F2A1EBE8C0899FC41B /* addLine.png in Resources */ = {isa = PBXBuildFile; fileRef = 7A7A28238217B0E51A106E4E /* addLine.png */; };
 		7A7A2810D7553E2E86245493 /* TetrisAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A7A211A98BB989007FD7F72 /* TetrisAppDelegate.m */; };
 		7A7A28BA28F81EA4ED06D213 /* RandomRemove.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A7A233E4F34AF3BE16B6D91 /* RandomRemove.m */; };
 		7A7A2AAF8308B4C6FA929375 /* Block.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A7A280F42E8D0AA24D17D27 /* Block.m */; };
@@ -445,6 +446,7 @@
 		7A7A277BEF7FD59499B61ABC /* Field.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Field.h; sourceTree = "<group>"; };
 		7A7A277D372CAA99EBFFD1A7 /* GameOverLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GameOverLayer.m; sourceTree = "<group>"; };
 		7A7A280F42E8D0AA24D17D27 /* Block.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Block.m; sourceTree = "<group>"; };
+		7A7A28238217B0E51A106E4E /* addLine.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = addLine.png; sourceTree = "<group>"; };
 		7A7A287AD73D9F6BBD6D6993 /* ICastable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ICastable.h; sourceTree = "<group>"; };
 		7A7A2887596424A5D8CC15F3 /* GameLogicLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GameLogicLayer.m; sourceTree = "<group>"; };
 		7A7A289DC56AC84CBFB8AA8A /* GameLogicLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GameLogicLayer.h; sourceTree = "<group>"; };
@@ -906,6 +908,7 @@
 				250B88928643535FCEE13092 /* preview.jpg */,
 				250B88CF9EA5E7B7BC2EFE63 /* Default.png */,
 				250B82C5C86EF3B6434793C0 /* yellow.png */,
+				7A7A28238217B0E51A106E4E /* addLine.png */,
 			);
 			name = Sprites;
 			sourceTree = "<group>";
@@ -1051,6 +1054,7 @@
 				250B83922D44EFC51701CD5B /* preview.jpg in Resources */,
 				250B8EE84B932B24957A3027 /* Default.png in Resources */,
 				250B8CBDFA6155DE3D59560A /* yellow.png in Resources */,
+				7A7A21F2A1EBE8C0899FC41B /* addLine.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

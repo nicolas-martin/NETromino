@@ -34,10 +34,10 @@
     return [[self alloc] initWithBoard:board FieldHeight:FieldHeight FieldWidth:FieldWidth TileSize:TileSize];
 }
 
-//TODO: Change to NSMutableArray of blocks
 - (BOOL)checkForRowsToClear:(NSMutableArray *)blocksToCheck {
 
     BOOL occupied = NO;
+
     NSUInteger deletedRow = (NSUInteger) nil;
     for (Block *block in blocksToCheck) {
 
@@ -75,6 +75,36 @@
     }
     return NO;
 
+}
+
+- (BOOL)randomBoolWithPercentage:(NSUInteger)percentage
+{
+    return (arc4random() % 100) < percentage;
+}
+
+- (void) addSpellToField
+{
+    NSMutableArray *allBlocksInBoard = [_board getAllBlocksInBoard];
+    NSUInteger nbBlocksInBoard = allBlocksInBoard.count;
+    NSUInteger nbSpellToAdd = 0;
+
+    for (NSUInteger i = 0; i < nbBlocksInBoard; i++)
+    {
+        if([self randomBoolWithPercentage:5])
+        {
+            nbSpellToAdd++;
+        }
+    }
+
+    for (NSUInteger i = 0; i < nbSpellToAdd; i++)
+    {
+        NSUInteger posOfSpell = arc4random() % nbBlocksInBoard;
+        Block * block = [allBlocksInBoard objectAtIndex:posOfSpell];
+        if (block.spell == nil)
+        {
+            [block addSpellToBlock];
+        }
+    }
 }
 
 - (BOOL)canMoveTetrominoByYTetromino:(Tetromino *)userTetromino offSetY:(NSUInteger)offSetY {

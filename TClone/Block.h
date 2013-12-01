@@ -21,6 +21,8 @@
 
 - (instancetype)initWithBlockType:(NSUInteger)blockType;
 
+- (void)addSpellToBlock;
+
 + (instancetype)blockWithBlockType:(NSUInteger)blockType;
 
 - (void)moveUp;

@@ -60,6 +60,24 @@
     }
 }
 
+- (NSMutableArray *)getAllBlocksInBoard{
+    NSMutableArray *blocksInBoard = [NSMutableArray array];
+    for (NSUInteger x = 0; x < self.Nbx; x++)
+    {
+        for (NSUInteger y = 0; y < self.Nby; y++)
+        {
+            Block *block = [self getBlockAt:ccp(x, y)];
+            if(block != nil)
+            {
+                [blocksInBoard addObject:block];
+            }
+
+        }
+    }
+
+    return blocksInBoard;
+}
+
 
 - (Block *)getBlockAt:(CGPoint)point {
 

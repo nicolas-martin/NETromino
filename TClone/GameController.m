@@ -57,14 +57,12 @@
     {
         userTetromino.stuck = YES;
         [_field.board printCurrentBoardStatus:YES];
+        [_field addSpellToField];
         if([self.field checkForRowsToClear:userTetromino.children])
         {
             self.numRowCleared++;
             [_hudLayer numRowClearedChanged:_numRowCleared];
-//            AddLine *line = [AddLine lineWithTargetField:_field];
-//            [line CastSpell:];
-//            [line CastSpell:];
-//            [line CastSpell:];
+            [_field addSpellToField];
         }
 
     }

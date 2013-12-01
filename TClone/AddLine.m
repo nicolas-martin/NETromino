@@ -18,7 +18,7 @@
     self = [super init];
     if (self) {
         _spellName = @"AddLine";
-        _spriteFileName = @"AddLine.png";
+        _spriteFileName = @"addLine.png";
 
     }
 
