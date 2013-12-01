@@ -17,6 +17,8 @@
 - (AddLine *)initWith {
     self = [super init];
     if (self) {
+        _spellName = @"AddLine";
+        _spriteFileName = @"AddLine.png";
 
     }
 
@@ -25,10 +27,6 @@
 
 + (AddLine *)initStuff {
     return [[self alloc] initWith];
-}
-
-- (NSString *)spellName {
-    return @"AddLine";
 }
 
 - (void)CreateBlockLine:(Field *)targetField {
