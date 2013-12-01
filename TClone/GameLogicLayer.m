@@ -27,8 +27,6 @@ GameController *gameController4;
 {
 }
 
-
-
 +(CCScene *) scene
 {
     CCScene *scene = [CCScene node];
@@ -209,7 +207,6 @@ GameController *gameController4;
 
     }
 }
-
 
 - (void)ccTouchesEnded:(NSSet *)touches withEvent:(UIEvent *)event{
     UITouch *touch = [touches anyObject];

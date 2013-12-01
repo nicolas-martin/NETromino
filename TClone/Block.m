@@ -24,7 +24,7 @@
     if (self) {
         self.blockType = blockType;
 
-
+        _spell = nil;
         switch (blockType) {
             case I_block:
                 color = @"cyan";
@@ -51,8 +51,6 @@
                 break;
         }
 
-
-
         self.anchorPoint = ccp(0,0);
         self.position = ccp(0,0);
         self.opacity = 255;
@@ -60,20 +58,17 @@
         self.disappearing = NO;
         _boardX = 0;
         _boardY = 0;
-        _spell = [AddLine initStuff];
 
-
-//        if (color) {
-//            filename = [[NSString alloc] initWithFormat:@"%@.png", color];
-//            temp = [self initWithFile:filename];
-//
-//        }
         filename = [[NSString alloc] initWithFormat:@"%@.png", color];
-
-
     }
 
     return  [self initWithFile:filename];
+}
+
+- (void) addSpellToBlock
+{
+    self.spell = [AddLine initStuff];
+
 }
 
 + (instancetype)blockWithBlockType:(NSUInteger)blockType {

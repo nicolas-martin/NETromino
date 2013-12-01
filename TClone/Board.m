@@ -138,7 +138,7 @@
 }
 
 - (NSMutableArray *)DeleteRow:(NSUInteger)y {
-    NSMutableArray *blocksWithSpell = [NSMutableArray init];
+    NSMutableArray *blocksWithSpell = [NSMutableArray array];
 
     for (NSUInteger x = 0; x < _Nbx; x++) {
 
