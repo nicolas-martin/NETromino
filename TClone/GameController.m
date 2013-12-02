@@ -63,7 +63,7 @@
     {
         userTetromino.stuck = YES;
         [_inventory addSpell:[AddLine initStuff]];
-        [_field.board printCurrentBoardStatus:YES];
+        //[_field.board printCurrentBoardStatus:YES];
         [_field addSpellToField];
         if([self.field checkForRowsToClear:userTetromino.children])
         {

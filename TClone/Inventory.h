@@ -7,13 +7,18 @@
 #import "CCLayer.h"
 
 @protocol ICastable;
+@class CCSprite;
 
 
 @interface Inventory : CCLayer
-
-@property (nonatomic, strong) NSMutableArray *Inventory;
+{
+    CCSprite * selSprite;
+}
+@property(nonatomic, strong) NSMutableArray *Inventory;
 
 + (id)initInventory;
+
+- (void)ccTouchMoved:(UITouch *)touch withEvent:(UIEvent *)event;
 
 - (void)addSpell:(<ICastable>) spell;
 - (void)removeSpell:(<ICastable>) spell;

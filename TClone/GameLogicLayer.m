@@ -9,6 +9,7 @@
 #import "Field.h"
 #import "GameController.h"
 #import "Board.h"
+#import "Inventory.h"
 
 #define NSLog(FORMAT, ...) printf("%s\n", [[NSString stringWithFormat:FORMAT, ##__VA_ARGS__] UTF8String]);
 GameController *gameController1;
@@ -126,6 +127,11 @@ GameController *gameController4;
 
 
         _gameController = [GameController controllerWithField:_MainField ];
+
+        UIPanGestureRecognizer *gestureRecognizer = [[UIPanGestureRecognizer alloc] initWithTarget:_gameController.inventory action:@selector(handlePanFrom:)];
+        [[CCDirector sharedDirector].view addGestureRecognizer:gestureRecognizer];
+        [self addGestureRecognizer:gestureRecognizer];
+
 
         //////// TESTING ////////
         gameController1 = [GameController controllerWithField:_FieldLayer1];
