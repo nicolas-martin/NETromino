@@ -76,7 +76,7 @@ GameController *gameController4;
 
 
         //Set the field position on screen
-        [_MainField setPosition:ccp(20,20)];
+        [_MainField setPosition:ccp(20,70)];
         [_MainField setContentSize:CGSizeMake(mainWidth, mainHeight)];
         CCLayerColor *layerColorMain = [CCLayerColor layerWithColor:ccc4(50, 50, 100, 128) width:_MainField.contentSize.width height:_MainField.contentSize.height];
         [_MainField addChild:layerColorMain z:-1];

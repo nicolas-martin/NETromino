@@ -141,19 +141,19 @@
 		03311B19179C07A300221460 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 03311B18179C07A300221460 /* Default-568h@2x.png */; };
 		03919F3E17A7563B00FE3A35 /* CCNode+SFGestureRecognizers.m in Sources */ = {isa = PBXBuildFile; fileRef = 03919F3D17A7563A00FE3A35 /* CCNode+SFGestureRecognizers.m */; };
 		250B83922D44EFC51701CD5B /* preview.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 250B88928643535FCEE13092 /* preview.jpg */; };
-		250B852BFB2B868DA7656F1A /* 16.tmx in Resources */ = {isa = PBXBuildFile; fileRef = 250B8B9B048EF0F350CA770E /* 16.tmx */; };
 		250B8CBDFA6155DE3D59560A /* yellow.png in Resources */ = {isa = PBXBuildFile; fileRef = 250B82C5C86EF3B6434793C0 /* yellow.png */; };
-		250B8EA1B9637F7627E5EF20 /* 32.tmx in Resources */ = {isa = PBXBuildFile; fileRef = 250B85845376C26625E4BB8F /* 32.tmx */; };
 		250B8EE84B932B24957A3027 /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 250B88CF9EA5E7B7BC2EFE63 /* Default.png */; };
 		7A7A2006E823B70E1F7DAB4C /* IntroLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A7A2CCD3813F97926FA53D4 /* IntroLayer.m */; };
 		7A7A2047A42EF970A40C4C01 /* GameLogicLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A7A2887596424A5D8CC15F3 /* GameLogicLayer.m */; };
 		7A7A21AC0625C25E3160E905 /* Field.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A7A22F571F5B61F648AD5F2 /* Field.m */; };
 		7A7A21F2A1EBE8C0899FC41B /* addLine.png in Resources */ = {isa = PBXBuildFile; fileRef = 7A7A28238217B0E51A106E4E /* addLine.png */; };
+		7A7A23A0A33C30FF11781F26 /* inventory.png in Resources */ = {isa = PBXBuildFile; fileRef = 7A7A2B90F5CE60ECB098F96C /* inventory.png */; };
 		7A7A2810D7553E2E86245493 /* TetrisAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A7A211A98BB989007FD7F72 /* TetrisAppDelegate.m */; };
 		7A7A28BA28F81EA4ED06D213 /* RandomRemove.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A7A233E4F34AF3BE16B6D91 /* RandomRemove.m */; };
-		7A7A2AAF8308B4C6FA929375 /* Block.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A7A280F42E8D0AA24D17D27 /* Block.m */; };
+		7A7A298EFCEBBD8E2214D9FF /* Inventory.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A7A251DE0A377BAAD73433C /* Inventory.m */; };
 		7A7A2B3D2EC781F62740CD27 /* GameController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A7A2B055D95B73BDEDBB5DB /* GameController.m */; };
 		7A7A2BD9F89C1E62331D89B3 /* Tetromino.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A7A2E5CE98660517D31B176 /* Tetromino.m */; };
+		7A7A2BECA780318AF971693E /* Block.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A7A235CED4AC11F1647501F /* Block.m */; };
 		7A7A2D0CF914C0DCC6E6FEA0 /* Board.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A7A2AC0EB17443A2090E8E7 /* Board.m */; };
 		7A7A2DC40AD8DF337AC0CA4B /* GameOverLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A7A277D372CAA99EBFFD1A7 /* GameOverLayer.m */; };
 		7A7A2E6DF84C73C14A8E709A /* AddLine.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A7A2D1875DF24EC9DD8063C /* AddLine.m */; };
@@ -429,23 +429,23 @@
 		03919F3C17A7563A00FE3A35 /* CCNode+SFGestureRecognizers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "CCNode+SFGestureRecognizers.h"; sourceTree = "<group>"; };
 		03919F3D17A7563A00FE3A35 /* CCNode+SFGestureRecognizers.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "CCNode+SFGestureRecognizers.m"; sourceTree = "<group>"; };
 		250B82C5C86EF3B6434793C0 /* yellow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = yellow.png; sourceTree = "<group>"; };
-		250B85845376C26625E4BB8F /* 32.tmx */ = {isa = PBXFileReference; lastKnownFileType = file.tmx; path = 32.tmx; sourceTree = "<group>"; };
 		250B88928643535FCEE13092 /* preview.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = preview.jpg; sourceTree = "<group>"; };
 		250B88CF9EA5E7B7BC2EFE63 /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Default.png; path = Resources/Default.png; sourceTree = "<group>"; };
-		250B8B9B048EF0F350CA770E /* 16.tmx */ = {isa = PBXFileReference; lastKnownFileType = file.tmx; path = 16.tmx; sourceTree = "<group>"; };
 		7A7A2030F0B7C8803C98A990 /* HudLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HudLayer.m; sourceTree = "<group>"; };
 		7A7A20ED0B026338D75360D5 /* HudLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HudLayer.h; sourceTree = "<group>"; };
 		7A7A211A98BB989007FD7F72 /* TetrisAppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TetrisAppDelegate.m; sourceTree = "<group>"; };
 		7A7A21B40E7CBF4872248BBA /* Board.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Board.h; sourceTree = "<group>"; };
-		7A7A21F09A8A8A685565CD51 /* Block.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Block.h; sourceTree = "<group>"; };
+		7A7A21C851117FA38C7E9D26 /* Block.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Block.h; sourceTree = "<group>"; };
 		7A7A222AD466201F3437B25F /* IntroLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IntroLayer.h; sourceTree = "<group>"; };
 		7A7A22F571F5B61F648AD5F2 /* Field.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Field.m; sourceTree = "<group>"; };
 		7A7A233E4F34AF3BE16B6D91 /* RandomRemove.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RandomRemove.m; sourceTree = "<group>"; };
+		7A7A235CED4AC11F1647501F /* Block.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Block.m; sourceTree = "<group>"; };
 		7A7A23F26A8E7DA58DF10DD8 /* RandomRemove.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RandomRemove.h; sourceTree = "<group>"; };
+		7A7A251DE0A377BAAD73433C /* Inventory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Inventory.m; sourceTree = "<group>"; };
 		7A7A256E5699BF67428F00EA /* GameController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GameController.h; sourceTree = "<group>"; };
+		7A7A26E2A91E8517954433F2 /* Inventory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Inventory.h; sourceTree = "<group>"; };
 		7A7A277BEF7FD59499B61ABC /* Field.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Field.h; sourceTree = "<group>"; };
 		7A7A277D372CAA99EBFFD1A7 /* GameOverLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GameOverLayer.m; sourceTree = "<group>"; };
-		7A7A280F42E8D0AA24D17D27 /* Block.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Block.m; sourceTree = "<group>"; };
 		7A7A28238217B0E51A106E4E /* addLine.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = addLine.png; sourceTree = "<group>"; };
 		7A7A287AD73D9F6BBD6D6993 /* ICastable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ICastable.h; sourceTree = "<group>"; };
 		7A7A2887596424A5D8CC15F3 /* GameLogicLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GameLogicLayer.m; sourceTree = "<group>"; };
@@ -453,6 +453,7 @@
 		7A7A294D0B4EEA1862CAAB33 /* TetrisAppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TetrisAppDelegate.h; sourceTree = "<group>"; };
 		7A7A2AC0EB17443A2090E8E7 /* Board.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Board.m; sourceTree = "<group>"; };
 		7A7A2B055D95B73BDEDBB5DB /* GameController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GameController.m; sourceTree = "<group>"; };
+		7A7A2B90F5CE60ECB098F96C /* inventory.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = inventory.png; sourceTree = "<group>"; };
 		7A7A2C218A80F7774C681130 /* GameOverLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GameOverLayer.h; sourceTree = "<group>"; };
 		7A7A2CCD3813F97926FA53D4 /* IntroLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IntroLayer.m; sourceTree = "<group>"; };
 		7A7A2D1875DF24EC9DD8063C /* AddLine.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddLine.m; sourceTree = "<group>"; };
@@ -903,12 +904,11 @@
 				03311B0C179BF87000221460 /* orange.png */,
 				03311B0D179BF87000221460 /* red.png */,
 				03311B0E179BF87000221460 /* tetris_bg.jpg */,
-				250B8B9B048EF0F350CA770E /* 16.tmx */,
-				250B85845376C26625E4BB8F /* 32.tmx */,
 				250B88928643535FCEE13092 /* preview.jpg */,
 				250B88CF9EA5E7B7BC2EFE63 /* Default.png */,
 				250B82C5C86EF3B6434793C0 /* yellow.png */,
 				7A7A28238217B0E51A106E4E /* addLine.png */,
+				7A7A2B90F5CE60ECB098F96C /* inventory.png */,
 			);
 			name = Sprites;
 			sourceTree = "<group>";
@@ -931,8 +931,6 @@
 				7A7A287AD73D9F6BBD6D6993 /* ICastable.h */,
 				7A7A233E4F34AF3BE16B6D91 /* RandomRemove.m */,
 				7A7A23F26A8E7DA58DF10DD8 /* RandomRemove.h */,
-				7A7A21F09A8A8A685565CD51 /* Block.h */,
-				7A7A280F42E8D0AA24D17D27 /* Block.m */,
 			);
 			name = Spell;
 			sourceTree = "<group>";
@@ -947,6 +945,8 @@
 				7A7A2E5CE98660517D31B176 /* Tetromino.m */,
 				7A7A2E1F3DD4708C864567FB /* Tetromino.h */,
 				7A7A23CFE835E16440973C5B /* Spell */,
+				7A7A235CED4AC11F1647501F /* Block.m */,
+				7A7A21C851117FA38C7E9D26 /* Block.h */,
 			);
 			name = Domain;
 			sourceTree = "<group>";
@@ -958,6 +958,8 @@
 				7A7A2CCD3813F97926FA53D4 /* IntroLayer.m */,
 				7A7A222AD466201F3437B25F /* IntroLayer.h */,
 				7A7A2030F0B7C8803C98A990 /* HudLayer.m */,
+				7A7A251DE0A377BAAD73433C /* Inventory.m */,
+				7A7A26E2A91E8517954433F2 /* Inventory.h */,
 			);
 			name = Layers;
 			sourceTree = "<group>";
@@ -1049,12 +1051,11 @@
 				03311B16179BF87000221460 /* red.png in Resources */,
 				03311B17179BF87000221460 /* tetris_bg.jpg in Resources */,
 				03311B19179C07A300221460 /* Default-568h@2x.png in Resources */,
-				250B852BFB2B868DA7656F1A /* 16.tmx in Resources */,
-				250B8EA1B9637F7627E5EF20 /* 32.tmx in Resources */,
 				250B83922D44EFC51701CD5B /* preview.jpg in Resources */,
 				250B8EE84B932B24957A3027 /* Default.png in Resources */,
 				250B8CBDFA6155DE3D59560A /* yellow.png in Resources */,
 				7A7A21F2A1EBE8C0899FC41B /* addLine.png in Resources */,
+				7A7A23A0A33C30FF11781F26 /* inventory.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1178,7 +1179,8 @@
 				7A7A2FA9951CB4B1B1668365 /* HudLayer.m in Sources */,
 				7A7A2E6DF84C73C14A8E709A /* AddLine.m in Sources */,
 				7A7A28BA28F81EA4ED06D213 /* RandomRemove.m in Sources */,
-				7A7A2AAF8308B4C6FA929375 /* Block.m in Sources */,
+				7A7A298EFCEBBD8E2214D9FF /* Inventory.m in Sources */,
+				7A7A2BECA780318AF971693E /* Block.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

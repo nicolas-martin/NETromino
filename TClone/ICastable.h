@@ -13,6 +13,6 @@
 @property (nonatomic, strong) NSString *spriteFileName;
 
 - (void)CastSpell:(Field *)targetField;
--(NSString *)LogSpell;
+- (NSString *)LogSpell;
 
 @end

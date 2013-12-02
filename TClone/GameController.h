@@ -8,6 +8,7 @@
 
 @class Field;
 @class HudLayer;
+@class Inventory;
 
 @protocol GameControllerObserver <NSObject>
 
@@ -33,6 +34,7 @@
 @property (assign) NSUInteger numRowCleared;
 @property (nonatomic, strong) Field *field;
 @property (strong) HudLayer * hudLayer;
+@property (strong) Inventory * inventory;
 
 - (id)initWithField:(Field *)aField;
 

@@ -9,6 +9,8 @@
 #import "HudLayer.h"
 #import "Field.h"
 #import "Board.h"
+#import "Inventory.h"
+#import "AddLine.h"
 
 
 #define NSLog(FORMAT, ...) printf("%s\n", [[NSString stringWithFormat:FORMAT, ##__VA_ARGS__] UTF8String]);
@@ -32,6 +34,10 @@
         [hud setPosition:ccp(_field.Width + 10, _field.Height + 10)];
         self.hudLayer = hud;
 
+        Inventory *inventory = [Inventory initInventory];
+        [_field addChild:inventory];
+        [inventory setPosition:ccp(60, -10)];
+        self.inventory = inventory;
     }
 
     return self;
@@ -56,6 +62,7 @@
     else
     {
         userTetromino.stuck = YES;
+        [_inventory addSpell:[AddLine initStuff]];
         [_field.board printCurrentBoardStatus:YES];
         [_field addSpellToField];
         if([self.field checkForRowsToClear:userTetromino.children])
