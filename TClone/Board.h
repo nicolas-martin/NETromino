@@ -10,9 +10,9 @@
 
 @interface Board : NSObject
 
-@property (readwrite, assign) int NbBlocks;
-@property (nonatomic) NSUInteger Nby;
-@property (nonatomic) NSUInteger Nbx;
+@property int NbBlocks;
+@property NSUInteger Nby;
+@property NSUInteger Nbx;
 
 - (id)init;
 + (id)initBoard;

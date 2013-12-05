@@ -10,8 +10,8 @@
 
 @interface AddLine : NSObject <ICastable>
 
-@property (nonatomic, strong) NSString *spellName;
-@property (nonatomic, strong) NSString *spriteFileName;
+@property NSString *spellName;
+@property NSString *spriteFileName;
 
 - (AddLine *)initWith;
 + (AddLine *)initStuff;

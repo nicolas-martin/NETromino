@@ -9,8 +9,8 @@
 
 @protocol ICastable
 
-@property (nonatomic, strong) NSString *spellName;
-@property (nonatomic, strong) NSString *spriteFileName;
+@property NSString *spellName;
+@property NSString *spriteFileName;
 
 - (void)CastSpell:(Field *)targetField;
 - (NSString *)LogSpell;

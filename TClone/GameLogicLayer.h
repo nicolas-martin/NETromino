@@ -39,11 +39,13 @@
 	
 }
 
-@property (nonatomic, strong) GameController *gameController;
+@property GameController *gameController;
 
 - (void)AddBlocksToPlayer:(GameController *)controller blocksToAdd:(NSMutableArray *)blocks;
 
 - (id)initWithFields:(Field *)mainFieldLayer and:(Field *)otherFieldLayer1 and:(Field *)otherFieldLayer2 and:(Field *)otherFieldLayer3 and:(Field *)otherFieldLayer4;
+
+- (void)handleTap:(UITapGestureRecognizer *)sender;
 
 + (CCScene *) scene;
 

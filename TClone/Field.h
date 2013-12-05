@@ -13,12 +13,12 @@
 
 }
 
-@property (nonatomic, strong) Board *board;
-@property (nonatomic) NSUInteger Width;
-@property (nonatomic) NSUInteger Height;
-@property (nonatomic) NSUInteger TileSize;
-@property (nonatomic, strong) NSObject *Name;
-@property (strong) NSMutableArray *spellArray;
+@property Board *board;
+@property NSUInteger Width;
+@property NSUInteger Height;
+@property NSUInteger TileSize;
+@property NSObject *Name;
+@property NSMutableArray *spellArray;
 
 
 - (id)initWithBoard:(Board *)board FieldHeight:(NSUInteger)FieldHeight FieldWidth:(NSUInteger)FieldWidth TileSize:(NSUInteger)TileSize;

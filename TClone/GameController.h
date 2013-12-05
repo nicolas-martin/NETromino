@@ -30,11 +30,11 @@
 
 }
 
-@property (nonatomic, strong) NSMutableArray* listObservers;
-@property (assign) NSUInteger numRowCleared;
-@property (nonatomic, strong) Field *field;
-@property (strong) HudLayer * hudLayer;
-@property (strong) Inventory * inventory;
+@property NSMutableArray* listObservers;
+@property NSUInteger numRowCleared;
+@property Field *field;
+@property HudLayer * hudLayer;
+@property Inventory * inventory;
 
 - (id)initWithField:(Field *)aField;
 

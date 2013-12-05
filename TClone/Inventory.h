@@ -13,8 +13,11 @@
 @interface Inventory : CCLayer
 {
     CCSprite * selSprite;
+    NSMutableArray *movableSprites;
 }
-@property(nonatomic, strong) NSMutableArray *Inventory;
+@property NSMutableArray *Inventory;
+
+@property NSMutableArray *fieldBoundingBoxes;
 
 + (id)initInventory;
 

@@ -12,12 +12,12 @@
 	BOOL stuck;
 	BOOL disappearing;
 }
-@property (readwrite, assign) NSUInteger boardX;
-@property (readwrite, assign) NSUInteger boardY;
-@property (readwrite, strong) id <ICastable> spell;
+@property NSUInteger boardX;
+@property NSUInteger boardY;
+@property id <ICastable> spell;
 @property BOOL stuck;
 @property BOOL disappearing;
-@property (readwrite, assign) NSUInteger blockType;
+@property NSUInteger blockType;
 
 - (instancetype)initWithBlockType:(NSUInteger)blockType;
 

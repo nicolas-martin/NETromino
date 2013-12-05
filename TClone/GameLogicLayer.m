@@ -75,32 +75,35 @@ GameController *gameController4;
         NSUInteger bottomMargin = 20;
         NSUInteger padBetweenField = 250;
 
-
+        //TODO: Use sprites instead of CCLayerColor to increase performance
         //Set the field position on screen
         [_MainField setPosition:ccp(20,70)];
         [_MainField setContentSize:CGSizeMake(mainWidth, mainHeight)];
-        CCLayerColor *layerColorMain = [CCLayerColor layerWithColor:ccc4(50, 50, 100, 128) width:_MainField.contentSize.width height:_MainField.contentSize.height];
-        [_MainField addChild:layerColorMain z:-1];
+        //glClearColor *color = [glClearcolor]
+//        CCLayerColor *layerColorMain = [CCLayerColor layerWithColor:ccc4(50, 50, 100, 128) width:_MainField.contentSize.width height:_MainField.contentSize.height];
+//        [_MainField addChild:layerColorMain z:-1];
 
         [_FieldLayer1 setPosition:ccp((winSize.width - rightMargin) - playerWidth, bottomMargin)];
         [_FieldLayer1 setContentSize:CGSizeMake(playerWidth, playerHeight)];
-        CCLayerColor *layerColor1 = [CCLayerColor layerWithColor:ccc4(100, 150, 50, 128) width:_FieldLayer1.contentSize.width height:_FieldLayer1.contentSize.height];
-        [_FieldLayer1 addChild:layerColor1 z:-1];
+//        CCLayerColor *layerColor1 = [CCLayerColor layerWithColor:ccc4(100, 150, 50, 128) width:_FieldLayer1.contentSize.width height:_FieldLayer1.contentSize.height];
+//        [_FieldLayer1 addChild:layerColor1 z:-1];
 
         [_FieldLayer2 setPosition:ccp((winSize.width - rightMargin) - playerWidth, (winSize.height - topMargin) - playerHeight)];
         [_FieldLayer2 setContentSize:CGSizeMake(playerWidth, playerHeight)];
-        CCLayerColor *layerColor2 = [CCLayerColor layerWithColor:ccc4(200, 50, 100, 128) width:_FieldLayer2.contentSize.width height:_FieldLayer2.contentSize.height];
-        [_FieldLayer2 addChild:layerColor2 z:-1];
+//        CCLayerColor *layerColor2 = [CCLayerColor layerWithColor:ccc4(200, 50, 100, 128) width:_FieldLayer2.contentSize.width height:_FieldLayer2.contentSize.height];
+//        [_FieldLayer2 addChild:layerColor2 z:-1];
 
         [_FieldLayer3 setPosition:ccp((winSize.width - rightMargin) - (playerWidth + padBetweenField), bottomMargin)];
         [_FieldLayer3 setContentSize:CGSizeMake(playerWidth, playerHeight)];
-        CCLayerColor *layerColor3 = [CCLayerColor layerWithColor:ccc4(200, 50, 100, 128) width:_FieldLayer3.contentSize.width height:_FieldLayer3.contentSize.height];
-        [_FieldLayer3 addChild:layerColor3 z:-1];
+//        CCLayerColor *layerColor3 = [CCLayerColor layerWithColor:ccc4(200, 50, 100, 128) width:_FieldLayer3.contentSize.width height:_FieldLayer3.contentSize.height];
+//        [_FieldLayer3 addChild:layerColor3 z:-1];
 
         [_FieldLayer4 setPosition:ccp((winSize.width - rightMargin) - (playerWidth + padBetweenField), (winSize.height - topMargin) - (playerHeight))];
         _FieldLayer4.contentSize = CGSizeMake(playerWidth, playerHeight);
-        CCLayerColor *layerColor4 = [CCLayerColor layerWithColor:ccc4(200, 50, 100, 128) width:_FieldLayer4.contentSize.width height:_FieldLayer4.contentSize.height];
-        [_FieldLayer4 addChild:layerColor4 z:-1];
+//        CCLayerColor *layerColor4 = [CCLayerColor layerWithColor:ccc4(200, 50, 100, 128) width:_FieldLayer4.contentSize.width height:_FieldLayer4.contentSize.height];
+//        [_FieldLayer4 addChild:layerColor4 z:-1];
+        
+
 
         [self addChild:_MainField z:-1];
         [self addChild:_FieldLayer1 z:-1];
@@ -110,50 +113,87 @@ GameController *gameController4;
 
         self.isTouchEnabled = YES;
 
-		//creates the swipeRight gesture recognizer for the layer
-		UISwipeGestureRecognizer *swipeRightGestureRecognizer = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(swipeRightGestureRecognizer:)];
-		swipeRightGestureRecognizer.direction = UISwipeGestureRecognizerDirectionRight;
-		swipeRightGestureRecognizer.delegate = self;
-		[self addGestureRecognizer:swipeRightGestureRecognizer];
 
-        //creates the swipeLeft gesture recognizer for the layer
-		UISwipeGestureRecognizer *swipeLeftGestureRecognizer = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(swipeLeftGestureRecognizer:)];
-		swipeLeftGestureRecognizer.direction = UISwipeGestureRecognizerDirectionLeft;
-		swipeLeftGestureRecognizer.delegate = self;
-		[self addGestureRecognizer:swipeLeftGestureRecognizer];
 
         //Creates a new controller with a field.
-
-
-
         _gameController = [GameController controllerWithField:_MainField ];
-
-        UIPanGestureRecognizer *gestureRecognizer = [[UIPanGestureRecognizer alloc] initWithTarget:_gameController.inventory action:@selector(handlePanFrom:)];
-        [[CCDirector sharedDirector].view addGestureRecognizer:gestureRecognizer];
-        [self addGestureRecognizer:gestureRecognizer];
-
 
         //////// TESTING ////////
         gameController1 = [GameController controllerWithField:_FieldLayer1];
         gameController2 = [GameController controllerWithField:_FieldLayer2];
         gameController3 = [GameController controllerWithField:_FieldLayer3];
         gameController4 = [GameController controllerWithField:_FieldLayer4];
-        Block *block = [Block blockWithBlockType:2];
-        [block setBoardX:5];
-        [block setBoardY:7];
-        NSMutableArray *bArray = [NSMutableArray array];
-        [bArray addObject:block];
-        [gameController1.field addBlocks:bArray];
-
-
-
+//        Block *block = [Block blockWithBlockType:2];
+//        [block setBoardX:5];
+//        [block setBoardY:7];
+//        NSMutableArray *bArray = [NSMutableArray array];
+//        [bArray addObject:block];
+//        [gameController1.field addBlocks:bArray];
         //////// TESTING ////////
+
+
+		//creates the swipeRight gesture recognizer for the layer
+		UISwipeGestureRecognizer *swipeRightGestureRecognizer = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(swipeRightGestureRecognizer:)];
+		swipeRightGestureRecognizer.direction = UISwipeGestureRecognizerDirectionRight;
+		swipeRightGestureRecognizer.delegate = self;
+		[self addGestureRecognizer:swipeRightGestureRecognizer];
+
+
+        //creates the swipeLeft gesture recognizer for the layer
+		UISwipeGestureRecognizer *swipeLeftGestureRecognizer = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(swipeLeftGestureRecognizer:)];
+		swipeLeftGestureRecognizer.direction = UISwipeGestureRecognizerDirectionLeft;
+		swipeLeftGestureRecognizer.delegate = self;
+		[self addGestureRecognizer:swipeLeftGestureRecognizer];
+//
+        UITapGestureRecognizer *tapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleTap:)];
+        tapGestureRecognizer.delegate = self;
+        [self addGestureRecognizer:tapGestureRecognizer];
+
+//        UIPanGestureRecognizer *gestureRecognizer = [[UIPanGestureRecognizer alloc] initWithTarget:_gameController.inventory action:@selector(handlePanFrom:)];
+//        [[CCDirector sharedDirector].view addGestureRecognizer:gestureRecognizer];
+//        [self addGestureRecognizer:gestureRecognizer];
+
+        [[[CCDirector sharedDirector] touchDispatcher] addTargetedDelegate:_gameController.inventory priority:0 swallowsTouches:NO];
+
+        [self setInventoryFieldBoxes];
+
+
 
         [self startGame];
 	
 	}
 	return self;
 }
+
+- (void)setInventoryFieldBoxes {
+    NSMutableDictionary *mainFieldBoxWithName = [NSMutableDictionary dictionary];
+    NSMutableDictionary *field1BoxWithName = [NSMutableDictionary dictionary];
+    NSMutableDictionary *field2BoxWithName = [NSMutableDictionary dictionary];
+    NSMutableDictionary *field3BoxWithName = [NSMutableDictionary dictionary];
+    NSMutableDictionary *field4BoxWithName = [NSMutableDictionary dictionary];
+
+    [mainFieldBoxWithName setObject:[NSValue valueWithCGRect:_MainField.boundingBox] forKey:@"Main"];
+    [field1BoxWithName setObject:[NSValue valueWithCGRect:_FieldLayer1.boundingBox] forKey:@"Field1"];
+    [field2BoxWithName setObject:[NSValue valueWithCGRect:_FieldLayer2.boundingBox] forKey:@"Field2"];
+    [field3BoxWithName setObject:[NSValue valueWithCGRect:_FieldLayer3.boundingBox] forKey:@"Field3"];
+    [field4BoxWithName setObject:[NSValue valueWithCGRect:_FieldLayer4.boundingBox] forKey:@"Field4"];
+
+    [_gameController.inventory.fieldBoundingBoxes addObject:mainFieldBoxWithName];
+    [_gameController.inventory.fieldBoundingBoxes addObject:field1BoxWithName];
+    [_gameController.inventory.fieldBoundingBoxes addObject:field2BoxWithName];
+    [_gameController.inventory.fieldBoundingBoxes addObject:field3BoxWithName];
+    [_gameController.inventory.fieldBoundingBoxes addObject:field4BoxWithName];
+}
+
+- (void)handleTap:(UITapGestureRecognizer *)sender
+{
+
+    CGPoint location = [sender locationInView: [sender view]];
+
+    [_gameController viewTap:[self tileCoordForPosition:location]];
+}
+
+
 
 -(void)AddBlocksToPlayer:(GameController *)controller blocksToAdd:(NSMutableArray *)blocks
 {
@@ -167,6 +207,8 @@ GameController *gameController4;
     //NSLog(@"position clicked on board x = %d and y = %d", x, y);
     return ccp(x, y);
 }
+
+//TODO: Use Delegate instead
 - (void)swipeRightGestureRecognizer:(UISwipeGestureRecognizer*)aGestureRecognizer
 {
 	[_gameController rotateTetromino:rotateClockwise];
@@ -205,7 +247,7 @@ GameController *gameController4;
     {
         [_gameController moveDownOrCreate];
         //////// TESTING ////////
-        //[gameController1 moveDownOrCreate];
+//        [gameController1 moveDownOrCreate];
 //        [gameController2 moveDownOrCreate];
 //        [gameController3 moveDownOrCreate];
 //        [gameController4 moveDownOrCreate];
@@ -213,7 +255,7 @@ GameController *gameController4;
 
     }
 }
-
+/*
 - (void)ccTouchesEnded:(NSSet *)touches withEvent:(UIEvent *)event{
     UITouch *touch = [touches anyObject];
     CGPoint location = [touch locationInView: [touch view]];
@@ -221,7 +263,7 @@ GameController *gameController4;
 
     [_gameController viewTap:[self tileCoordForPosition:location]];
 
-}
+}*/
 
 
 @end
