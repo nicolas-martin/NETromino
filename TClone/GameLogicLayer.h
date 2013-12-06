@@ -45,6 +45,8 @@
 
 - (id)initWithFields:(Field *)mainFieldLayer and:(Field *)otherFieldLayer1 and:(Field *)otherFieldLayer2 and:(Field *)otherFieldLayer3 and:(Field *)otherFieldLayer4;
 
+- (Field *)getFieldFromString:(NSString *)fieldName;
+
 - (void)handleTap:(UITapGestureRecognizer *)sender;
 
 + (CCScene *) scene;

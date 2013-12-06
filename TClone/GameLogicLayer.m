@@ -131,33 +131,32 @@ GameController *gameController4;
 //        [gameController1.field addBlocks:bArray];
         //////// TESTING ////////
 
-
-		//creates the swipeRight gesture recognizer for the layer
+        _MainField.isTouchEnabled = YES;
+//		//creates the swipeRight gesture recognizer for the layer
 		UISwipeGestureRecognizer *swipeRightGestureRecognizer = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(swipeRightGestureRecognizer:)];
 		swipeRightGestureRecognizer.direction = UISwipeGestureRecognizerDirectionRight;
 		swipeRightGestureRecognizer.delegate = self;
-		[self addGestureRecognizer:swipeRightGestureRecognizer];
-
-
-        //creates the swipeLeft gesture recognizer for the layer
+		[_MainField addGestureRecognizer:swipeRightGestureRecognizer];
+//
+//
+//        //creates the swipeLeft gesture recognizer for the layer
 		UISwipeGestureRecognizer *swipeLeftGestureRecognizer = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(swipeLeftGestureRecognizer:)];
 		swipeLeftGestureRecognizer.direction = UISwipeGestureRecognizerDirectionLeft;
 		swipeLeftGestureRecognizer.delegate = self;
-		[self addGestureRecognizer:swipeLeftGestureRecognizer];
+		[_MainField addGestureRecognizer:swipeLeftGestureRecognizer];
 //
         UITapGestureRecognizer *tapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleTap:)];
         tapGestureRecognizer.delegate = self;
-        [self addGestureRecognizer:tapGestureRecognizer];
+        [_MainField addGestureRecognizer:tapGestureRecognizer];
 
+        _gameController.inventory.isTouchEnabled = YES;
 //        UIPanGestureRecognizer *gestureRecognizer = [[UIPanGestureRecognizer alloc] initWithTarget:_gameController.inventory action:@selector(handlePanFrom:)];
-//        [[CCDirector sharedDirector].view addGestureRecognizer:gestureRecognizer];
-//        [self addGestureRecognizer:gestureRecognizer];
-
+//        tapGestureRecognizer.delegate = self;
+//        [_gameController.inventory addGestureRecognizer:gestureRecognizer];
         [[[CCDirector sharedDirector] touchDispatcher] addTargetedDelegate:_gameController.inventory priority:0 swallowsTouches:NO];
 
+
         [self setInventoryFieldBoxes];
-
-
 
         [self startGame];
 	
@@ -172,7 +171,7 @@ GameController *gameController4;
     NSMutableDictionary *field3BoxWithName = [NSMutableDictionary dictionary];
     NSMutableDictionary *field4BoxWithName = [NSMutableDictionary dictionary];
 
-    [mainFieldBoxWithName setObject:[NSValue valueWithCGRect:_MainField.boundingBox] forKey:@"Main"];
+    [mainFieldBoxWithName setObject:[NSValue valueWithCGRect:_MainField.boundingBox] forKey:@"MainField"];
     [field1BoxWithName setObject:[NSValue valueWithCGRect:_FieldLayer1.boundingBox] forKey:@"Field1"];
     [field2BoxWithName setObject:[NSValue valueWithCGRect:_FieldLayer2.boundingBox] forKey:@"Field2"];
     [field3BoxWithName setObject:[NSValue valueWithCGRect:_FieldLayer3.boundingBox] forKey:@"Field3"];
@@ -184,6 +183,35 @@ GameController *gameController4;
     [_gameController.inventory.fieldBoundingBoxes addObject:field3BoxWithName];
     [_gameController.inventory.fieldBoundingBoxes addObject:field4BoxWithName];
 }
+
+- (Field *)getFieldFromString:(NSString *)fieldName
+{
+    if ([fieldName isEqualToString:@"MainField"])
+    {
+        return _MainField;
+    }
+    else if ([fieldName isEqualToString:@"Field1"])
+    {
+        return _FieldLayer1;
+    }
+    else if ([fieldName isEqualToString:@"Field2"])
+    {
+        return _FieldLayer2;
+    }
+    else if ([fieldName isEqualToString:@"Field3"])
+    {
+        return _FieldLayer3;
+    }
+    else if ([fieldName isEqualToString:@"Field4"])
+    {
+        return _FieldLayer4;
+    }
+    else
+    {
+        return nil;
+    }
+}
+
 
 - (void)handleTap:(UITapGestureRecognizer *)sender
 {
@@ -208,7 +236,6 @@ GameController *gameController4;
     return ccp(x, y);
 }
 
-//TODO: Use Delegate instead
 - (void)swipeRightGestureRecognizer:(UISwipeGestureRecognizer*)aGestureRecognizer
 {
 	[_gameController rotateTetromino:rotateClockwise];
@@ -255,15 +282,5 @@ GameController *gameController4;
 
     }
 }
-/*
-- (void)ccTouchesEnded:(NSSet *)touches withEvent:(UIEvent *)event{
-    UITouch *touch = [touches anyObject];
-    CGPoint location = [touch locationInView: [touch view]];
-
-
-    [_gameController viewTap:[self tileCoordForPosition:location]];
-
-}*/
-
 
 @end

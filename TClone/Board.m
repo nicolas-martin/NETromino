@@ -99,6 +99,8 @@
     [[_array objectAtIndex:x] replaceObjectAtIndex:y withObject:block];
 }
 
+//TODO: Crash here
+// -[__NSArrayM replaceObjectAtIndex:withObject:]: index 4294967295 beyond bounds [0 .. 19]'
 - (void)DeleteBlock:(Tetromino *)tetromino {
 
     for (Block *block in tetromino.children) {
