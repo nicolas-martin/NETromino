@@ -13,6 +13,6 @@
 @property NSString *spriteFileName;
 
 - (void)CastSpell:(Field *)targetField;
-- (NSString *)LogSpell;
+- (NSString *)LogSpell:(Field *)targetField;
 
 @end

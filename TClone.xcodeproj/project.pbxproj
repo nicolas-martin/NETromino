@@ -148,6 +148,7 @@
 		7A7A21AC0625C25E3160E905 /* Field.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A7A22F571F5B61F648AD5F2 /* Field.m */; };
 		7A7A21F2A1EBE8C0899FC41B /* addLine.png in Resources */ = {isa = PBXBuildFile; fileRef = 7A7A28238217B0E51A106E4E /* addLine.png */; };
 		7A7A23A0A33C30FF11781F26 /* inventory.png in Resources */ = {isa = PBXBuildFile; fileRef = 7A7A2B90F5CE60ECB098F96C /* inventory.png */; };
+		7A7A26264E40EAC689C07669 /* SpellManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A7A25F0D7B0B608BBB6B212 /* SpellManager.m */; };
 		7A7A2810D7553E2E86245493 /* TetrisAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A7A211A98BB989007FD7F72 /* TetrisAppDelegate.m */; };
 		7A7A28BA28F81EA4ED06D213 /* RandomRemove.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A7A233E4F34AF3BE16B6D91 /* RandomRemove.m */; };
 		7A7A298EFCEBBD8E2214D9FF /* Inventory.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A7A251DE0A377BAAD73433C /* Inventory.m */; };
@@ -443,6 +444,7 @@
 		7A7A23F26A8E7DA58DF10DD8 /* RandomRemove.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RandomRemove.h; sourceTree = "<group>"; };
 		7A7A251DE0A377BAAD73433C /* Inventory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Inventory.m; sourceTree = "<group>"; };
 		7A7A256E5699BF67428F00EA /* GameController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GameController.h; sourceTree = "<group>"; };
+		7A7A25F0D7B0B608BBB6B212 /* SpellManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SpellManager.m; sourceTree = "<group>"; };
 		7A7A26E2A91E8517954433F2 /* Inventory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Inventory.h; sourceTree = "<group>"; };
 		7A7A277BEF7FD59499B61ABC /* Field.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Field.h; sourceTree = "<group>"; };
 		7A7A277D372CAA99EBFFD1A7 /* GameOverLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GameOverLayer.m; sourceTree = "<group>"; };
@@ -459,6 +461,7 @@
 		7A7A2D1875DF24EC9DD8063C /* AddLine.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddLine.m; sourceTree = "<group>"; };
 		7A7A2E1F3DD4708C864567FB /* Tetromino.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Tetromino.h; sourceTree = "<group>"; };
 		7A7A2E5CE98660517D31B176 /* Tetromino.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Tetromino.m; sourceTree = "<group>"; };
+		7A7A2E8D772F6BC4D304C515 /* SpellManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SpellManager.h; sourceTree = "<group>"; };
 		7A7A2F2974ED36C4AAD294BB /* AddLine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddLine.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -931,6 +934,8 @@
 				7A7A287AD73D9F6BBD6D6993 /* ICastable.h */,
 				7A7A233E4F34AF3BE16B6D91 /* RandomRemove.m */,
 				7A7A23F26A8E7DA58DF10DD8 /* RandomRemove.h */,
+				7A7A25F0D7B0B608BBB6B212 /* SpellManager.m */,
+				7A7A2E8D772F6BC4D304C515 /* SpellManager.h */,
 			);
 			name = Spell;
 			sourceTree = "<group>";
@@ -1181,6 +1186,7 @@
 				7A7A28BA28F81EA4ED06D213 /* RandomRemove.m in Sources */,
 				7A7A298EFCEBBD8E2214D9FF /* Inventory.m in Sources */,
 				7A7A2BECA780318AF971693E /* Block.m in Sources */,
+				7A7A26264E40EAC689C07669 /* SpellManager.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

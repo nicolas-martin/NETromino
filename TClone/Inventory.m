@@ -80,12 +80,11 @@
 - (void)ccTouchMoved:(UITouch *)touch withEvent:(UIEvent *)event {
     CGPoint touchLocation = [self convertTouchToNodeSpace:touch];
 
-    CGPoint oldTouchLocation = [touch previousLocationInView:touch.view];
-    oldTouchLocation = [[CCDirector sharedDirector] convertToGL:oldTouchLocation];
-    oldTouchLocation = [self convertToNodeSpace:oldTouchLocation];
+    if (selSprite) {
+        id move = [CCEaseIn actionWithAction:[CCMoveTo actionWithDuration:0.1 position:touchLocation]];
+        [selSprite runAction:move];
 
-    CGPoint translation = ccpSub(touchLocation, oldTouchLocation);
-    [self panForTranslation:translation];
+    }
 }
 
 
@@ -103,31 +102,20 @@
                 if (selSprite)
                 {
                     id<ICastable> obj = selSprite.userObject;
+
                     //TODO: Be careful with LEAKS!
                     GameLogicLayer *myParentAsMainClass = (GameLogicLayer*)self.parent.parent;
                     [obj CastSpell:[myParentAsMainClass getFieldFromString:key]];
                     [self removeSpell:selSprite.userObject];
-                    //[selSprite removeFromParentAndCleanup:YES];
 
                 }
 
             }
 
-
         }
     }
 
-
-
 }
-
-- (void)panForTranslation:(CGPoint)translation {
-    if (selSprite) {
-        CGPoint newPos = ccpAdd(selSprite.position, translation);
-        selSprite.position = newPos;
-    }
-}
-
 
 - (void)selectSpriteForTouch:(CGPoint)touchLocation {
     CCSprite * newSprite = nil;

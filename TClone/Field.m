@@ -8,6 +8,7 @@
 #import "Field.h"
 #import "Board.h"
 #import "Tetromino.h"
+#import "SpellManager.h"
 
 #define NSLog(FORMAT, ...) printf("%s\n", [[NSString stringWithFormat:FORMAT, ##__VA_ARGS__] UTF8String]);
 
@@ -15,23 +16,21 @@
 
 
 }
-
-
-- (id)initWithBoard:(Board *)board FieldHeight:(NSUInteger)FieldHeight FieldWidth:(NSUInteger)FieldWidth TileSize:(NSUInteger)TileSize {
+- (instancetype)initWithName:(NSObject *)Name TileSize:(NSUInteger)TileSize Height:(NSUInteger)Height Width:(NSUInteger)Width board:(Board *)board {
     self = [super init];
     if (self) {
-        self.board = board;
-        self.Height = FieldHeight;
-        self.Width = FieldWidth;
+        self.Name = Name;
         self.TileSize = TileSize;
-
+        self.Height = Height;
+        self.Width = Width;
+        self.board = board;
     }
 
     return self;
 }
 
-+ (id)fieldWithBoard:(Board *)board FieldHeight:(NSUInteger)FieldHeight FieldWidth:(NSUInteger)FieldWidth TileSize:(NSUInteger)TileSize {
-    return [[self alloc] initWithBoard:board FieldHeight:FieldHeight FieldWidth:FieldWidth TileSize:TileSize];
++ (instancetype)fieldWithName:(NSObject *)Name TileSize:(NSUInteger)TileSize Height:(NSUInteger)Height Width:(NSUInteger)Width board:(Board *)board {
+    return [[self alloc] initWithName:Name TileSize:TileSize Height:Height Width:Width board:board];
 }
 
 - (BOOL)checkForRowsToClear:(NSMutableArray *)blocksToCheck {
@@ -102,10 +101,11 @@
         Block * block = [allBlocksInBoard objectAtIndex:posOfSpell];
         if (block.spell == nil)
         {
-            [block addSpellToBlock];
+            [block addSpellToBlock:[SpellManager getSpellUsingFrequency]];
         }
     }
 }
+
 
 - (BOOL)canMoveTetrominoByYTetromino:(Tetromino *)userTetromino offSetY:(NSUInteger)offSetY {
 

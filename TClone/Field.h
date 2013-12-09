@@ -21,9 +21,9 @@
 @property NSMutableArray *spellArray;
 
 
-- (id)initWithBoard:(Board *)board FieldHeight:(NSUInteger)FieldHeight FieldWidth:(NSUInteger)FieldWidth TileSize:(NSUInteger)TileSize;
+- (instancetype)initWithName:(NSObject *)Name TileSize:(NSUInteger)TileSize Height:(NSUInteger)Height Width:(NSUInteger)Width board:(Board *)board;
 
-+ (id)fieldWithBoard:(Board *)board FieldHeight:(NSUInteger)FieldHeight FieldWidth:(NSUInteger)FieldWidth TileSize:(NSUInteger)TileSize;
++ (instancetype)fieldWithName:(NSObject *)Name TileSize:(NSUInteger)TileSize Height:(NSUInteger)Height Width:(NSUInteger)Width board:(Board *)board;
 
 - (BOOL)checkForRowsToClear:(NSMutableArray *)array;
 

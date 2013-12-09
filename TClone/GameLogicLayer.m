@@ -62,12 +62,11 @@ GameController *gameController4;
         Board *player3Board = [Board initBoard];
         Board *player4Board = [Board initBoard];
 
-        [_MainField initWithBoard:mainBoard FieldHeight:640 FieldWidth:320 TileSize:32];
-        [_FieldLayer1 initWithBoard:player1Board FieldHeight:320 FieldWidth:160 TileSize:16];
-        [_FieldLayer2 initWithBoard:player2Board FieldHeight:320 FieldWidth:160 TileSize:16];
-        [_FieldLayer3 initWithBoard:player3Board FieldHeight:320 FieldWidth:160 TileSize:16];
-        [_FieldLayer4 initWithBoard:player4Board FieldHeight:320 FieldWidth:160 TileSize:16];
-
+        [_MainField initWithName:@"MainField" TileSize:32 Height:640 Width:320 board:mainBoard];
+        [_FieldLayer1 initWithName:@"Field1" TileSize:16 Height:320 Width:160 board:player1Board];
+        [_FieldLayer2 initWithName:@"Field2" TileSize:16 Height:320 Width:160 board:player2Board];
+        [_FieldLayer3 initWithName:@"Field3" TileSize:16 Height:320 Width:160 board:player3Board];
+        [_FieldLayer4 initWithName:@"Field4" TileSize:16 Height:320 Width:160 board:player4Board];
 
         CGSize winSize = [CCDirector sharedDirector].winSize;
         NSUInteger rightMargin = 50;
@@ -75,35 +74,21 @@ GameController *gameController4;
         NSUInteger bottomMargin = 20;
         NSUInteger padBetweenField = 250;
 
-        //TODO: Use sprites instead of CCLayerColor to increase performance
-        //Set the field position on screen
         [_MainField setPosition:ccp(20,70)];
         [_MainField setContentSize:CGSizeMake(mainWidth, mainHeight)];
-        //glClearColor *color = [glClearcolor]
-//        CCLayerColor *layerColorMain = [CCLayerColor layerWithColor:ccc4(50, 50, 100, 128) width:_MainField.contentSize.width height:_MainField.contentSize.height];
-//        [_MainField addChild:layerColorMain z:-1];
 
         [_FieldLayer1 setPosition:ccp((winSize.width - rightMargin) - playerWidth, bottomMargin)];
         [_FieldLayer1 setContentSize:CGSizeMake(playerWidth, playerHeight)];
-//        CCLayerColor *layerColor1 = [CCLayerColor layerWithColor:ccc4(100, 150, 50, 128) width:_FieldLayer1.contentSize.width height:_FieldLayer1.contentSize.height];
-//        [_FieldLayer1 addChild:layerColor1 z:-1];
 
         [_FieldLayer2 setPosition:ccp((winSize.width - rightMargin) - playerWidth, (winSize.height - topMargin) - playerHeight)];
         [_FieldLayer2 setContentSize:CGSizeMake(playerWidth, playerHeight)];
-//        CCLayerColor *layerColor2 = [CCLayerColor layerWithColor:ccc4(200, 50, 100, 128) width:_FieldLayer2.contentSize.width height:_FieldLayer2.contentSize.height];
-//        [_FieldLayer2 addChild:layerColor2 z:-1];
+
 
         [_FieldLayer3 setPosition:ccp((winSize.width - rightMargin) - (playerWidth + padBetweenField), bottomMargin)];
         [_FieldLayer3 setContentSize:CGSizeMake(playerWidth, playerHeight)];
-//        CCLayerColor *layerColor3 = [CCLayerColor layerWithColor:ccc4(200, 50, 100, 128) width:_FieldLayer3.contentSize.width height:_FieldLayer3.contentSize.height];
-//        [_FieldLayer3 addChild:layerColor3 z:-1];
 
         [_FieldLayer4 setPosition:ccp((winSize.width - rightMargin) - (playerWidth + padBetweenField), (winSize.height - topMargin) - (playerHeight))];
         _FieldLayer4.contentSize = CGSizeMake(playerWidth, playerHeight);
-//        CCLayerColor *layerColor4 = [CCLayerColor layerWithColor:ccc4(200, 50, 100, 128) width:_FieldLayer4.contentSize.width height:_FieldLayer4.contentSize.height];
-//        [_FieldLayer4 addChild:layerColor4 z:-1];
-        
-
 
         [self addChild:_MainField z:-1];
         [self addChild:_FieldLayer1 z:-1];
@@ -112,8 +97,6 @@ GameController *gameController4;
         [self addChild:_FieldLayer4 z:-1];
 
         self.isTouchEnabled = YES;
-
-
 
         //Creates a new controller with a field.
         _gameController = [GameController controllerWithField:_MainField ];
@@ -132,32 +115,24 @@ GameController *gameController4;
         //////// TESTING ////////
 
         _MainField.isTouchEnabled = YES;
-//		//creates the swipeRight gesture recognizer for the layer
 		UISwipeGestureRecognizer *swipeRightGestureRecognizer = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(swipeRightGestureRecognizer:)];
 		swipeRightGestureRecognizer.direction = UISwipeGestureRecognizerDirectionRight;
 		swipeRightGestureRecognizer.delegate = self;
 		[_MainField addGestureRecognizer:swipeRightGestureRecognizer];
-//
-//
-//        //creates the swipeLeft gesture recognizer for the layer
+
 		UISwipeGestureRecognizer *swipeLeftGestureRecognizer = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(swipeLeftGestureRecognizer:)];
 		swipeLeftGestureRecognizer.direction = UISwipeGestureRecognizerDirectionLeft;
 		swipeLeftGestureRecognizer.delegate = self;
 		[_MainField addGestureRecognizer:swipeLeftGestureRecognizer];
-//
+
         UITapGestureRecognizer *tapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleTap:)];
         tapGestureRecognizer.delegate = self;
         [_MainField addGestureRecognizer:tapGestureRecognizer];
 
         _gameController.inventory.isTouchEnabled = YES;
-//        UIPanGestureRecognizer *gestureRecognizer = [[UIPanGestureRecognizer alloc] initWithTarget:_gameController.inventory action:@selector(handlePanFrom:)];
-//        tapGestureRecognizer.delegate = self;
-//        [_gameController.inventory addGestureRecognizer:gestureRecognizer];
         [[[CCDirector sharedDirector] touchDispatcher] addTargetedDelegate:_gameController.inventory priority:0 swallowsTouches:NO];
 
-
         [self setInventoryFieldBoxes];
-
         [self startGame];
 	
 	}
@@ -228,11 +203,9 @@ GameController *gameController4;
 
 }
 
-//Returns the tileCoordinate from a X and Y position
 - (CGPoint)tileCoordForPosition:(CGPoint)position {
-    NSUInteger x = (NSUInteger) (position.x / mainTileSize);//500,200
+    NSUInteger x = (NSUInteger) (position.x / mainTileSize);
     NSUInteger y = (NSUInteger) (20-(((mainHeight) - position.y) / mainTileSize));
-    //NSLog(@"position clicked on board x = %d and y = %d", x, y);
     return ccp(x, y);
 }
 
@@ -253,10 +226,10 @@ GameController *gameController4;
 
 	[_gameController createNewTetromino];
     //////// TESTING ////////
-//    [gameController1 createNewTetromino];
-//    [gameController2 createNewTetromino];
-//    [gameController3 createNewTetromino];
-//    [gameController4 createNewTetromino];
+    [gameController1 createNewTetromino];
+    [gameController2 createNewTetromino];
+    [gameController3 createNewTetromino];
+    [gameController4 createNewTetromino];
     //////// TESTING ////////
 
 	frameCount = 0;
@@ -274,10 +247,10 @@ GameController *gameController4;
     {
         [_gameController moveDownOrCreate];
         //////// TESTING ////////
-//        [gameController1 moveDownOrCreate];
-//        [gameController2 moveDownOrCreate];
-//        [gameController3 moveDownOrCreate];
-//        [gameController4 moveDownOrCreate];
+        [gameController1 moveDownOrCreate];
+        [gameController2 moveDownOrCreate];
+        [gameController3 moveDownOrCreate];
+        [gameController4 moveDownOrCreate];
         //////// TESTING ////////
 
     }

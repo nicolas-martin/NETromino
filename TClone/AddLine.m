@@ -38,6 +38,7 @@
         if ((random % 3) > 0)
         {
             Block *block = [Block blockWithBlockType:random % 7];
+            block.stuck = YES;
             [block setBoardX:x];
             [block setBoardY:19];
 
@@ -49,24 +50,23 @@
     [targetField addBlocks:bArray];
 }
 
+//TODO: Bug when adding a line and it collides with a falling block
 - (void)CastSpell:(Field *)targetField {
-    NSLog(@"ADD LINE CALLED!!!!!!");
-
     Board *board = targetField.board;
 
     NSMutableArray *blocksToSetPosition = [NSMutableArray array];
 
     for (NSUInteger y = 0; y < board.Nby; y++) {
         for (NSUInteger x = 0; x < board.Nbx; x++) {
-            Block *current = [board getBlockAt:ccp(x, y)];
-            if (current != nil) {
 
+            Block *current = [board getBlockAt:ccp(x, y)];
+
+            if (current != nil && current.stuck) {
                 [board MoveBlock:current to:ccp(x, y - 1)];
 
                 [current moveUp];
 
                 [blocksToSetPosition addObject:current];
-
             }
         }
     }
@@ -75,14 +75,13 @@
 
     [self CreateBlockLine:targetField ];
 
+    [self LogSpell:targetField];
 
 }
 
-//add field
-- (NSString *)LogSpell {
-    NSString *Output = [NSString stringWithFormat:@"%@ was casted on...", _spellName];
+- (NSString *)LogSpell:(Field *)targetField {
+    NSString *Output = [NSString stringWithFormat:@"%@ was casted on %@", _spellName, targetField.Name];
     return Output;
 }
-
 
 @end

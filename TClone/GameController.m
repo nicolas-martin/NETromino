@@ -71,9 +71,7 @@
             [_hudLayer numRowClearedChanged:_numRowCleared];
             [_field addSpellToField];
         }
-
     }
-
 }
 
 - (id)init {

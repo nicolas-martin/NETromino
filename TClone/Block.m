@@ -65,12 +65,10 @@
     return  [self initWithFile:filename];
 }
 
-- (void) addSpellToBlock
+- (void) addSpellToBlock:(<ICastable>) spell
 {
-    self.spell = [AddLine initStuff];
+    _spell = spell;
     [self setTexture:[[CCTextureCache sharedTextureCache] addImage:_spell.spriteFileName]];
-
-
 }
 
 + (instancetype)blockWithBlockType:(NSUInteger)blockType {

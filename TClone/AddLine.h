@@ -16,6 +16,7 @@
 - (AddLine *)initWith;
 + (AddLine *)initStuff;
 - (void)CastSpell:(Field *)targetField;
-- (NSString *)LogSpell;
+- (NSString *)LogSpell:(Field *)targetField;
+
 
 @end

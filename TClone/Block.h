@@ -9,8 +9,6 @@
 
 
 @interface Block : CCSprite {
-	BOOL stuck;
-	BOOL disappearing;
 }
 @property NSUInteger boardX;
 @property NSUInteger boardY;
@@ -21,7 +19,7 @@
 
 - (instancetype)initWithBlockType:(NSUInteger)blockType;
 
-- (void)addSpellToBlock;
+- (void)addSpellToBlock:(<ICastable>) spell;
 
 + (instancetype)blockWithBlockType:(NSUInteger)blockType;
 
