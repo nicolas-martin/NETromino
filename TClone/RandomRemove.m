@@ -13,15 +13,15 @@
 - (RandomRemove *)initWith {
     self = [super init];
     if (self) {
-        _spellName = @"RandomRemove";
-        _spriteFileName = @"RandomRemove.png";
+        _spellName = @"randomRemove";
+        _spriteFileName = @"randomRemove.png";
 
     }
 
     return self;
 }
 
-+ (RandomRemove *)initStuff {
++ (RandomRemove *)init {
     return [[self alloc] initWith];
 }
 

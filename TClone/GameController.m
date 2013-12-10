@@ -10,7 +10,6 @@
 #import "Field.h"
 #import "Board.h"
 #import "Inventory.h"
-#import "AddLine.h"
 
 
 #define NSLog(FORMAT, ...) printf("%s\n", [[NSString stringWithFormat:FORMAT, ##__VA_ARGS__] UTF8String]);
@@ -62,10 +61,9 @@
     else
     {
         userTetromino.stuck = YES;
-        [_inventory addSpell:[AddLine initStuff]];
-        //[_field.board printCurrentBoardStatus:YES];
+        [_field.board printCurrentBoardStatus:YES];
         [_field addSpellToField];
-        if([self.field checkForRowsToClear:userTetromino.children])
+        if([self checkForRowsToClear:userTetromino.children])
         {
             self.numRowCleared++;
             [_hudLayer numRowClearedChanged:_numRowCleared];
@@ -109,6 +107,64 @@
 
 
 }
+
+- (BOOL)checkForRowsToClear:(NSMutableArray *)blocksToCheck {
+
+    BOOL occupied = NO;
+
+    NSUInteger deletedRow = (NSUInteger) nil;
+    for (Block *block in blocksToCheck) {
+
+        //Skip row already processed
+        if ([block boardY] == (NSUInteger) deletedRow) {
+            continue;
+        }
+
+        for (int x = 0; x < [_field.board Nbx]; x++) {
+
+            if (![_field.board isBlockAt:ccp(x, block.boardY)]) {
+                occupied = NO;
+                //Since there's an empty block on this column there's no need to look at the others
+                //Exits both loops and get the next row
+                break;
+
+            }
+            else {
+                occupied = YES;
+            }
+        }
+
+        if (occupied) {
+
+            deletedRow = [block boardY];
+
+            //TODO: Send the spells to the inventory
+            NSMutableArray *spellsToAdd = [_field.board DeleteRow:(NSUInteger)deletedRow];
+            if(spellsToAdd.count > 0)
+            {
+                [self addSpellsToInventory:spellsToAdd];
+            }
+
+            [_field setPositionUsingFieldValue:[_field.board MoveBoardDown:(NSUInteger) (deletedRow - 1)]];
+            return YES;
+
+        }
+        else {
+            continue;
+        }
+    }
+    return NO;
+
+}
+
+-(void) addSpellsToInventory:(NSMutableArray *)spellsToAdd
+{
+    for (id <ICastable> spell in spellsToAdd)
+    {
+        [_inventory addSpell:spell];
+    }
+}
+
 
 
 - (void)gameOver:(BOOL)won

@@ -1,5 +1,5 @@
 //
-// Created by Nicolas Martin on 11/30/2013.
+// Created by Nicolas Martin on 12/9/2013.
 //
 
 
@@ -9,15 +9,13 @@
 @class Field;
 
 
-@interface RandomRemove : NSObject <ICastable>
+@interface Nuke : NSObject <ICastable>
 
 @property NSString *spellName;
 @property NSString *spriteFileName;
 
++ (Nuke *)init;
 
-+ (RandomRemove *)init;
-
-- (void)CastSpell:(Field *)targetField;
 - (NSString *)LogSpell:(Field *)targetField;
-
+- (void)CastSpell:(Field *)targetField;
 @end

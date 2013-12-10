@@ -25,7 +25,7 @@
     return self;
 }
 
-+ (AddLine *)initStuff {
++ (AddLine *)init {
     return [[self alloc] initWith];
 }
 
@@ -80,8 +80,7 @@
 }
 
 - (NSString *)LogSpell:(Field *)targetField {
-    NSString *Output = [NSString stringWithFormat:@"%@ was casted on %@", _spellName, targetField.Name];
-    return Output;
+    return [NSString stringWithFormat:@"%@ was casted on %@", _spellName, targetField.Name];
 }
 
 @end

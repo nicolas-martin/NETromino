@@ -226,10 +226,10 @@ GameController *gameController4;
 
 	[_gameController createNewTetromino];
     //////// TESTING ////////
-    [gameController1 createNewTetromino];
-    [gameController2 createNewTetromino];
-    [gameController3 createNewTetromino];
-    [gameController4 createNewTetromino];
+//    [gameController1 createNewTetromino];
+//    [gameController2 createNewTetromino];
+//    [gameController3 createNewTetromino];
+//    [gameController4 createNewTetromino];
     //////// TESTING ////////
 
 	frameCount = 0;
@@ -247,10 +247,10 @@ GameController *gameController4;
     {
         [_gameController moveDownOrCreate];
         //////// TESTING ////////
-        [gameController1 moveDownOrCreate];
-        [gameController2 moveDownOrCreate];
-        [gameController3 moveDownOrCreate];
-        [gameController4 moveDownOrCreate];
+//        [gameController1 moveDownOrCreate];
+//        [gameController2 moveDownOrCreate];
+//        [gameController3 moveDownOrCreate];
+//        [gameController4 moveDownOrCreate];
         //////// TESTING ////////
 
     }

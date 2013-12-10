@@ -8,7 +8,7 @@
 @protocol ICastable;
 
 
-@interface SpellManager : NSObject{
+@interface SpellFactory : NSObject{
 
 }
 

@@ -161,7 +161,6 @@
     for (NSUInteger x = 0; x < _Nbx; x++) {
 
         Block *block = [self getBlockAt:ccp(x, y)];
-        //TODO: Check for blocks with spell and add them to the inventory
 
         if (block.spell != Nil)
         {

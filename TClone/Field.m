@@ -8,7 +8,7 @@
 #import "Field.h"
 #import "Board.h"
 #import "Tetromino.h"
-#import "SpellManager.h"
+#import "SpellFactory.h"
 
 #define NSLog(FORMAT, ...) printf("%s\n", [[NSString stringWithFormat:FORMAT, ##__VA_ARGS__] UTF8String]);
 
@@ -33,48 +33,51 @@
     return [[self alloc] initWithName:Name TileSize:TileSize Height:Height Width:Width board:board];
 }
 
-- (BOOL)checkForRowsToClear:(NSMutableArray *)blocksToCheck {
+//- (BOOL)checkForRowsToClear:(NSMutableArray *)blocksToCheck {
+//
+//    BOOL occupied = NO;
+//
+//    NSUInteger deletedRow = (NSUInteger) nil;
+//    for (Block *block in blocksToCheck) {
+//
+//        //Skip row already processed
+//        if ([block boardY] == (NSUInteger) deletedRow) {
+//            continue;
+//        }
+//
+//        for (int x = 0; x < [_board Nbx]; x++) {
+//
+//            if (![_board isBlockAt:ccp(x, block.boardY)]) {
+//                occupied = NO;
+//                //Since there's an empty block on this column there's no need to look at the others
+//                //Exits both loops and get the next row
+//                break;
+//
+//            }
+//            else {
+//                occupied = YES;
+//            }
+//        }
+//
+//        if (occupied) {
+//
+//            deletedRow = [block boardY];
+//
+//            //TODO: Send the spells to the inventory
+//            _spellArray = [_board DeleteRow:(NSUInteger)deletedRow];
+//
+//            [self setPositionUsingFieldValue:[_board MoveBoardDown:(NSUInteger) (deletedRow - 1)]];
+//            return YES;
+//
+//        }
+//        else {
+//            continue;
+//        }
+//    }
+//    return NO;
+//
+//}
 
-    BOOL occupied = NO;
-
-    NSUInteger deletedRow = (NSUInteger) nil;
-    for (Block *block in blocksToCheck) {
-
-        //Skip row already processed
-        if ([block boardY] == (NSUInteger) deletedRow) {
-            continue;
-        }
-
-        for (int x = 0; x < [_board Nbx]; x++) {
-
-            if (![_board isBlockAt:ccp(x, block.boardY)]) {
-                occupied = NO;
-                //Since there's an empty block on this column there's no need to look at the others
-                //Exits both loops and get the next row
-                break;
-
-            }
-            else {
-                occupied = YES;
-            }
-        }
-
-        if (occupied) {
-
-            deletedRow = [block boardY];
-            _spellArray = [_board DeleteRow:(NSUInteger)deletedRow];
-
-            [self setPositionUsingFieldValue:[_board MoveBoardDown:(NSUInteger) (deletedRow - 1)]];
-            return YES;
-
-        }
-        else {
-            continue;
-        }
-    }
-    return NO;
-
-}
 
 - (BOOL)randomBoolWithPercentage:(NSUInteger)percentage
 {
@@ -89,7 +92,7 @@
 
     for (NSUInteger i = 0; i < nbBlocksInBoard; i++)
     {
-        if([self randomBoolWithPercentage:5])
+        if([self randomBoolWithPercentage:25])
         {
             nbSpellToAdd++;
         }
@@ -101,7 +104,7 @@
         Block * block = [allBlocksInBoard objectAtIndex:posOfSpell];
         if (block.spell == nil)
         {
-            [block addSpellToBlock:[SpellManager getSpellUsingFrequency]];
+            [block addSpellToBlock:[SpellFactory getSpellUsingFrequency]];
         }
     }
 }

@@ -14,7 +14,7 @@
 @property NSString *spriteFileName;
 
 - (AddLine *)initWith;
-+ (AddLine *)initStuff;
++ (AddLine *)init;
 - (void)CastSpell:(Field *)targetField;
 - (NSString *)LogSpell:(Field *)targetField;
 

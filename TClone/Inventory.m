@@ -37,14 +37,6 @@
 
 - (void) updateInventory
 {
-    for (CCSprite *sprite in self.children)
-    {
-        if (sprite.tag == 1){
-            [sprite removeFromParentAndCleanup:YES];
-            [movableSprites removeObject:sprite];
-        }
-
-    }
 
     NSUInteger count = 1;
     for (id <ICastable> spell in _Inventory)
@@ -61,13 +53,31 @@
 
 - (void)addSpell:(<ICastable>)spell {
     [_Inventory addObject:spell];
-    [self updateInventory];
+    CCSprite *newSpellSprite = [CCSprite spriteWithFile:spell.spriteFileName];
+    [newSpellSprite setPosition:ccp(newSpellSprite.contentSize.width * _Inventory.count, 7)];
+    [newSpellSprite setTag:1];
+    newSpellSprite.userObject = spell;
+    [movableSprites addObject:newSpellSprite];
+    [self addChild:newSpellSprite];
+
+
+    //[self updateInventory];
 
 }
 
 - (void)removeSpell:(<ICastable>)spell {
     [_Inventory removeObject:spell];
-    [self updateInventory];
+    [movableSprites removeObject:selSprite];
+    [selSprite removeFromParentAndCleanup:YES];
+
+    NSUInteger count = 1;
+    for (CCSprite *sprite in movableSprites)
+    {
+        [sprite setPosition:ccp(sprite.contentSize.width*count, 7)];
+        count++;
+
+    }
+
 
 }
 
@@ -107,6 +117,7 @@
                     GameLogicLayer *myParentAsMainClass = (GameLogicLayer*)self.parent.parent;
                     [obj CastSpell:[myParentAsMainClass getFieldFromString:key]];
                     [self removeSpell:selSprite.userObject];
+
 
                 }
 
