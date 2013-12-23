@@ -12,39 +12,59 @@
 
 #define NSLog(FORMAT, ...) printf("%s\n", [[NSString stringWithFormat:FORMAT, ##__VA_ARGS__] UTF8String]);
 
-@implementation Inventory
-- (id)init {
+@implementation Inventory {
+    BOOL _Main;
+}
+
+
++ (id)initInventory:(BOOL)isMain {
+    return [[self alloc] initWithFieldSize:isMain];
+}
+
+- (id)initWithFieldSize:(BOOL)main {
+    NSString *filename;
     self = [super init];
     if (self) {
         _Inventory = [NSMutableArray array];
-        CCSprite *sprite = [CCSprite spriteWithFile:@"inventory.png"];
-        sprite.ignoreAnchorPointForPosition = YES;
-        [self addChild:sprite];
-        self.ignoreAnchorPointForPosition = YES;
+        _Main = main;
+
+        //TODO: Use their own sprite
+
+        if (!_Main)
+        {
+            filename = [[NSString alloc] initWithFormat:@"inventory-small.png"];
+        }
+        else
+        {
+            filename = [[NSString alloc] initWithFormat:@"inventory.png"];
+        }
+
         movableSprites = [NSMutableArray array];
         _fieldBoundingBoxes = [NSMutableArray array];
+
+//        self.anchorPoint=ccp(-1,1);
+//        self.position=ccp(self.contentSize.width , self.contentSize.height);
+
     }
 
-    return self;
+    return [self initWithFile:filename];
 }
-
-+ (id)initInventory {
-    return [[self alloc] init];
-}
-
 
 
 - (void)addSpell:(<ICastable>)spell {
     [_Inventory addObject:spell];
     CCSprite *newSpellSprite = [CCSprite spriteWithFile:spell.spriteFileName];
-    [newSpellSprite setPosition:ccp(newSpellSprite.contentSize.width * _Inventory.count, 7)];
+
+    //TODO: Use their own sprite
+    if(!_Main)
+    {
+        [newSpellSprite setScale:0.7];
+    }
+    [newSpellSprite setPosition:ccp(newSpellSprite.contentSize.width * _Inventory.count, newSpellSprite.contentSize.height/2)];
     [newSpellSprite setTag:1];
     newSpellSprite.userObject = spell;
     [movableSprites addObject:newSpellSprite];
     [self addChild:newSpellSprite];
-
-
-    //[self updateInventory];
 
 }
 
@@ -56,7 +76,7 @@
     NSUInteger count = 1;
     for (CCSprite *sprite in movableSprites)
     {
-        [sprite setPosition:ccp(sprite.contentSize.width*count, 7)];
+        [sprite setPosition:ccp(sprite.contentSize.width*count, sprite.contentSize.height/2)];
         count++;
 
     }

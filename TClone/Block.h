@@ -17,11 +17,11 @@
 @property BOOL disappearing;
 @property NSUInteger blockType;
 
-- (instancetype)initWithBlockType:(NSUInteger)blockType;
+- (instancetype)initWithBlockType:(NSUInteger)blockType displayOnMainField:(BOOL)isMain;
 
 - (void)addSpellToBlock:(<ICastable>) spell;
 
-+ (instancetype)blockWithBlockType:(NSUInteger)blockType;
++ (instancetype)blockWithBlockType:(NSUInteger)blockType displayOnMainField:(BOOL)isMain;
 
 - (void)moveUp;
 - (void)moveDown;

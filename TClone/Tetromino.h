@@ -56,9 +56,9 @@ typedef enum
 @property (readwrite, assign, nonatomic) CGPoint lowestPosition;
 @property (nonatomic) tetrominoType type;
 
-+ (id)randomBlockUsingBlockFrequency;
++ (id)randomBlockUsingBlockFrequency:(BOOL)isMain;
 
-- (id)initWithRandomTypeAndOrientationUsingFrequency;
+- (id)initWithRandomTypeAndOrientationUsingFrequency:(BOOL)isMain;
 
 + (id)blockWithType:(tetrominoType)blockType Direction:(RotationDirection)blockOrientation BoardX:(NSUInteger)positionX BoardY:(NSUInteger)positionY CurrentOrientation:(NSUInteger)CurrentOrientation;
 

@@ -37,7 +37,7 @@
 
         if ((random % 3) > 0)
         {
-            Block *block = [Block blockWithBlockType:random % 7];
+            Block *block = [Block blockWithBlockType:random % 7 displayOnMainField:NO ];
             block.stuck = YES;
             [block setBoardX:x];
             [block setBoardY:19];

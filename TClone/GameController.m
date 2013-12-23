@@ -12,6 +12,7 @@
 #import "Inventory.h"
 #import "Nuke.h"
 #import "RandomRemove.h"
+#import "AddLine.h"
 
 
 #define NSLog(FORMAT, ...) printf("%s\n", [[NSString stringWithFormat:FORMAT, ##__VA_ARGS__] UTF8String]);
@@ -36,9 +37,10 @@
         self.hudLayer = hud;
         self.isMain = isMain;
 
-        Inventory *inventory = [Inventory initInventory];
+        Inventory *inventory = [Inventory initInventory:isMain ];
         [_field addChild:inventory];
-        [inventory setPosition:ccp(60, -10)];
+
+        [inventory setPosition:ccp(inventory.contentSize.width/2, 0)];
         self.inventory = inventory;
     }
 
@@ -65,9 +67,9 @@
     {
         userTetromino.stuck = YES;
         [_field.board printCurrentBoardStatus:YES];
-        RandomRemove *randomRemove = [RandomRemove init];
+        AddLine *s = [AddLine init];
         NSMutableArray *array = [NSMutableArray array];
-        [array addObject:randomRemove];
+        [array addObject:s];
         [self addSpellsToInventory:array];
         if([self checkForRowsToClear:userTetromino.children])
         {
@@ -144,7 +146,6 @@
 
             deletedRow = [block boardY];
 
-            //TODO: Send the spells to the inventory
             NSMutableArray *spellsToAdd = [_field.board DeleteRow:(NSUInteger)deletedRow];
             if(spellsToAdd.count > 0)
             {
@@ -184,7 +185,7 @@
 - (void)createNewTetromino {
 
 
-    Tetromino *tempTetromino = [Tetromino randomBlockUsingBlockFrequency];
+    Tetromino *tempTetromino = [Tetromino randomBlockUsingBlockFrequency:_isMain ];
 
     [self VerifyNewBlockCollision:tempTetromino];
 
@@ -292,9 +293,6 @@
     lowestY = [userTetromino lowestPosition].y;
     highestY = [userTetromino highestPosition].y;
 
-    //location = [[CCDirector sharedDirector] convertToGL:location];
-
-    //TODO: Maybe change this so that the bottom left == (0,0 instead of (0,19)?
     if (location.y > lowestY)
     {
         touchType = kDropBlocks;

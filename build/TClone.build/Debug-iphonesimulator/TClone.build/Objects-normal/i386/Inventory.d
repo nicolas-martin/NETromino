@@ -25,9 +25,9 @@ dependencies: /Users/nmartin/TClone/TClone/Inventory.m \
   TClone/libs/kazmath/include/kazmath/plane.h \
   TClone/libs/kazmath/include/kazmath/aabb.h \
   TClone/libs/kazmath/include/kazmath/ray2.h \
-  /Users/nmartin/TClone/TClone/ICastable.h \
   /Users/nmartin/TClone/TClone/libs/cocos2d/CCSprite.h \
   /Users/nmartin/TClone/TClone/libs/cocos2d/CCTextureAtlas.h \
+  /Users/nmartin/TClone/TClone/ICastable.h \
   /Users/nmartin/TClone/TClone/libs/cocos2d/Support/CGPointExtension.h \
   /Users/nmartin/TClone/TClone/libs/cocos2d/CCActionEase.h \
   /Users/nmartin/TClone/TClone/libs/cocos2d/CCActionInterval.h \

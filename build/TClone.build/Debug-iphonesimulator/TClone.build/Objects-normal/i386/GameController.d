@@ -105,4 +105,5 @@ dependencies: /Users/nmartin/TClone/TClone/GameController.m \
   /Users/nmartin/TClone/TClone/Inventory.h \
   /Users/nmartin/TClone/TClone/Nuke.h \
   /Users/nmartin/TClone/TClone/ICastable.h \
-  /Users/nmartin/TClone/TClone/RandomRemove.h
+  /Users/nmartin/TClone/TClone/RandomRemove.h \
+  /Users/nmartin/TClone/TClone/AddLine.h

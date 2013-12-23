@@ -180,7 +180,7 @@ static NSUInteger orientationCount[7] = {2, 1, 4, 4, 2, 2, 4};
 				if (cellType == 0)
 					continue;
 				
-				Block *newBlock = [Block blockWithBlockType:self.type];
+				Block *newBlock = [Block blockWithBlockType:self.type displayOnMainField:NO ];
 				newBlock.boardX = (row + _anchorX);
 				newBlock.boardY = col + _anchorY;
                 //copmute?
@@ -204,14 +204,12 @@ static NSUInteger orientationCount[7] = {2, 1, 4, 4, 2, 2, 4};
 }
 
 
-+ (id)randomBlockUsingBlockFrequency
-{
-	return [[self alloc] initWithRandomTypeAndOrientationUsingFrequency];
++ (id)randomBlockUsingBlockFrequency:(BOOL)isMain {
+	return [[self alloc] initWithRandomTypeAndOrientationUsingFrequency:isMain ];
 }
 
 //This works with random orientation and random types!!
-- (id)initWithRandomTypeAndOrientationUsingFrequency
-{
+- (id)initWithRandomTypeAndOrientationUsingFrequency:(BOOL)isMain {
 
 	if (self = [super init])
 	{
@@ -240,7 +238,7 @@ static NSUInteger orientationCount[7] = {2, 1, 4, 4, 2, 2, 4};
 					continue;
 			
 
-				Block *newBlock = [Block blockWithBlockType:self.type];
+				Block *newBlock = [Block blockWithBlockType:self.type displayOnMainField:isMain ];
 				newBlock.boardX = row + _anchorX;
 				newBlock.boardY = col + _anchorY;
 
@@ -307,10 +305,6 @@ static NSUInteger orientationCount[7] = {2, 1, 4, 4, 2, 2, 4};
 
 - (void)moveTetrominoInDirection:(Tetromino *)tetromino inDirection:(MoveDirection)direction
 {
-//     CCArray *reversedBlockArray = [[CCArray alloc] initWithArray:tetromino.children];
-//    [reversedBlockArray reverseObjects];
-
-    //TODO: Add board verification
     for (Block* currentBlock in tetromino.children)
     {
         [currentBlock moveByX:direction];
@@ -338,7 +332,6 @@ static NSUInteger orientationCount[7] = {2, 1, 4, 4, 2, 2, 4};
 	self.anchorY += 1;
 }
 
-//TODO: Make sure these return the x and y like in "math"
 - (CGPoint)leftMostPosition
 {
 	
