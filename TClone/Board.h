@@ -21,7 +21,8 @@
 - (NSMutableArray *)getAllBlocksInBoard;
 
 - (id)getBlockAt:(CGPoint)point;
-- (void)DeleteBlock:(Tetromino *)tetromino;
+- (void)DeleteBlockFromBoard:(NSMutableArray *)blocks;
+- (void)DeleteBlockFromBoardAndSprite:(NSMutableArray *)blocks;
 - (void)MoveTetromino:(Tetromino *)FromTetromino to:(Tetromino *)ToTetromino;
 - (void)MoveBlock:(Block *)block to:(CGPoint)after;
 - (BOOL)boardRowFull:(NSUInteger)y;

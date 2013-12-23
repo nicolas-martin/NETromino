@@ -28,7 +28,6 @@
     return self;
 }
 
-//ok
 + (id)initBoard {
     return [[self alloc] init];
 }
@@ -67,8 +66,7 @@
         for (NSUInteger y = 0; y < self.Nby; y++)
         {
             Block *block = [self getBlockAt:ccp(x, y)];
-            if(block != nil)
-            {
+            if(block != nil && block.stuck) {
                 [blocksInBoard addObject:block];
             }
 
@@ -99,10 +97,19 @@
     [[_array objectAtIndex:x] replaceObjectAtIndex:y withObject:block];
 }
 
-- (void)DeleteBlock:(Tetromino *)tetromino {
+- (void)DeleteBlockFromBoard:(NSMutableArray *)blocks {
 
-    for (Block *block in tetromino.children) {
+    for (Block *block in blocks) {
         [[_array objectAtIndex:(NSUInteger) block.boardX] replaceObjectAtIndex:(NSUInteger) block.boardY withObject:[NSNumber numberWithInt:0]];
+    }
+
+}
+
+- (void)DeleteBlockFromBoardAndSprite:(NSMutableArray *)blocks {
+
+    for (Block *block in blocks) {
+        [[_array objectAtIndex:(NSUInteger) block.boardX] replaceObjectAtIndex:(NSUInteger) block.boardY withObject:[NSNumber numberWithInt:0]];
+        [block removeFromParentAndCleanup:YES];
     }
 
 }

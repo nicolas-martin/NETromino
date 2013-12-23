@@ -35,19 +35,14 @@
 @property Field *field;
 @property HudLayer * hudLayer;
 @property Inventory * inventory;
+@property BOOL isMain;
 
-- (id)initWithField:(Field *)aField;
-
-+ (id)controllerWithField:(Field *)aField;
-
+- (id)initWithField:(Field *)aField andPlayerSize:(BOOL)isMain;
++ (id)controllerWithField:(Field *)aField isMain:(BOOL)isMain;
 - (void)VerifyNewBlockCollision:(Tetromino *)new;
-
 - (void) createNewTetromino;
-
 - (void)rotateTetromino:(RotationDirection)direction;
-
 - (void)viewTap:(CGPoint)location;
-
 - (void)moveDownOrCreate;
 
 @end

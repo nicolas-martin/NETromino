@@ -5,6 +5,7 @@
 
 #import "Nuke.h"
 #import "Field.h"
+#import "Board.h"
 
 
 @implementation Nuke {
@@ -27,6 +28,9 @@
 }
 
 - (void)CastSpell:(Field *)targetField {
+    Board *board = targetField.board;
+
+    [board DeleteBlockFromBoardAndSprite:[board getAllBlocksInBoard]];
 
 }
 

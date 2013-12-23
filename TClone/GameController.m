@@ -10,6 +10,8 @@
 #import "Field.h"
 #import "Board.h"
 #import "Inventory.h"
+#import "Nuke.h"
+#import "RandomRemove.h"
 
 
 #define NSLog(FORMAT, ...) printf("%s\n", [[NSString stringWithFormat:FORMAT, ##__VA_ARGS__] UTF8String]);
@@ -23,7 +25,7 @@
 
 }
 
-- (id)initWithField:(Field *)aField {
+- (id)initWithField:(Field *)aField andPlayerSize:(BOOL)isMain{
     self = [super init];
     if (self) {
         self.field = aField;
@@ -32,6 +34,7 @@
         [_field addChild:hud];
         [hud setPosition:ccp(_field.Width + 10, _field.Height + 10)];
         self.hudLayer = hud;
+        self.isMain = isMain;
 
         Inventory *inventory = [Inventory initInventory];
         [_field addChild:inventory];
@@ -42,8 +45,8 @@
     return self;
 }
 
-+ (id)controllerWithField:(Field *)aField {
-    return [[self alloc] initWithField:aField];
++ (id)controllerWithField:(Field *)aField isMain:(BOOL)isMain {
+    return [[self alloc] initWithField:aField andPlayerSize:isMain];
 }
 
 - (void)moveDownOrCreate {
@@ -62,7 +65,10 @@
     {
         userTetromino.stuck = YES;
         [_field.board printCurrentBoardStatus:YES];
-        [_field addSpellToField];
+        RandomRemove *randomRemove = [RandomRemove init];
+        NSMutableArray *array = [NSMutableArray array];
+        [array addObject:randomRemove];
+        [self addSpellsToInventory:array];
         if([self checkForRowsToClear:userTetromino.children])
         {
             self.numRowCleared++;
@@ -197,7 +203,7 @@
 - (void)moveTetrominoDown
 {
 
-    [self.field.board DeleteBlock:userTetromino];
+    [self.field.board DeleteBlockFromBoard:userTetromino.children];
 
     [userTetromino moveTetrominoDown];
 
@@ -209,7 +215,7 @@
     if ([self.field canMoveTetrominoByXTetromino:userTetromino offSetX:-1])
     {
 
-        [self.field.board DeleteBlock:userTetromino];
+        [self.field.board DeleteBlockFromBoard:userTetromino.children];
 
         [userTetromino moveTetrominoInDirection:userTetromino inDirection:moveLeft];
 
@@ -222,7 +228,7 @@
 
     if ([self.field canMoveTetrominoByXTetromino:userTetromino offSetX:1])
     {
-        [self.field.board DeleteBlock:userTetromino];
+        [self.field.board DeleteBlockFromBoard:userTetromino.children];
 
         [userTetromino moveTetrominoInDirection:userTetromino inDirection:moveRight];
 
@@ -237,7 +243,7 @@
 
     if([self.field isTetrominoInBounds:rotated noCollisionWith:userTetromino])
     {
-        [self.field.board DeleteBlock:userTetromino];
+        [self.field.board DeleteBlockFromBoard:userTetromino.children];
 
         [userTetromino MoveBoardPosition:rotated];
         [userTetromino setOrientation:rotated.orientation];

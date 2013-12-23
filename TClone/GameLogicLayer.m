@@ -99,13 +99,13 @@ GameController *gameController4;
         self.isTouchEnabled = YES;
 
         //Creates a new controller with a field.
-        _gameController = [GameController controllerWithField:_MainField ];
+        _gameController = [GameController controllerWithField:_MainField isMain:YES ];
 
         //////// TESTING ////////
-        gameController1 = [GameController controllerWithField:_FieldLayer1];
-        gameController2 = [GameController controllerWithField:_FieldLayer2];
-        gameController3 = [GameController controllerWithField:_FieldLayer3];
-        gameController4 = [GameController controllerWithField:_FieldLayer4];
+        gameController1 = [GameController controllerWithField:_FieldLayer1 isMain:NO ];
+        gameController2 = [GameController controllerWithField:_FieldLayer2 isMain:NO];
+        gameController3 = [GameController controllerWithField:_FieldLayer3 isMain:NO];
+        gameController4 = [GameController controllerWithField:_FieldLayer4 isMain:NO];
 //        Block *block = [Block blockWithBlockType:2];
 //        [block setBoardX:5];
 //        [block setBoardY:7];

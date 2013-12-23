@@ -7,9 +7,6 @@
 #import "ICastable.h"
 #import "CCSprite.h"
 #import "CGPointExtension.h"
-#import "CCDirector.h"
-#import "CCTouchDispatcher.h"
-#import "ccDeprecated.h"
 #import "CCActionEase.h"
 #import "GameLogicLayer.h"
 
@@ -35,21 +32,7 @@
     return [[self alloc] init];
 }
 
-- (void) updateInventory
-{
 
-    NSUInteger count = 1;
-    for (id <ICastable> spell in _Inventory)
-    {
-        CCSprite *newSpell = [CCSprite spriteWithFile:spell.spriteFileName];
-        [newSpell setPosition:ccp(newSpell.contentSize.width*count, 7)];
-        [newSpell setTag:1];
-        newSpell.userObject = spell;
-        [movableSprites addObject:newSpell];
-        [self addChild:newSpell];
-        count++;
-    }
-}
 
 - (void)addSpell:(<ICastable>)spell {
     [_Inventory addObject:spell];
