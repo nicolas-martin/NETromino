@@ -46,7 +46,7 @@
 
     for (NSUInteger i = 0; i < nbBlocksInBoard; i++)
     {
-        if([self randomBoolWithPercentage:25])
+        if([self randomBoolWithPercentage:55])
         {
             nbSpellToAdd++;
         }

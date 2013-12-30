@@ -15,7 +15,7 @@
     self = [super init];
     if (self) {
         _spellName = @"randomRemove";
-        _spriteFileName = @"randomRemove.png";
+        _spriteFileName = @"randomRemove";
 
     }
 

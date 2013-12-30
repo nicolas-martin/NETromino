@@ -17,8 +17,8 @@
 - (AddLine *)initWith {
     self = [super init];
     if (self) {
-        _spellName = @"AddLine";
-        _spriteFileName = @"addLine.png";
+        _spellName = @"addLine";
+        _spriteFileName = @"addLine";
 
     }
 

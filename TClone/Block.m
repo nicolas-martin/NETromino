@@ -19,6 +19,7 @@
 - (instancetype)initWithBlockType:(NSUInteger)blockType displayOnMainField:(BOOL)isMain {
     Block *temp = nil;
     NSString *filename = nil, *color = nil;
+    _isMain = isMain;
 
     self = [super init];
     if (self) {
@@ -61,7 +62,7 @@
 
 
         //TODO: Use their own sprites instead of scaling down.
-        if(isMain)
+        if(_isMain)
         {
             filename = [[NSString alloc] initWithFormat:@"%@.png", color];
             Block *block = [self initWithFile:filename];
@@ -80,7 +81,21 @@
 - (void) addSpellToBlock:(<ICastable>) spell
 {
     _spell = spell;
+    NSString *spriteFilename;
+
+    if (_isMain)
+    {
+         spriteFilename = [[NSString alloc] initWithFormat:@"%@.png", _spell.spriteFileName];
+
+    }
+    else
+    {
+        spriteFilename = [[NSString alloc] initWithFormat:@"%@-small.png", _spell.spriteFileName];
+
+    }
+    _spell.spriteFileName = spriteFilename;
     [self setTexture:[[CCTextureCache sharedTextureCache] addImage:_spell.spriteFileName]];
+
 }
 
 + (instancetype)blockWithBlockType:(NSUInteger)blockType displayOnMainField:(BOOL)isMain {

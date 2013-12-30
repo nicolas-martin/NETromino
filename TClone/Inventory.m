@@ -80,8 +80,6 @@
         count++;
 
     }
-
-
 }
 
 - (BOOL)ccTouchBegan:(UITouch *)touch withEvent:(UIEvent *)event {

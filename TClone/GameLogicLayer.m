@@ -107,12 +107,24 @@ GameController *gameController4;
         gameController2 = [GameController controllerWithField:_FieldLayer2 isMain:NO];
         gameController3 = [GameController controllerWithField:_FieldLayer3 isMain:NO];
         gameController4 = [GameController controllerWithField:_FieldLayer4 isMain:NO];
-//        Block *block = [Block blockWithBlockType:2];
-//        [block setBoardX:5];
-//        [block setBoardY:7];
-//        NSMutableArray *bArray = [NSMutableArray array];
-//        [bArray addObject:block];
-//        [gameController1.field addBlocks:bArray];
+
+        NSMutableArray *bArray = [NSMutableArray array];
+
+        for(int i = 0; i < 10; i++)
+        {
+            if (i == 7) continue;
+            for (int j = 0; j < 2; j++)
+            {
+                Block *block = [Block blockWithBlockType:2 displayOnMainField:YES];
+                [block setBoardX:i];
+                [block setBoardY:19-j];
+                [bArray addObject:block];
+            }
+        }
+
+
+
+        [_gameController.field addBlocks:bArray];
         //////// TESTING ////////
 
         _MainField.isTouchEnabled = YES;
@@ -160,25 +172,27 @@ GameController *gameController4;
     [_gameController.inventory.fieldBoundingBoxes addObject:field4BoxWithName];
 }
 
+//TODO: Use the field's name property instead
 - (Field *)getFieldFromString:(NSString *)fieldName
 {
-    if ([fieldName isEqualToString:@"MainField"])
+
+    if ([fieldName isEqualToString:_MainField.Name])
     {
         return _MainField;
     }
-    else if ([fieldName isEqualToString:@"Field1"])
+    else if ([fieldName isEqualToString:_FieldLayer1.Name])
     {
         return _FieldLayer1;
     }
-    else if ([fieldName isEqualToString:@"Field2"])
+    else if ([fieldName isEqualToString:_FieldLayer2.Name])
     {
         return _FieldLayer2;
     }
-    else if ([fieldName isEqualToString:@"Field3"])
+    else if ([fieldName isEqualToString:_FieldLayer3.Name])
     {
         return _FieldLayer3;
     }
-    else if ([fieldName isEqualToString:@"Field4"])
+    else if ([fieldName isEqualToString:_FieldLayer4.Name])
     {
         return _FieldLayer4;
     }
@@ -227,10 +241,10 @@ GameController *gameController4;
 
 	[_gameController createNewTetromino];
     //////// TESTING ////////
-    [gameController1 createNewTetromino];
-    [gameController2 createNewTetromino];
-    [gameController3 createNewTetromino];
-    [gameController4 createNewTetromino];
+//    [gameController1 createNewTetromino];
+//    [gameController2 createNewTetromino];
+//    [gameController3 createNewTetromino];
+//    [gameController4 createNewTetromino];
     //////// TESTING ////////
 
 	frameCount = 0;
@@ -248,10 +262,10 @@ GameController *gameController4;
     {
         [_gameController moveDownOrCreate];
         //////// TESTING ////////
-        [gameController1 moveDownOrCreate];
-        [gameController2 moveDownOrCreate];
-        [gameController3 moveDownOrCreate];
-        [gameController4 moveDownOrCreate];
+//        [gameController1 moveDownOrCreate];
+//        [gameController2 moveDownOrCreate];
+//        [gameController3 moveDownOrCreate];
+//        [gameController4 moveDownOrCreate];
         //////// TESTING ////////
 
     }

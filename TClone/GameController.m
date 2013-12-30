@@ -66,14 +66,20 @@
     else
     {
         userTetromino.stuck = YES;
-        [_field.board printCurrentBoardStatus:YES];
-        AddLine *s = [AddLine init];
-        NSMutableArray *array = [NSMutableArray array];
-        [array addObject:s];
-        [self addSpellsToInventory:array];
-        if([self checkForRowsToClear:userTetromino.children])
+
+        if([_field.Name isEqual:@"MainField"])
         {
-            self.numRowCleared++;
+            [_field.board printCurrentBoardStatus:YES];
+        }
+
+//        AddLine *s = [AddLine init];
+//        NSMutableArray *array = [NSMutableArray array];
+//        [array addObject:s];
+//        [self addSpellsToInventory:array];
+        NSUInteger nbLinesCleared = [self checkForRowsToClear:userTetromino.children];
+        if(nbLinesCleared > 0)
+        {
+            self.numRowCleared + nbLinesCleared;
             [_hudLayer numRowClearedChanged:_numRowCleared];
             [_field addSpellToField];
         }
@@ -116,9 +122,11 @@
 
 }
 
-- (BOOL)checkForRowsToClear:(NSMutableArray *)blocksToCheck {
+//TODO: Bug when clearing multiple lines and adding multiple spells
+- (NSUInteger)checkForRowsToClear:(NSMutableArray *)blocksToCheck {
 
     BOOL occupied = NO;
+    NSUInteger nbLinesToDelete = 0;
 
     NSUInteger deletedRow = (NSUInteger) nil;
     for (Block *block in blocksToCheck) {
@@ -153,14 +161,14 @@
             }
 
             [_field setPositionUsingFieldValue:[_field.board MoveBoardDown:(NSUInteger) (deletedRow - 1)]];
-            return YES;
+            nbLinesToDelete++;
 
         }
         else {
             continue;
         }
     }
-    return NO;
+    return nbLinesToDelete;
 
 }
 
