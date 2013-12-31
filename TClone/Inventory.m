@@ -42,9 +42,6 @@
         movableSprites = [NSMutableArray array];
         _fieldBoundingBoxes = [NSMutableArray array];
 
-//        self.anchorPoint=ccp(-1,1);
-//        self.position=ccp(self.contentSize.width , self.contentSize.height);
-
     }
 
     return [self initWithFile:filename];
@@ -52,20 +49,23 @@
 
 
 - (void)addSpell:(<ICastable>)spell {
-    [_Inventory addObject:spell];
-    CCSprite *newSpellSprite = [CCSprite spriteWithFile:spell.spriteFileName];
 
-    //TODO: Use their own sprite
-    if(!_Main)
+    if(_Inventory.count < 10)
     {
-        [newSpellSprite setScale:0.7];
-    }
-    [newSpellSprite setPosition:ccp(newSpellSprite.contentSize.width * _Inventory.count, newSpellSprite.contentSize.height/2)];
-    [newSpellSprite setTag:1];
-    newSpellSprite.userObject = spell;
-    [movableSprites addObject:newSpellSprite];
-    [self addChild:newSpellSprite];
+        [_Inventory addObject:spell];
+        CCSprite *newSpellSprite = [CCSprite spriteWithFile:spell.spriteFileName];
 
+        if(!_Main)
+        {
+            [newSpellSprite setScale:0.7];
+        }
+
+        [newSpellSprite setPosition:ccp(newSpellSprite.contentSize.width * _Inventory.count, newSpellSprite.contentSize.height/2)];
+        [newSpellSprite setTag:1];
+        newSpellSprite.userObject = spell;
+        [movableSprites addObject:newSpellSprite];
+        [self addChild:newSpellSprite];
+    }
 }
 
 - (void)removeSpell:(<ICastable>)spell {

@@ -13,6 +13,7 @@
 #import "Nuke.h"
 #import "RandomRemove.h"
 #import "AddLine.h"
+#import "Gravity.h"
 
 
 #define NSLog(FORMAT, ...) printf("%s\n", [[NSString stringWithFormat:FORMAT, ##__VA_ARGS__] UTF8String]);
@@ -72,10 +73,15 @@
             [_field.board printCurrentBoardStatus:YES];
         }
 
-//        AddLine *s = [AddLine init];
-//        NSMutableArray *array = [NSMutableArray array];
+//        RandomRemove *s = [RandomRemove init];
+//        Nuke *n = [Nuke init];
+        Gravity *a = [Gravity init];
+        NSMutableArray *array = [NSMutableArray array];
 //        [array addObject:s];
-//        [self addSpellsToInventory:array];
+//        [array addObject:n];
+        [array addObject:a];
+        [self addSpellsToInventory:array];
+
         NSUInteger nbLinesCleared = [self checkForRowsToClear:userTetromino.children];
         if(nbLinesCleared > 0)
         {
@@ -122,7 +128,6 @@
 
 }
 
-//TODO: Bug when clearing multiple lines and adding multiple spells
 - (NSUInteger)checkForRowsToClear:(NSMutableArray *)blocksToCheck {
 
     BOOL occupied = NO;

@@ -102,4 +102,6 @@ dependencies: /Users/nmartin/TClone/TClone/GameLogicLayer.m \
   /Users/nmartin/TClone/TClone/Tetromino.h \
   /Users/nmartin/TClone/TClone/Board.h \
   /Users/nmartin/TClone/TClone/Block.h \
-  /Users/nmartin/TClone/TClone/Inventory.h
+  /Users/nmartin/TClone/TClone/Inventory.h \
+  /Users/nmartin/TClone/TClone/AddLine.h \
+  /Users/nmartin/TClone/TClone/ICastable.h

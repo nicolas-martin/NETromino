@@ -15,7 +15,7 @@
     self = [super init];
     if (self) {
         _spellName = @"randomRemove";
-        _spriteFileName = @"randomRemove";
+        _spriteFileName = @"randomRemove.png";
 
     }
 
@@ -33,9 +33,9 @@
 
     NSUInteger nbBlockInBoard = allBlockInBoard.count;
 
-    //Removes 10% of all the blocks
+    //Removes 20% of all the blocks
 
-    NSUInteger nbBlocksToRemove = (NSUInteger )(nbBlockInBoard / 10);
+    NSUInteger nbBlocksToRemove = (NSUInteger )(nbBlockInBoard / 20);
 
     for (NSUInteger i = 0; i < nbBlocksToRemove; i++)
     {

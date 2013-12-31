@@ -16,7 +16,7 @@
     self = [super init];
     if (self) {
         _spellName = @"nuke";
-        _spriteFileName = @"nuke";
+        _spriteFileName = @"nuke.png";
 
     }
 

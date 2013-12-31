@@ -82,19 +82,15 @@
 {
     _spell = spell;
     NSString *spriteFilename;
+    spriteFilename = [[NSString alloc] initWithFormat:@"%@", _spell.spriteFileName];
 
-    if (_isMain)
-    {
-         spriteFilename = [[NSString alloc] initWithFormat:@"%@.png", _spell.spriteFileName];
-
-    }
-    else
-    {
-        spriteFilename = [[NSString alloc] initWithFormat:@"%@-small.png", _spell.spriteFileName];
-
-    }
     _spell.spriteFileName = spriteFilename;
     [self setTexture:[[CCTextureCache sharedTextureCache] addImage:_spell.spriteFileName]];
+
+    if (!_isMain)
+    {
+        [self setScale:0.7];
+    }
 
 }
 

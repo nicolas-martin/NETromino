@@ -1,6 +1,7 @@
-dependencies: /Users/nmartin/TClone/TClone/GameController.m \
-  /Users/nmartin/TClone/TClone/GameController.h \
-  /Users/nmartin/TClone/TClone/Tetromino.h \
+dependencies: /Users/nmartin/TClone/TClone/Gravity.m \
+  /Users/nmartin/TClone/TClone/Gravity.h \
+  /Users/nmartin/TClone/TClone/ICastable.h \
+  /Users/nmartin/TClone/TClone/Field.h \
   /Users/nmartin/TClone/TClone/libs/cocos2d/cocos2d.h \
   /Users/nmartin/TClone/TClone/libs/cocos2d/ccConfig.h \
   /Users/nmartin/TClone/TClone/libs/cocos2d/CCActionManager.h \
@@ -97,14 +98,5 @@ dependencies: /Users/nmartin/TClone/TClone/GameController.m \
   /Users/nmartin/TClone/TClone/libs/cocos2d/Support/TransformUtils.h \
   /Users/nmartin/TClone/TClone/libs/cocos2d/Support/CCProfiling.h \
   TClone/libs/kazmath/include/kazmath/GL/matrix.h \
-  /Users/nmartin/TClone/TClone/GameOverLayer.h \
-  /Users/nmartin/TClone/TClone/HudLayer.h \
-  /Users/nmartin/TClone/TClone/Field.h \
   /Users/nmartin/TClone/TClone/Board.h \
-  /Users/nmartin/TClone/TClone/Block.h \
-  /Users/nmartin/TClone/TClone/Inventory.h \
-  /Users/nmartin/TClone/TClone/Nuke.h \
-  /Users/nmartin/TClone/TClone/ICastable.h \
-  /Users/nmartin/TClone/TClone/RandomRemove.h \
-  /Users/nmartin/TClone/TClone/AddLine.h \
-  /Users/nmartin/TClone/TClone/Gravity.h
+  /Users/nmartin/TClone/TClone/Block.h

@@ -20,6 +20,8 @@
 
 - (NSMutableArray *)getAllBlocksInBoard;
 
+- (NSMutableArray *)getAllInvertedBlocksInBoard;
+
 - (id)getBlockAt:(CGPoint)point;
 - (void)DeleteBlockFromBoard:(NSMutableArray *)blocks;
 - (void)DeleteBlockFromBoardAndSprite:(NSMutableArray *)blocks;
