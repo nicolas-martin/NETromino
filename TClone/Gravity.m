@@ -28,7 +28,7 @@
     return [[self alloc] initWith];
 }
 
-
+//TODO: Look for lines to clear?
 - (void)CastSpell:(Field *)targetField {
     NSEnumerator *enumerator;
     NSMutableArray *blocksToSetPosition = [NSMutableArray array];
