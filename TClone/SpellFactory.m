@@ -14,7 +14,8 @@
 
 }
 
-- (instancetype)initWithDropAddLine{
+- (instancetype)initWithDropAddLine
+{
     self = [super init];
     if (self) {
 
@@ -23,7 +24,8 @@
     return self;
 }
 
-+ (instancetype)managerWithDropAddLine{
++ (instancetype)managerWithDropAddLine
+{
     return [[self alloc] initWithDropAddLine];
 }
 

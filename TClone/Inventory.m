@@ -47,7 +47,6 @@
     return [self initWithFile:filename];
 }
 
-
 - (void)addSpell:(<ICastable>)spell {
 
     if(_Inventory.count < 10)
@@ -97,7 +96,6 @@
 
     }
 }
-
 
 - (void)ccTouchEnded:(UITouch *)touch withEvent:(UIEvent *)event {
     CGPoint touchLocation = [self convertTouchToNodeSpace:touch];

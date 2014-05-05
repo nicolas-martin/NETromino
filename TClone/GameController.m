@@ -22,12 +22,14 @@
 
 @end
 
-@implementation GameController {
+@implementation GameController
+{
 
 
 }
 
-- (id)initWithField:(Field *)aField andPlayerSize:(BOOL)isMain{
+- (id)initWithField:(Field *)aField andPlayerSize:(BOOL)isMain
+{
     self = [super init];
     if (self) {
         self.field = aField;
@@ -48,11 +50,13 @@
     return self;
 }
 
-+ (id)controllerWithField:(Field *)aField isMain:(BOOL)isMain {
++ (id)controllerWithField:(Field *)aField isMain:(BOOL)isMain
+{
     return [[self alloc] initWithField:aField andPlayerSize:isMain];
 }
 
-- (void)moveDownOrCreate {
+- (void)moveDownOrCreate
+{
     //Perhaps set all tetromino to stuck by default?
     //[userTetromino getLowestPosition];
     if(userTetromino.stuck || userTetromino == NULL)
@@ -75,24 +79,25 @@
 
 //        RandomRemove *s = [RandomRemove init];
 //        Nuke *n = [Nuke init];
-        Gravity *a = [Gravity init];
-        NSMutableArray *array = [NSMutableArray array];
+        //Gravity *a = [Gravity init];
+        //NSMutableArray *array = [NSMutableArray array];
 //        [array addObject:s];
 //        [array addObject:n];
-        [array addObject:a];
-        [self addSpellsToInventory:array];
+        //[array addObject:a];
+        //[self addSpellsToInventory:array];
 
         NSUInteger nbLinesCleared = [self checkForRowsToClear:userTetromino.children];
         if(nbLinesCleared > 0)
         {
-            self.numRowCleared + nbLinesCleared;
+            _numRowCleared = _numRowCleared + nbLinesCleared;
             [_hudLayer numRowClearedChanged:_numRowCleared];
             [_field addSpellToField];
         }
     }
 }
 
-- (id)init {
+- (id)init
+{
     if (self = [super init]) {
 
         _listObservers = [NSMutableArray arrayWithCapacity:2];
@@ -100,8 +105,8 @@
     return self;
 }
 
-
-- (void)encodeWithCoder:(NSCoder *)coder {
+- (void)encodeWithCoder:(NSCoder *)coder
+{
     [coder encodeObject:self.listObservers forKey:@"self.listObservers"];
 }
 
@@ -122,13 +127,14 @@
 
     if (collision)
     {
-        [self gameOver:NO];
+        [self gameOver:YES];
     }
 
 
 }
 
-- (NSUInteger)checkForRowsToClear:(NSMutableArray *)blocksToCheck {
+- (NSUInteger)checkForRowsToClear:(NSMutableArray *)blocksToCheck
+{
 
     BOOL occupied = NO;
     NSUInteger nbLinesToDelete = 0;
@@ -185,18 +191,26 @@
     }
 }
 
-
-
 - (void)gameOver:(BOOL)won
 {
-    CCScene *gameOverScene = [GameOverLayer sceneWithWon:won];
-    [[CCDirector sharedDirector] replaceScene:gameOverScene];
+    _isGameOver = won;
+    CCScene *gameOverScene = [GameOverLayer sceneWithWon:won andPosition: _field.position];
+    if (_isMain)
+    {
+        [[CCDirector sharedDirector] replaceScene:gameOverScene];
+    }
+    else
+    {
+        [_field addChild:gameOverScene];
+    }
+
+
+//    CCScene *gameOverScene = [GameOverLayer sceneWithWon:won];
+//    [[CCDirector sharedDirector] replaceScene:gameOverScene];
 }
 
-
-
-- (void)createNewTetromino {
-
+- (void)createNewTetromino
+{
 
     Tetromino *tempTetromino = [Tetromino randomBlockUsingBlockFrequency:_isMain ];
 
@@ -224,7 +238,8 @@
     [self UpdatesNewTetromino:userTetromino];
 }
 
-- (void)moveTetrominoLeft{
+- (void)moveTetrominoLeft
+{
 
     if ([self.field canMoveTetrominoByXTetromino:userTetromino offSetX:-1])
     {
@@ -238,7 +253,8 @@
     }
 }
 
-- (void)moveTetrominoRight{
+- (void)moveTetrominoRight
+{
 
     if ([self.field canMoveTetrominoByXTetromino:userTetromino offSetX:1])
     {
@@ -251,7 +267,8 @@
     }
 }
 
-- (void)rotateTetromino:(RotationDirection)direction {
+- (void)rotateTetromino:(RotationDirection)direction
+{
 
     Tetromino *rotated = [Tetromino rotateTetromino:userTetromino in:direction];
 
@@ -277,7 +294,8 @@
     [self notifyTretrominoPosition:ToTetromino];
 }
 
-- (void)notifyTretrominoPosition:(Tetromino *)tetromino {
+- (void)notifyTretrominoPosition:(Tetromino *)tetromino
+{
     for (id<GameControllerObserver> observer in _listObservers) {
         if ([observer respondsToSelector:@selector(updateTetrominoPosition:)]) {
             [observer updateTetrominoPosition:tetromino];
@@ -285,7 +303,8 @@
     }
 }
 
-- (void)newTetromino:(Tetromino *)tetromino {
+- (void)newTetromino:(Tetromino *)tetromino
+{
     for (id<GameControllerObserver> observer in _listObservers) {
         if ([observer respondsToSelector:@selector(newTetromino:)]) {
             //[observer newTetromino:tetromino];
@@ -293,7 +312,8 @@
     }
 }
 
-- (void)viewTap:(CGPoint)location {
+- (void)viewTap:(CGPoint)location
+{
 
     CGFloat leftMostX = 0;
     CGFloat rightMostX = 0;
@@ -323,8 +343,8 @@
     [self processTaps];
 }
 
-
-- (void)processTaps{
+- (void)processTaps
+{
     if (touchType == kDropBlocks)
     {
         touchType = kNone;

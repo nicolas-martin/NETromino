@@ -10,7 +10,8 @@
     
 }
 
-+(CCScene *) sceneWithWon:(BOOL)won;
-- (id)initWithWon:(BOOL)won;
++ (CCScene *)sceneWithWon:(BOOL)won andPosition:(CGPoint)position;
+
+- (id)initWithWon:(BOOL)won withPosition:(CGPoint)position;
 
 @end

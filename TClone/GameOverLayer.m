@@ -8,15 +8,11 @@
 
 @implementation GameOverLayer
 
-+(CCScene *) sceneWithWon:(BOOL)won
-{
-    CCScene *scene = [CCScene node];
-    GameOverLayer *layer = [[GameOverLayer alloc] initWithWon:won];    
-    [scene addChild: layer];
-    return scene;
++ (id)initLayer:(BOOL)won withPosition:(CGPoint) position {
+    return [[self alloc] initWithWon:won withPosition:position];
 }
 
-- (id)initWithWon:(BOOL)won {
+- (id)initWithWon:(BOOL)won withPosition:(CGPoint)position {
     if ((self = [super init])) {
         
         NSString * message;
@@ -26,19 +22,18 @@
             message = @"You Lose :[";
         }
 		
-        CGSize winSize = [[CCDirector sharedDirector] winSize];
         CCLabelTTF * label = [CCLabelTTF labelWithString:message fontName:@"Arial" fontSize:32];
         label.color = ccc3(300,300,0);
-        label.position = ccp(winSize.width/2, winSize.height/2);
+        label.position = position;
         [self addChild:label];
         
-        [self runAction:
-         [CCSequence actions:
-          [CCDelayTime actionWithDuration:3],
-          [CCCallBlockN actionWithBlock:^(CCNode *node) {
-             [[CCDirector sharedDirector] replaceScene:[GameLogicLayer scene]];
-		 }],
-          nil]];
+//        [self runAction:
+//         [CCSequence actions:
+//          [CCDelayTime actionWithDuration:3],
+//          [CCCallBlockN actionWithBlock:^(CCNode *node) {
+//             [[CCDirector sharedDirector] replaceScene:[GameLogicLayer scene]];
+//		 }],
+//          nil]];
     }
     return self;
 }

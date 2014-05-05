@@ -76,8 +76,6 @@
     return blocksInBoard;
 }
 
-
-
 - (Block *)getBlockAt:(CGPoint)point {
 
     NSUInteger x = (NSUInteger) point.x;
@@ -126,7 +124,6 @@
 
 }
 
-
 - (void)MoveBlock:(Block *)block to:(CGPoint)after {
     NSUInteger x = (NSUInteger) [block boardX];
     NSUInteger y = (NSUInteger) [block boardY];
@@ -136,7 +133,6 @@
     //insert
     [self insertBlockAt:block at:after];
 }
-
 
 - (BOOL)boardRowFull:(NSUInteger)y {
     BOOL occupied;
@@ -203,7 +199,6 @@
     }
     return blocksToSetPosition;
 }
-
 
 - (void)addTetrominoToBoard:(NSMutableArray *)blocksToAdd {
 

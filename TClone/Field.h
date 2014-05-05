@@ -17,7 +17,7 @@
 @property NSUInteger Width;
 @property NSUInteger Height;
 @property NSUInteger TileSize;
-@property NSObject *Name;
+@property NSString *Name;
 @property NSMutableArray *spellArray;
 
 

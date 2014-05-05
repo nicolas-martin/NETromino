@@ -275,7 +275,8 @@ GameController *gameController4;
     {
         [_gameController moveDownOrCreate];
         //////// TESTING ////////
-//        [gameController1 moveDownOrCreate];
+        [gameController1 moveDownOrCreate];
+
 //        [gameController2 moveDownOrCreate];
 //        [gameController3 moveDownOrCreate];
 //        [gameController4 moveDownOrCreate];

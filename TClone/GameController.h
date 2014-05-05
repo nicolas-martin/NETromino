@@ -36,6 +36,7 @@
 @property HudLayer * hudLayer;
 @property Inventory * inventory;
 @property BOOL isMain;
+@property BOOL isGameOver;
 
 - (id)initWithField:(Field *)aField andPlayerSize:(BOOL)isMain;
 + (id)controllerWithField:(Field *)aField isMain:(BOOL)isMain;

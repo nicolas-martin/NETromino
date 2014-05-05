@@ -156,7 +156,7 @@ static NSUInteger orientationCount[7] = {2, 1, 4, 4, 2, 2, 4};
 
 - (id)initWithTypeRotationPosition:(tetrominoType)blockType rotationDirection:(RotationDirection)blockDirection BoardX:(NSUInteger)positionX BoardY:(NSUInteger)positionY CurrentOrientation:(NSUInteger)CurrentOrientation;
 {
-	if (self = [super init])
+	if ((self = [super init]))
 	{
 		self.anchorX = positionX;
 		self.anchorY = positionY;
@@ -211,7 +211,7 @@ static NSUInteger orientationCount[7] = {2, 1, 4, 4, 2, 2, 4};
 //This works with random orientation and random types!!
 - (id)initWithRandomTypeAndOrientationUsingFrequency:(BOOL)isMain {
 
-	if (self = [super init])
+	if ((self = [super init]))
 	{
 
         NSUInteger blockFrequency = arc4random() % 7;
