@@ -76,7 +76,8 @@ GameController *gameController4;
         NSUInteger padBetweenField = 250;
 
 //        [_MainField setPosition:ccp(20,70)];
-        [_MainField setPosition:ccp(20,70)];
+        [self setAnchorPoint:ccp(0, 0)];
+        [_MainField setPosition:ccp(0, 70)];
         [_MainField setContentSize:CGSizeMake(mainWidth, mainHeight)];
 
         [_FieldLayer1 setPosition:ccp((winSize.width - rightMargin) - playerWidth, bottomMargin)];

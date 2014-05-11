@@ -24,6 +24,7 @@
         self.Height = Height;
         self.Width = Width;
         self.board = board;
+        self.anchorPoint = ccp(0, 0);
     }
 
     return self;

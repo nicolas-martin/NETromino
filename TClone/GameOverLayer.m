@@ -29,7 +29,8 @@
         label.color = ccc3(300,300,0);
         label.position = ccp(50, 50);
 
-        [self setAnchorPoint:position];
+        //[self setAnchorPoint:position];
+        [self setAnchorPoint:ccp(0, 0)];
         [self addChild:label];
 
         [self setZOrder:2];

@@ -27,6 +27,8 @@
     if (self) {
         _Inventory = [NSMutableArray array];
         _Main = main;
+        [self setAnchorPoint:ccp(0, 0)];
+
 
         //TODO: Use their own sprite
 
