@@ -151,7 +151,20 @@
 
     for (Block * blocks in blocksToAdd)
     {
-        [self addChild:blocks];
+        //TODO Create and pass a field type(main or not) and resolve the dimensions
+        //32 = main 16 = no
+        if (self.TileSize == 16){
+            blocks.scale = 0.5;
+        }
+
+        //if the block has a parent it is already been added
+        //through the tetromino
+        if (blocks.parent == nil){
+            [self addChild:blocks];
+
+        }
+
+
     }
 
     //[self newTetromino:blocksToAdd];

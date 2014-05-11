@@ -16,13 +16,13 @@
 @property BOOL stuck;
 @property BOOL disappearing;
 @property NSUInteger blockType;
-@property BOOL isMain;
 
-- (instancetype)initWithBlockType:(NSUInteger)blockType displayOnMainField:(BOOL)isMain;
+
+- (instancetype)initWithBlockType:(NSUInteger)blockType;
 
 - (void)addSpellToBlock:(<ICastable>) spell;
 
-+ (instancetype)blockWithBlockType:(NSUInteger)blockType displayOnMainField:(BOOL)isMain;
++ (instancetype)blockWithBlockType:(NSUInteger)blockType;
 
 - (void)moveUp;
 - (void)moveDown;

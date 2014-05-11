@@ -128,7 +128,7 @@ GameController *gameController4;
             {
                 if(i%4)
                 {
-                    Block *block = [Block blockWithBlockType:2 displayOnMainField:YES];
+                    Block *block = [Block blockWithBlockType:2];
                     AddLine *a = [AddLine init];
                     [block addSpellToBlock:a];
                     [block setBoardX:i];
@@ -137,7 +137,7 @@ GameController *gameController4;
                 }
                 else
                 {
-                    Block *block = [Block blockWithBlockType:2 displayOnMainField:YES];
+                    Block *block = [Block blockWithBlockType:2];
                     [block setBoardX:i];
                     [block setBoardY:19-j];
                     [bArray addObject:block];

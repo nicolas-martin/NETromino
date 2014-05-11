@@ -204,7 +204,10 @@
 
     for (Block *block in blocksToAdd) {
         [self insertBlockAt:block at:ccp(block.boardX, block.boardY)];
+
     }
+
+
 
 }
 

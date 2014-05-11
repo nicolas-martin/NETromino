@@ -232,13 +232,12 @@
 
     [self VerifyNewBlockCollision:tempTetromino];
 
-    [self.field.board addTetrominoToBoard:tempTetromino.children];
+    [_field addBlocks:tempTetromino.children];
 
-    [self.field setPositionUsingFieldValue:tempTetromino.children];
+    [_field addChild:tempTetromino];
 
-    [self.field addChild:tempTetromino];
 
-    [self newTetromino:tempTetromino];
+    //[self newTetromino:tempTetromino];
 
     userTetromino = tempTetromino;
 

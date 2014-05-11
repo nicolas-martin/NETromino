@@ -16,10 +16,9 @@
 
 @implementation Block
 
-- (instancetype)initWithBlockType:(NSUInteger)blockType displayOnMainField:(BOOL)isMain {
+- (instancetype)initWithBlockType:(NSUInteger)blockType {
     Block *temp = nil;
     NSString *filename = nil, *color = nil;
-    _isMain = isMain;
 
     self = [super init];
     if (self) {
@@ -62,17 +61,10 @@
 
 
         //TODO: Use their own sprites instead of scaling down.
-        if(_isMain)
-        {
-            filename = [[NSString alloc] initWithFormat:@"%@.png", color];
-            Block *block = [self initWithFile:filename];
-        }
-        else
-        {
-            filename = [[NSString alloc] initWithFormat:@"%@-small.png", color];
-            Block *block = [self initWithFile:filename];
-            [block setScale:0.7];
-        }
+
+        filename = [[NSString alloc] initWithFormat:@"%@.png", color];
+        Block *block = [self initWithFile:filename];
+
     }
 
     return  self;
@@ -87,15 +79,16 @@
     _spell.spriteFileName = spriteFilename;
     [self setTexture:[[CCTextureCache sharedTextureCache] addImage:_spell.spriteFileName]];
 
-    if (!_isMain)
-    {
-        [self setScale:0.7];
-    }
+    //Block should not know which part of the field it belongs to
+//    if (!_isMain)
+//    {
+//        [self setScale:0.7];
+//    }
 
 }
 
-+ (instancetype)blockWithBlockType:(NSUInteger)blockType displayOnMainField:(BOOL)isMain {
-    return [[self alloc] initWithBlockType:blockType displayOnMainField:isMain ];
++ (instancetype)blockWithBlockType:(NSUInteger)blockType {
+    return [[self alloc] initWithBlockType:blockType];
 }
 
 

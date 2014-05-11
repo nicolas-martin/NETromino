@@ -180,7 +180,7 @@ static NSUInteger orientationCount[7] = {2, 1, 4, 4, 2, 2, 4};
 				if (cellType == 0)
 					continue;
 				
-				Block *newBlock = [Block blockWithBlockType:self.type displayOnMainField:NO ];
+				Block *newBlock = [Block blockWithBlockType:self.type];
 				newBlock.boardX = (row + _anchorX);
 				newBlock.boardY = col + _anchorY;
                 //copmute?
@@ -238,7 +238,7 @@ static NSUInteger orientationCount[7] = {2, 1, 4, 4, 2, 2, 4};
 					continue;
 			
 
-				Block *newBlock = [Block blockWithBlockType:self.type displayOnMainField:isMain ];
+				Block *newBlock = [Block blockWithBlockType:self.type];
 				newBlock.boardX = row + _anchorX;
 				newBlock.boardY = col + _anchorY;
 
