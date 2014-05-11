@@ -42,7 +42,7 @@
 + (id)controllerWithField:(Field *)aField isMain:(BOOL)isMain;
 - (void)VerifyNewBlockCollision:(Tetromino *)new;
 
-- (void)gameOver:(BOOL)isGameOver;
+- (void)gameOver:(BOOL)won;
 
 - (void) createNewTetromino;
 - (void)rotateTetromino:(RotationDirection)direction;

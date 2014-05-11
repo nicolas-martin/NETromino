@@ -109,11 +109,14 @@ GameController *gameController4;
         gameController3 = [GameController controllerWithField:_FieldLayer3 isMain:NO];
         gameController4 = [GameController controllerWithField:_FieldLayer4 isMain:NO];
 
+        listOfControllers= [NSMutableArray array];
+
         [listOfControllers addObject:_gameController];
         [listOfControllers addObject:gameController1];
 //        [listOfControllers addObject:gameController2];
 //        [listOfControllers addObject:gameController3];
 //        [listOfControllers addObject:gameController4];
+        nbPlayers = listOfControllers.count;
 
 
         NSMutableArray *bArray = [NSMutableArray array];
@@ -274,6 +277,7 @@ GameController *gameController4;
 }
 
 - (void)updateBoard:(ccTime)dt  {
+    NSMutableArray *controllersToRemove = [NSMutableArray array];
     frameCount += 1;
     if (frameCount % moveCycleRatio == 0)
     {
@@ -284,6 +288,9 @@ GameController *gameController4;
             {
                 [controller gameOver:NO];
 
+                [self unschedule:@selector(updateBoard:)];
+                //TODO: Go back to menu / Start new game.
+
             }
 
             if (!controller.isGameOver)
@@ -293,12 +300,13 @@ GameController *gameController4;
             }
             else
             {
-                [listOfControllers removeObject:controller];
-
+                [controllersToRemove addObject:controller];
             }
 
 
         }
+
+        [listOfControllers removeObjectsInArray:controllersToRemove];
 
 
     }

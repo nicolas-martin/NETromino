@@ -14,6 +14,7 @@
     int playerWidth;
     int playerHeight;
     int playerTileSize;
+    int nbPlayers;
 
     int mainWidth;
     int mainHeight;

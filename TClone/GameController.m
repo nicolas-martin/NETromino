@@ -19,6 +19,8 @@
 
 #define NSLog(FORMAT, ...) printf("%s\n", [[NSString stringWithFormat:FORMAT, ##__VA_ARGS__] UTF8String]);
 
+@class UTF8String;
+
 @interface GameController ()
 
 @end
@@ -46,6 +48,8 @@
 
         [inventory setPosition:ccp(inventory.contentSize.width/2, 0)];
         self.inventory = inventory;
+
+        _isGameOver = NO;
     }
 
     return self;
@@ -75,7 +79,7 @@
 
         if([_field.Name isEqual:@"MainField"])
         {
-            [_field.board printCurrentBoardStatus:YES];
+            [_field.board printCurrentBoardStatus:NO];
         }
 
 //        RandomRemove *s = [RandomRemove init];
@@ -192,8 +196,9 @@
     }
 }
 
-- (void)gameOver:(BOOL)isGameOver
+- (void)gameOver:(BOOL)won
 {
+    _isGameOver = won;
 
     if (_isMain)
     {
@@ -210,14 +215,14 @@
 
 
         //[gameOverLayer setPosition:ccp(_field.Width + 10, _field.Height + 10)];
-
-
-
     }
 
+    NSString *message = _isGameOver ?  @"Lost" : @"Won";
 
-//    CCScene *gameOverScene = [GameOverLayer sceneWithWon:won];
-//    [[CCDirector sharedDirector] replaceScene:gameOverScene];
+    NSLog(@"{0} {1}",_field.Name, message);
+
+
+
 }
 
 - (void)createNewTetromino
