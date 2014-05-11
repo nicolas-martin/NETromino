@@ -14,6 +14,7 @@
 #import "RandomRemove.h"
 #import "AddLine.h"
 #import "Gravity.h"
+#import "GameLogicLayer.h"
 
 
 #define NSLog(FORMAT, ...) printf("%s\n", [[NSString stringWithFormat:FORMAT, ##__VA_ARGS__] UTF8String]);
@@ -191,17 +192,27 @@
     }
 }
 
-- (void)gameOver:(BOOL)won
+- (void)gameOver:(BOOL)isGameOver
 {
-    _isGameOver = won;
-    CCScene *gameOverScene = [GameOverLayer sceneWithWon:won andPosition: _field.position];
+
     if (_isMain)
     {
-        [[CCDirector sharedDirector] replaceScene:gameOverScene];
+        GameOverLayer *gameOverLayer = [GameOverLayer initLayer:_isGameOver withPosition:_field.position];
+
+        [_field addChild:gameOverLayer];
     }
     else
     {
-        [_field addChild:gameOverScene];
+        GameOverLayer *gameOverLayer = [GameOverLayer initLayer:_isGameOver withPosition:_field.position];
+
+        [_field addChild:gameOverLayer];
+
+
+
+        //[gameOverLayer setPosition:ccp(_field.Width + 10, _field.Height + 10)];
+
+
+
     }
 
 

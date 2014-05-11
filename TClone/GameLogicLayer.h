@@ -28,6 +28,7 @@
 	int lastDragStartTime;
 	
 	NSMutableArray *tetrominoInGame;
+    NSMutableArray *listOfControllers;
 
     Field * _MainField;
     Field * _FieldLayer1;

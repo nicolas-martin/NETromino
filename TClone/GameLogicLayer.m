@@ -92,11 +92,11 @@ GameController *gameController4;
         [_FieldLayer4 setPosition:ccp((winSize.width - rightMargin) - (playerWidth + padBetweenField), (winSize.height - topMargin) - (playerHeight))];
         _FieldLayer4.contentSize = CGSizeMake(playerWidth, playerHeight);
 
-        [self addChild:_MainField z:-1];
-        [self addChild:_FieldLayer1 z:-1];
-        [self addChild:_FieldLayer2 z:-1];
-        [self addChild:_FieldLayer3 z:-1];
-        [self addChild:_FieldLayer4 z:-1];
+        [self addChild:_MainField z:1];
+        [self addChild:_FieldLayer1 z:1];
+        [self addChild:_FieldLayer2 z:1];
+        [self addChild:_FieldLayer3 z:1];
+        [self addChild:_FieldLayer4 z:1];
 
         self.isTouchEnabled = YES;
 
@@ -109,35 +109,42 @@ GameController *gameController4;
         gameController3 = [GameController controllerWithField:_FieldLayer3 isMain:NO];
         gameController4 = [GameController controllerWithField:_FieldLayer4 isMain:NO];
 
-//        NSMutableArray *bArray = [NSMutableArray array];
-//
-//        for(int i = 0; i < 10; i++)
-//        {
-//            if (i == 7) continue;
-//            for (int j = 0; j < 2; j++)
-//            {
-//                if(i%4)
-//                {
-//                    Block *block = [Block blockWithBlockType:2 displayOnMainField:YES];
-//                    AddLine *a = [AddLine init];
-//                    [block addSpellToBlock:a];
-//                    [block setBoardX:i];
-//                    [block setBoardY:19-j];
-//                    [bArray addObject:block];
-//                }
-//                else
-//                {
-//                    Block *block = [Block blockWithBlockType:2 displayOnMainField:YES];
-//                    [block setBoardX:i];
-//                    [block setBoardY:19-j];
-//                    [bArray addObject:block];
-//                }
-//            }
-//        }
-//
-//
-//
-//        [_gameController.field addBlocks:bArray];
+        [listOfControllers addObject:_gameController];
+        [listOfControllers addObject:gameController1];
+//        [listOfControllers addObject:gameController2];
+//        [listOfControllers addObject:gameController3];
+//        [listOfControllers addObject:gameController4];
+
+
+        NSMutableArray *bArray = [NSMutableArray array];
+
+        for(int i = 0; i < 10; i++)
+        {
+            if (i == 7) continue;
+            for (int j = 0; j < 5; j++)
+            {
+                if(i%4)
+                {
+                    Block *block = [Block blockWithBlockType:2 displayOnMainField:YES];
+                    AddLine *a = [AddLine init];
+                    [block addSpellToBlock:a];
+                    [block setBoardX:i];
+                    [block setBoardY:19-j];
+                    [bArray addObject:block];
+                }
+                else
+                {
+                    Block *block = [Block blockWithBlockType:2 displayOnMainField:YES];
+                    [block setBoardX:i];
+                    [block setBoardY:19-j];
+                    [bArray addObject:block];
+                }
+            }
+        }
+
+
+
+        [gameController1.field addBlocks:bArray];
         //////// TESTING ////////
 
         _MainField.isTouchEnabled = YES;
@@ -251,18 +258,15 @@ GameController *gameController4;
 
 - (void)startGame{
 
-
-	[_gameController createNewTetromino];
-    //////// TESTING ////////
-//    [gameController1 createNewTetromino];
-//    [gameController2 createNewTetromino];
-//    [gameController3 createNewTetromino];
-//    [gameController4 createNewTetromino];
-    //////// TESTING ////////
+    for (GameController *controller in listOfControllers)
+    {
+        [controller createNewTetromino];
+    }
 
 	frameCount = 0;
 	moveCycleRatio = 10;
     [self schedule:@selector(updateBoard:) interval:(1.0 / 60.0)];
+
 }
 
 - (id)initWithFields:(Field *)mainFieldLayer and:(Field *)otherFieldLayer1 and:(Field *)otherFieldLayer2 and:(Field *)otherFieldLayer3 and:(Field *)otherFieldLayer4 {
@@ -273,14 +277,29 @@ GameController *gameController4;
     frameCount += 1;
     if (frameCount % moveCycleRatio == 0)
     {
-        [_gameController moveDownOrCreate];
-        //////// TESTING ////////
-        [gameController1 moveDownOrCreate];
 
-//        [gameController2 moveDownOrCreate];
-//        [gameController3 moveDownOrCreate];
-//        [gameController4 moveDownOrCreate];
-        //////// TESTING ////////
+        for (GameController *controller in listOfControllers)
+        {
+            if (listOfControllers.count == 1)
+            {
+                [controller gameOver:NO];
+
+            }
+
+            if (!controller.isGameOver)
+            {
+                [controller moveDownOrCreate];
+
+            }
+            else
+            {
+                [listOfControllers removeObject:controller];
+
+            }
+
+
+        }
+
 
     }
 }

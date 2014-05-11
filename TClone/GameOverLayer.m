@@ -12,20 +12,27 @@
     return [[self alloc] initWithWon:won withPosition:position];
 }
 
-- (id)initWithWon:(BOOL)won withPosition:(CGPoint)position {
+- (id)initWithWon:(BOOL)isGameOver withPosition:(CGPoint)position {
     if ((self = [super init])) {
         
         NSString * message;
-        if (won) {
-            message = @"You Won!";
-        } else {
+        if (isGameOver) {
             message = @"You Lose :[";
+        } else {
+            message = @"You Won!";
         }
+
+//        CCLayerColor *ccLayerColor = [CCLayerColor layerWithColor:ccc4(255, 0, 255, 255)];
+//        [self addChild:ccLayerColor z:0];
 		
         CCLabelTTF * label = [CCLabelTTF labelWithString:message fontName:@"Arial" fontSize:32];
         label.color = ccc3(300,300,0);
-        label.position = position;
+        label.position = ccp(50, 50);
+
+        [self setAnchorPoint:position];
         [self addChild:label];
+
+        [self setZOrder:2];
         
 //        [self runAction:
 //         [CCSequence actions:

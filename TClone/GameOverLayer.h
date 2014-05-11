@@ -12,6 +12,8 @@
 
 + (CCScene *)sceneWithWon:(BOOL)won andPosition:(CGPoint)position;
 
-- (id)initWithWon:(BOOL)won withPosition:(CGPoint)position;
++ (id)initLayer:(BOOL)won withPosition:(CGPoint)position;
+
+- (id)initWithWon:(BOOL)isGameOver withPosition:(CGPoint)position;
 
 @end

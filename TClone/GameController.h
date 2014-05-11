@@ -41,6 +41,9 @@
 - (id)initWithField:(Field *)aField andPlayerSize:(BOOL)isMain;
 + (id)controllerWithField:(Field *)aField isMain:(BOOL)isMain;
 - (void)VerifyNewBlockCollision:(Tetromino *)new;
+
+- (void)gameOver:(BOOL)isGameOver;
+
 - (void) createNewTetromino;
 - (void)rotateTetromino:(RotationDirection)direction;
 - (void)viewTap:(CGPoint)location;
