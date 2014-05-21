@@ -16,7 +16,7 @@
 
 
 }
-- (instancetype)initWithName:(NSObject *)Name TileSize:(NSUInteger)TileSize Height:(NSUInteger)Height Width:(NSUInteger)Width board:(Board *)board {
+- (instancetype)initWithName:(NSString *)Name TileSize:(NSUInteger)TileSize Height:(NSUInteger)Height Width:(NSUInteger)Width board:(Board *)board {
     self = [super init];
     if (self) {
         self.Name = Name;
@@ -30,7 +30,7 @@
     return self;
 }
 
-+ (instancetype)fieldWithName:(NSObject *)Name TileSize:(NSUInteger)TileSize Height:(NSUInteger)Height Width:(NSUInteger)Width board:(Board *)board {
++ (instancetype)fieldWithName:(NSString *)Name TileSize:(NSUInteger)TileSize Height:(NSUInteger)Height Width:(NSUInteger)Width board:(Board *)board {
     return [[self alloc] initWithName:Name TileSize:TileSize Height:Height Width:Width board:board];
 }
 

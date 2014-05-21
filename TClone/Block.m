@@ -51,7 +51,7 @@
                 break;
         }
 
-        self.anchorPoint = ccp(0,0);
+
         self.position = ccp(0,0);
         self.opacity = 255;
         self.stuck = NO;
@@ -64,6 +64,7 @@
 
         filename = [[NSString alloc] initWithFormat:@"%@.png", color];
         Block *block = [self initWithFile:filename];
+        [self setAnchorPoint:ccp(0,0)];
 
     }
 

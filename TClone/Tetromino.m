@@ -14,6 +14,8 @@
 
 @implementation Tetromino
 
+
+
 typedef uint8_t BLOCK[4][4];
 static BLOCK bI[2] = {
         {
@@ -185,6 +187,7 @@ static NSUInteger orientationCount[7] = {2, 1, 4, 4, 2, 2, 4};
 				newBlock.boardY = col + _anchorY;
                 //copmute?
 				newBlock.position = ccp(newBlock.boardX, newBlock.boardY);
+                [self setAnchorPoint:ccp(0, 0)];
 				[self addChild:newBlock];
 				[_blocksInTetromino addObject:newBlock];
 				
@@ -241,8 +244,11 @@ static NSUInteger orientationCount[7] = {2, 1, 4, 4, 2, 2, 4};
 				Block *newBlock = [Block blockWithBlockType:self.type];
 				newBlock.boardX = row + _anchorX;
 				newBlock.boardY = col + _anchorY;
+                //[newBlock setAnchorPoint:ccp(0,0)];
+
 
 				newBlock.position = ccp(newBlock.boardX, newBlock.boardY );
+                [self setAnchorPoint:ccp(0, 0)];
 				[self addChild:newBlock];
 				[_blocksInTetromino addObject:newBlock];
 				
@@ -271,7 +277,7 @@ static NSUInteger orientationCount[7] = {2, 1, 4, 4, 2, 2, 4};
 	/*Block *firstBlock = [children_ objectAtIndex:0];
 	self.anchorX = firstBlock.boardX;
 	self.anchorY = firstBlock.boardY;*/
-	self.anchorPoint = ccp(0,0);
+    [self setAnchorPoint:ccp(0, 0)];
 }
 
 - (BOOL)stuck

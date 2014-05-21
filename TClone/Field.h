@@ -21,8 +21,8 @@
 @property NSMutableArray *spellArray;
 
 
-- (instancetype)initWithName:(NSObject *)Name TileSize:(NSUInteger)TileSize Height:(NSUInteger)Height Width:(NSUInteger)Width board:(Board *)board;
-+ (instancetype)fieldWithName:(NSObject *)Name TileSize:(NSUInteger)TileSize Height:(NSUInteger)Height Width:(NSUInteger)Width board:(Board *)board;
+- (instancetype)initWithName:(NSString *)Name TileSize:(NSUInteger)TileSize Height:(NSUInteger)Height Width:(NSUInteger)Width board:(Board *)board;
++ (instancetype)fieldWithName:(NSString *)Name TileSize:(NSUInteger)TileSize Height:(NSUInteger)Height Width:(NSUInteger)Width board:(Board *)board;
 - (BOOL)randomBoolWithPercentage:(NSUInteger)percentage;
 - (void)addSpellToField;
 - (BOOL)canMoveTetrominoByYTetromino:(Tetromino *)userTetromino offSetY:(NSUInteger)offSetY;

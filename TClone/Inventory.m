@@ -83,6 +83,7 @@
     }
 }
 
+//TODO: The logic should be thrown to the controller
 - (BOOL)ccTouchBegan:(UITouch *)touch withEvent:(UIEvent *)event {
     CGPoint touchLocation = [self convertTouchToNodeSpace:touch];
     [self selectSpriteForTouch:touchLocation];
