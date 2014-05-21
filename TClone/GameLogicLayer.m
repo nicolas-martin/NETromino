@@ -80,8 +80,7 @@ GameController *gameController4;
         [_MainField setPosition:ccp(0, 70)];
         [_MainField setContentSize:CGSizeMake(mainWidth, mainHeight)];
 
-        // closed purple poly
-        ccDrawRect(ccp(0,70), ccp(mainWidth, 70 + mainHeight));
+
 
         [_FieldLayer1 setPosition:ccp((winSize.width - rightMargin) - playerWidth, bottomMargin)];
         [_FieldLayer1 setContentSize:CGSizeMake(playerWidth, playerHeight)];

@@ -27,22 +27,26 @@
     if (self) {
         _Inventory = [NSMutableArray array];
         _Main = main;
-        [self setAnchorPoint:ccp(0, 0)];
+
 
 
         //TODO: Use their own sprite
 
         if (!_Main)
         {
-            filename = [[NSString alloc] initWithFormat:@"inventory-small.png"];
+            //filename = [[NSString alloc] initWithFormat:@"inventory-small.png"];
+
         }
         else
         {
             filename = [[NSString alloc] initWithFormat:@"inventory.png"];
         }
-
+        [self setAnchorPoint:ccp(0, 0)];
         movableSprites = [NSMutableArray array];
         _fieldBoundingBoxes = [NSMutableArray array];
+
+
+        filename = [[NSString alloc] initWithFormat:@"inventory.png"];
 
     }
 

@@ -44,14 +44,19 @@
         self.isMain = isMain;
 
         Inventory *inventory = [Inventory initInventory:isMain ];
+
+        //TODO: Find a better way to size the other fields and blocks
+        if (!isMain){
+            [inventory setScale:0.5];
+        }
         [_field addChild:inventory];
         [_field setAnchorPoint:ccp(0, 0)];
-        [inventory setAnchorPoint:ccp(0,0)];
-        [inventory setPosition:ccp(0, 0)];
+
 
         //[inventory setPosition:ccp(inventory.contentSize.width/2, 0)];
         self.inventory = inventory;
-
+        [inventory setAnchorPoint:ccp(0,0)];
+        [inventory setPosition:ccp(0, 0)];
         _isGameOver = NO;
     }
 
@@ -231,7 +236,7 @@
 - (void)createNewTetromino
 {
 
-    Tetromino *tempTetromino = [Tetromino randomBlockUsingBlockFrequency:_isMain ];
+    Tetromino *tempTetromino = [Tetromino randomBlockUsingBlockFrequency];
 
     [self VerifyNewBlockCollision:tempTetromino];
 

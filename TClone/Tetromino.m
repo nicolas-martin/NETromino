@@ -207,12 +207,12 @@ static NSUInteger orientationCount[7] = {2, 1, 4, 4, 2, 2, 4};
 }
 
 
-+ (id)randomBlockUsingBlockFrequency:(BOOL)isMain {
-	return [[self alloc] initWithRandomTypeAndOrientationUsingFrequency:isMain ];
++ (id)randomBlockUsingBlockFrequency {
+	return [[self alloc] initWithRandomTypeAndOrientationUsingFrequency];
 }
 
 //This works with random orientation and random types!!
-- (id)initWithRandomTypeAndOrientationUsingFrequency:(BOOL)isMain {
+- (id)initWithRandomTypeAndOrientationUsingFrequency {
 
 	if ((self = [super init]))
 	{
