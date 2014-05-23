@@ -17,11 +17,13 @@
 }
 
 
-+ (id)initInventory:(BOOL)isMain {
++ (id)initInventory:(BOOL)isMain
+{
     return [[self alloc] initWithFieldSize:isMain];
 }
 
-- (id)initWithFieldSize:(BOOL)main {
+- (id)initWithFieldSize:(BOOL)main
+{
     NSString *filename;
     self = [super init];
     if (self) {
@@ -53,7 +55,8 @@
     return [self initWithFile:filename];
 }
 
-- (void)addSpell:(<ICastable>)spell {
+- (void)addSpell:(<ICastable>)spell
+{
 
     if(_Inventory.count < 10)
     {
@@ -73,28 +76,32 @@
     }
 }
 
-- (void)removeSpell:(<ICastable>)spell {
+- (void)removeSpell:(<ICastable>)spell
+{
     [_Inventory removeObject:spell];
     [movableSprites removeObject:selSprite];
     [selSprite removeFromParentAndCleanup:YES];
 
-    NSUInteger count = 1;
+    NSUInteger count = 0;
     for (CCSprite *sprite in movableSprites)
     {
-        [sprite setPosition:ccp(sprite.contentSize.width*count, sprite.contentSize.height/2)];
         count++;
+        [sprite setPosition:ccp(sprite.contentSize.width*count, sprite.contentSize.height/2)];
+
 
     }
 }
 
 //TODO: The logic should be thrown to the controller
-- (BOOL)ccTouchBegan:(UITouch *)touch withEvent:(UIEvent *)event {
+- (BOOL)ccTouchBegan:(UITouch *)touch withEvent:(UIEvent *)event
+{
     CGPoint touchLocation = [self convertTouchToNodeSpace:touch];
     [self selectSpriteForTouch:touchLocation];
     return TRUE;
 }
 
-- (void)ccTouchMoved:(UITouch *)touch withEvent:(UIEvent *)event {
+- (void)ccTouchMoved:(UITouch *)touch withEvent:(UIEvent *)event
+{
     CGPoint touchLocation = [self convertTouchToNodeSpace:touch];
 
     if (selSprite) {
@@ -104,7 +111,8 @@
     }
 }
 
-- (void)ccTouchEnded:(UITouch *)touch withEvent:(UIEvent *)event {
+- (void)ccTouchEnded:(UITouch *)touch withEvent:(UIEvent *)event
+{
     CGPoint touchLocation = [self convertTouchToNodeSpace:touch];
 
     for (NSMutableDictionary *dictionary in _fieldBoundingBoxes)
@@ -134,7 +142,8 @@
 
 }
 
-- (void)selectSpriteForTouch:(CGPoint)touchLocation {
+- (void)selectSpriteForTouch:(CGPoint)touchLocation
+{
     CCSprite * newSprite = nil;
     for (CCSprite *sprite in movableSprites)
     {

@@ -48,9 +48,13 @@
     }
 
     [targetField addBlocks:bArray];
+
+    [targetField.board printCurrentBoardStatus:NO];
+
+
 }
 
-//TODO: Bug when adding a line and it collides with a falling block
+//FIXME: Bug when adding a line and it collides with a falling block
 - (void)CastSpell:(Field *)targetField {
     Board *board = targetField.board;
 

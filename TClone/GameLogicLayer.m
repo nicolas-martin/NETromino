@@ -11,6 +11,7 @@
 #import "Board.h"
 #import "Inventory.h"
 #import "AddLine.h"
+#import "RandomRemove.h"
 
 #define NSLog(FORMAT, ...) printf("%s\n", [[NSString stringWithFormat:FORMAT, ##__VA_ARGS__] UTF8String]);
 GameController *gameController1;
@@ -132,10 +133,11 @@ GameController *gameController4;
                 if(i%4)
                 {
                     Block *block = [Block blockWithBlockType:2];
-                    AddLine *a = [AddLine init];
+                    RandomRemove *a = [RandomRemove init];
                     [block addSpellToBlock:a];
                     [block setBoardX:i];
                     [block setBoardY:19-j];
+                    [block setStuck:YES];
                     [bArray addObject:block];
                 }
                 else
@@ -143,6 +145,7 @@ GameController *gameController4;
                     Block *block = [Block blockWithBlockType:2];
                     [block setBoardX:i];
                     [block setBoardY:19-j];
+                    [block setStuck:YES];
                     [bArray addObject:block];
                 }
             }
@@ -150,7 +153,8 @@ GameController *gameController4;
 
 
 
-        [gameController1.field addBlocks:bArray];
+        [_gameController.field addBlocks:bArray];
+
         //////// TESTING ////////
 
         _MainField.isTouchEnabled = YES;
@@ -250,7 +254,8 @@ GameController *gameController4;
 
 }
 
-- (CGPoint)tileCoordForPosition:(CGPoint)position {
+- (CGPoint)tileCoordForPosition:(CGPoint)position
+{
     NSUInteger x = (NSUInteger) (position.x / mainTileSize);
     NSUInteger y = (NSUInteger) (20-(((mainHeight) - position.y) / mainTileSize));
     return ccp(x, y);
@@ -268,7 +273,8 @@ GameController *gameController4;
 	
 }
 
-- (void)startGame{
+- (void)startGame
+{
 
     for (GameController *controller in listOfControllers)
     {
@@ -285,7 +291,8 @@ GameController *gameController4;
     return nil;
 }
 
-- (void)updateBoard:(ccTime)dt  {
+- (void)updateBoard:(ccTime)dt
+{
     NSMutableArray *controllersToRemove = [NSMutableArray array];
     frameCount += 1;
     if (frameCount % moveCycleRatio == 0)
