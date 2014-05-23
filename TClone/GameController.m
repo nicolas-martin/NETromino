@@ -210,13 +210,13 @@
 
     if (_isMain)
     {
-        GameOverLayer *gameOverLayer = [GameOverLayer initLayer:_isGameOver withPosition:_field.position];
+        GameOverLayer *gameOverLayer = [GameOverLayer initLayer:_isGameOver andContentSize:_field.contentSize];
 
         [_field addChild:gameOverLayer];
     }
     else
     {
-        GameOverLayer *gameOverLayer = [GameOverLayer initLayer:_isGameOver withPosition:_field.position];
+        GameOverLayer *gameOverLayer = [GameOverLayer initLayer:_isGameOver andContentSize:_field.contentSize];
 
         [_field addChild:gameOverLayer];
 

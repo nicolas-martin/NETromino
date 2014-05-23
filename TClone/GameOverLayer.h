@@ -10,10 +10,8 @@
     
 }
 
-+ (CCScene *)sceneWithWon:(BOOL)won andPosition:(CGPoint)position;
++ (id)initLayer:(BOOL)won andContentSize:(CGSize)size;
 
-+ (id)initLayer:(BOOL)won withPosition:(CGPoint)position;
-
-- (id)initWithWon:(BOOL)isGameOver withPosition:(CGPoint)position;
+- (id)initWithWon:(BOOL)isGameOver andSize:(CGSize)size;
 
 @end

@@ -8,40 +8,36 @@
 
 @implementation GameOverLayer
 
-+ (id)initLayer:(BOOL)won withPosition:(CGPoint) position {
-    return [[self alloc] initWithWon:won withPosition:position];
++ (id)initLayer:(BOOL)won andContentSize:(CGSize)size {
+    return [[self alloc] initWithWon:won andSize:size];
 }
 
-- (id)initWithWon:(BOOL)isGameOver withPosition:(CGPoint)position {
+- (id)initWithWon:(BOOL)isGameOver andSize:(CGSize)size {
     if ((self = [super init])) {
         
         NSString * message;
         if (isGameOver) {
-            message = @"You Lose :[";
+            message = @"You Lose.";
         } else {
             message = @"You Won!";
         }
 
-//        CCLayerColor *ccLayerColor = [CCLayerColor layerWithColor:ccc4(255, 0, 255, 255)];
-//        [self addChild:ccLayerColor z:0];
-		
-        CCLabelTTF * label = [CCLabelTTF labelWithString:message fontName:@"Arial" fontSize:32];
-        label.color = ccc3(300,300,0);
-        label.position = ccp(50, 50);
+        CCLayerColor *_shadowLayer = [CCLayerColor layerWithColor: ccc4(0,0,0, 80)];
 
-        //[self setAnchorPoint:position];
+        [self addChild:_shadowLayer];
+
+
+
+        CCLabelTTF * label = [CCLabelTTF labelWithString:message fontName:@"Arial" fontSize:32];
+        [label setAnchorPoint:ccp(0,0)];
+        label.color = ccc3(220,20,60);
+        [label setPosition:ccp(size.width/2, size.height/2)];
+
         [self setAnchorPoint:ccp(0, 0)];
         [self addChild:label];
 
         [self setZOrder:2];
-        
-//        [self runAction:
-//         [CCSequence actions:
-//          [CCDelayTime actionWithDuration:3],
-//          [CCCallBlockN actionWithBlock:^(CCNode *node) {
-//             [[CCDirector sharedDirector] replaceScene:[GameLogicLayer scene]];
-//		 }],
-//          nil]];
+
     }
     return self;
 }
