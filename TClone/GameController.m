@@ -15,6 +15,7 @@
 #import "AddLine.h"
 #import "Gravity.h"
 #import "GameLogicLayer.h"
+#import "TClone-Swift.h"
 
 
 #define NSLog(FORMAT, ...) printf("%s\n", [[NSString stringWithFormat:FORMAT, ##__VA_ARGS__] UTF8String]);
@@ -212,24 +213,18 @@
     {
         GameOverLayer *gameOverLayer = [GameOverLayer initLayer:_isGameOver andContentSize:_field.contentSize];
 
-        [_field addChild:gameOverLayer];
+        [_field addChild:gameOverLayer];        
     }
     else
     {
         GameOverLayer *gameOverLayer = [GameOverLayer initLayer:_isGameOver andContentSize:_field.contentSize];
 
         [_field addChild:gameOverLayer];
-
-
-
+        
         //[gameOverLayer setPosition:ccp(_field.Width + 10, _field.Height + 10)];
     }
 
     NSString *message = _isGameOver ?  @"Lost" : @"Won";
-
-    NSLog(@"{0} {1}",_field.Name, message);
-
-
 
 }
 

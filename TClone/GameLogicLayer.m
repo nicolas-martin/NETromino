@@ -287,10 +287,6 @@ GameController *gameController4;
 
 }
 
-- (id)initWithFields:(Field *)mainFieldLayer and:(Field *)otherFieldLayer1 and:(Field *)otherFieldLayer2 and:(Field *)otherFieldLayer3 and:(Field *)otherFieldLayer4 {
-    return nil;
-}
-
 - (void)updateBoard:(ccTime)dt
 {
     NSMutableArray *controllersToRemove = [NSMutableArray array];
