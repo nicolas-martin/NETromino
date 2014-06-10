@@ -195,6 +195,7 @@
 		ED202A7B19456A3B00EE8A63 /* play.png in Resources */ = {isa = PBXBuildFile; fileRef = ED202A7A19456A3B00EE8A63 /* play.png */; };
 		ED202A7D1945703F00EE8A63 /* playPressed.png in Resources */ = {isa = PBXBuildFile; fileRef = ED202A7C1945703F00EE8A63 /* playPressed.png */; };
 		ED5874591945525B00E25727 /* GameMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED5874581945525B00E25727 /* GameMenu.swift */; };
+		ED7360FD1946C9A900AFE31E /* chime.wav in Resources */ = {isa = PBXBuildFile; fileRef = ED7360FB1946C9A900AFE31E /* chime.wav */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -538,6 +539,7 @@
 		ED202A7C1945703F00EE8A63 /* playPressed.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = playPressed.png; sourceTree = "<group>"; };
 		ED5874571945525A00E25727 /* TClone-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "TClone-Bridging-Header.h"; sourceTree = "<group>"; };
 		ED5874581945525B00E25727 /* GameMenu.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameMenu.swift; sourceTree = "<group>"; };
+		ED7360FB1946C9A900AFE31E /* chime.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = chime.wav; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -608,6 +610,7 @@
 		0331195C179BF6EF00221460 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				ED7360FB1946C9A900AFE31E /* chime.wav */,
 				03919F3C17A7563A00FE3A35 /* CCNode+SFGestureRecognizers.h */,
 				03919F3D17A7563A00FE3A35 /* CCNode+SFGestureRecognizers.m */,
 				03311B05179BF7D100221460 /* Sprites */,
@@ -1203,6 +1206,7 @@
 				7A7A2387FC9FDF8800F1DCAD /* green-small@2x.png in Resources */,
 				7A7A2888F303D2B17A858300 /* blue-small.png in Resources */,
 				7A7A2A8E2775FB52BC038EF7 /* inventory-small@2x.png in Resources */,
+				ED7360FD1946C9A900AFE31E /* chime.wav in Resources */,
 				7A7A2C57F23930C93B5B82F0 /* inventory-small.png in Resources */,
 				7A7A20469AB37A010F1F997B /* randomRemove@2x.png in Resources */,
 				7A7A231CB1379D77E6D34200 /* nuke@2x.png in Resources */,

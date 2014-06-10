@@ -16,6 +16,7 @@
 #import "Gravity.h"
 #import "GameLogicLayer.h"
 #import "TClone-Swift.h"
+#import "SimpleAudioEngine.h"
 
 
 #define NSLog(FORMAT, ...) printf("%s\n", [[NSString stringWithFormat:FORMAT, ##__VA_ARGS__] UTF8String]);
@@ -59,6 +60,9 @@
         [inventory setAnchorPoint:ccp(0,0)];
         [inventory setPosition:ccp(0, 0)];
         _isGameOver = NO;
+        
+        //Preload sounds
+        [[SimpleAudioEngine sharedEngine] preloadEffect:@"chime.wav"];
     }
 
     return self;
@@ -103,6 +107,7 @@
         NSUInteger nbLinesCleared = [self checkForRowsToClear:userTetromino.children];
         if(nbLinesCleared > 0)
         {
+            [[SimpleAudioEngine sharedEngine] playEffect:@"chime.wav"];
             _numRowCleared = _numRowCleared + nbLinesCleared;
             [_hudLayer numRowClearedChanged:_numRowCleared];
             [_field addSpellToField];
@@ -363,6 +368,7 @@
 
 - (void)processTaps
 {
+
     if (touchType == kDropBlocks)
     {
         touchType = kNone;
