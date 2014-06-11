@@ -5,7 +5,7 @@
 
 #import "IntroLayer.h"
 #import "GameLogicLayer.h"
-
+#import "TClone-Swift.h"
 
 @implementation IntroLayer
 
@@ -61,7 +61,10 @@
 	//[self addChild:layer z:1];
 	
 
-    [[CCDirector sharedDirector] replaceScene:[CCTransitionFade transitionWithDuration:1.0 scene:[GameLogicLayer scene] ]];
+    //[[CCDirector sharedDirector] replaceScene:[CCTransitionFade transitionWithDuration:1.0 scene:[GameLogicLayer scene] ]];
+    [[CCDirector sharedDirector] replaceScene:[GameMenu scene]];
+    
+    
 }
 @end
 

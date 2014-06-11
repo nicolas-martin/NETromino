@@ -8,11 +8,22 @@
 
 class GameMenu : CCLayer{
     
+    class func scene() -> CCScene{
+
+        let scene = CCScene()
+        let GameMenuLayer = GameMenu()
+        
+        scene.addChild(GameMenuLayer)
+        
+        return scene
+
+    }
+
     init(){
         super.init()
         let mySelector: Selector = "onPlayPressed"
 
-        var PlayButton = CCMenuItemImage(normalImage: "play.png", selectedImage: "playPressed.png", disabledImage: "play.png", target: self, selector: "onPlayPressed")
+        var PlayButton = CCMenuItemImage(normalImage: "play.png", selectedImage: "playPressed.png", disabledImage: "play.png", target: self, selector: mySelector)
         //var MusicOn = CCMenuItemImage(normalImage: "musicOn.png", selectedImage: "musicOnPressed.png", disabledImage: "musicOn.png", target: nil, selector: nil)
         
         var MenuItems = CCMenuItem[]()
@@ -27,17 +38,15 @@ class GameMenu : CCLayer{
         
         self.addChild(Menu)
         
+    }
+    
+    func onPlayPressed(){
+
+        let GameLayer = GameLogicLayer.scene
         
-        func onPlayPressed(){
-            let GameLayer = GameLogicLayer.scene()
         
-            
-            var sharedDirector = CCDirector()
-            sharedDirector.replaceScene(GameLayer)
-
-        }
-
-
+        var sharedDirector = CCDirector.sharedDirector
+        sharedDirector().replaceScene(GameLayer())
         
     }
     
