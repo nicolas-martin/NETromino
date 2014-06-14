@@ -14,7 +14,7 @@
 - (RandomRemove *)initWith {
     self = [super init];
     if (self) {
-        _spellName = @"randomRemove";
+        _spellName = @"Random Remove";
         _spriteFileName = @"randomRemove.png";
 
     }

@@ -133,7 +133,7 @@ GameController *gameController4;
                 if(i%4)
                 {
                     Block *block = [Block blockWithBlockType:2];
-                    RandomRemove *a = [RandomRemove init];
+                    AddLine *a = [AddLine init];
                     [block addSpellToBlock:a];
                     [block setBoardX:i];
                     [block setBoardY:19-j];

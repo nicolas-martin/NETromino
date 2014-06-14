@@ -6,3 +6,6 @@
 #import "cocos2d.h"
 #import "CCLayer.h"
 #import "GameLogicLayer.h"
+#import "ICastable.h"
+#import "Field.h"
+#import "Board.h"
