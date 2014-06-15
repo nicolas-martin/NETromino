@@ -195,6 +195,7 @@
 		ED202A7B19456A3B00EE8A63 /* play.png in Resources */ = {isa = PBXBuildFile; fileRef = ED202A7A19456A3B00EE8A63 /* play.png */; };
 		ED202A7D1945703F00EE8A63 /* playPressed.png in Resources */ = {isa = PBXBuildFile; fileRef = ED202A7C1945703F00EE8A63 /* playPressed.png */; };
 		ED429EF0194D51A70036D539 /* ClearLine.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED429EEF194D51A70036D539 /* ClearLine.swift */; };
+		ED429EF2194D59E00036D539 /* SwitchField.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED429EF1194D59E00036D539 /* SwitchField.swift */; };
 		ED5874591945525B00E25727 /* GameMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED5874581945525B00E25727 /* GameMenu.swift */; };
 		ED7360FD1946C9A900AFE31E /* chime.wav in Resources */ = {isa = PBXBuildFile; fileRef = ED7360FB1946C9A900AFE31E /* chime.wav */; };
 		ED9ABD67194C1A2900491AC4 /* ClearSpell.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED9ABD66194C1A2900491AC4 /* ClearSpell.swift */; };
@@ -551,6 +552,7 @@
 		ED202A7A19456A3B00EE8A63 /* play.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = play.png; sourceTree = "<group>"; };
 		ED202A7C1945703F00EE8A63 /* playPressed.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = playPressed.png; sourceTree = "<group>"; };
 		ED429EEF194D51A70036D539 /* ClearLine.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ClearLine.swift; sourceTree = "<group>"; };
+		ED429EF1194D59E00036D539 /* SwitchField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwitchField.swift; sourceTree = "<group>"; };
 		ED5874571945525A00E25727 /* TClone-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "TClone-Bridging-Header.h"; sourceTree = "<group>"; };
 		ED5874581945525B00E25727 /* GameMenu.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameMenu.swift; sourceTree = "<group>"; };
 		ED7360FB1946C9A900AFE31E /* chime.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = chime.wav; sourceTree = "<group>"; };
@@ -1078,6 +1080,7 @@
 				7A7A27EE0F7A1C64BC7A3FA9 /* Gravity.h */,
 				ED9ABD66194C1A2900491AC4 /* ClearSpell.swift */,
 				ED429EEF194D51A70036D539 /* ClearLine.swift */,
+				ED429EF1194D59E00036D539 /* SwitchField.swift */,
 			);
 			name = Spell;
 			sourceTree = "<group>";
@@ -1333,6 +1336,7 @@
 				033119D6179BF6F000221460 /* CCMenuItem.m in Sources */,
 				033119D9179BF6F000221460 /* CCMotionStreak.m in Sources */,
 				033119DC179BF6F000221460 /* CCNode+Debug.m in Sources */,
+				ED429EF2194D59E00036D539 /* SwitchField.swift in Sources */,
 				033119DF179BF6F000221460 /* CCNode.m in Sources */,
 				033119E2179BF6F000221460 /* CCParallaxNode.m in Sources */,
 				033119E5179BF6F000221460 /* CCParticleBatchNode.m in Sources */,

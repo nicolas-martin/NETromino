@@ -128,6 +128,9 @@
                     id<ICastable> obj = selSprite.userObject;
 
                     //TODO: Be careful with LEAKS!
+                    //TODO: Check if this works...
+                    //GameLogicLayer *myParentAsMainClass = [GameLogicLayer sharedManager];
+                    
                     GameLogicLayer *myParentAsMainClass = (GameLogicLayer*)self.parent.parent;
                     [obj CastSpell:[myParentAsMainClass getFieldFromString:key]];
                     [self removeSpell:selSprite.userObject];

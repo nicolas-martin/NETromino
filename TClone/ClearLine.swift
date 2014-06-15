@@ -28,6 +28,8 @@ class ClearLine : ICastable{
 //        
 //        [_field setPositionUsingFieldValue:[_field.board MoveBoardDown:(NSUInteger) (deletedRow - 1)]];
         
+        LogSpell(targetField)
+        
     }
     
     func LogSpell(targetField: Field) -> String {

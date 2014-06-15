@@ -30,6 +30,18 @@ GameController *gameController4;
 {
 }
 
+static GameLogicLayer *sharedManager = nil;
+
++ (GameLogicLayer*) sharedManager
+{
+    if (sharedManager == nil)
+    {
+        sharedManager = [[GameLogicLayer alloc] init];
+    }
+    return sharedManager;
+}
+
+
 +(CCScene *) scene
 {
     CCScene *scene = [CCScene node];

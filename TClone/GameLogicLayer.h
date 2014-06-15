@@ -50,7 +50,7 @@
 - (void)handleTap:(UITapGestureRecognizer *)sender;
 
 + (CCScene *) scene;
-
++ (GameLogicLayer*) sharedManager;
 
 
 @end
