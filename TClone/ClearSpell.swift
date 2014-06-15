@@ -16,13 +16,17 @@ class ClearSpell : ICastable{
         let board = targetField.board
         let allBlockInBoard = board.getAllBlocksInBoard()
         
-        for block in allBlockInBoard{
+        //TODO
+        //for block in allBlockInBoard{
+        //  if block.spell != null{
+        //        //block.removeSpell
 
-        }
-        
-        
+        //    }
 
-        
+        //}
+
+  
+        LogSpell(targetField)
         
     }
     

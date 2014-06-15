@@ -16,6 +16,36 @@
 
 @implementation Block
 
+- (NSString *)getColorFromType:(NSUInteger)blockType {
+    NSString *color= nil;
+    switch (blockType) {
+        case I_block:
+            color = @"cyan";
+            break;
+        case O_block:
+            color = @"yellow";
+            break;
+        case J_block:
+            color = @"green";
+            break;
+        case L_block:
+            color = @"red";
+            break;
+        case Z_block:
+            color = @"orange";
+            break;
+        case S_block:
+            color = @"blue";
+            break;
+        case T_block:
+            color = @"magenta";
+            break;
+        default:
+            break;
+    }
+    return color;
+}
+
 - (instancetype)initWithBlockType:(NSUInteger)blockType {
     Block *temp = nil;
     NSString *filename = nil, *color = nil;
@@ -25,31 +55,7 @@
         self.blockType = blockType;
 
         _spell = nil;
-        switch (blockType) {
-            case I_block:
-                color = @"cyan";
-                break;
-            case O_block:
-                color = @"yellow";
-                break;
-            case J_block:
-                color = @"green";
-                break;
-            case L_block:
-                color = @"red";
-                break;
-            case Z_block:
-                color = @"orange";
-                break;
-            case S_block:
-                color = @"blue";
-                break;
-            case T_block:
-                color = @"magenta";
-                break;
-            default:
-                break;
-        }
+        color = [self getColorFromType:blockType];
 
 
         self.position = ccp(0,0);
@@ -87,6 +93,15 @@
 //    }
 
 }
+
+-(void) removeSpell{
+    self.spell = nil;
+    NSString *color = [[NSString alloc] initWithFormat: @"%@.png", [self getColorFromType:self.blockType]];
+    self.texture = [[CCTextureCache sharedTextureCache] addImage:color];
+
+}
+
+
 
 + (instancetype)blockWithBlockType:(NSUInteger)blockType {
     return [[self alloc] initWithBlockType:blockType];
