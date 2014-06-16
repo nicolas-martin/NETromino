@@ -14,8 +14,18 @@ class Fog : ICastable{
     
     func CastSpell(targetField: Field) {
         
+        let fogLayer = FogLayer()
+                
+        var gameLogicLayer = GameLogicLayer.sharedManager()
+        var field = gameLogicLayer.getFieldFromString(targetField.Name) as Field
+
+        fogLayer.position = CGPoint(x: field.contentSize.width/2, y: field.contentSize.height/2)
         
-        //TODO: Add way to obstruct the field vision
+        gameLogicLayer.addChild(fogLayer)
+        
+        
+        //TODO: find a way to figure out if the spell was dropped on "you"
+        //maybe with global player identifier?
         
         LogSpell(targetField)
         
