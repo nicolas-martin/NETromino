@@ -20,10 +20,11 @@
 
 - (instancetype)initWithBlockType:(NSUInteger)blockType;
 
-- (void)addSpellToBlock:(<ICastable>) spell;
+- (void)addSpellToBlock:(id<ICastable>) spell;
 
 + (instancetype)blockWithBlockType:(NSUInteger)blockType;
 
+- (void)removeSpell;
 - (void)moveUp;
 - (void)moveDown;
 - (void)moveLeft;
