@@ -203,6 +203,10 @@
 		EDAE1AC7194E9ADD00295B0D /* ClearColumn.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDAE1AC6194E9ADD00295B0D /* ClearColumn.swift */; };
 		EDAE1AC9194E9FC400295B0D /* Fog.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDAE1AC8194E9FC400295B0D /* Fog.swift */; };
 		EDAE1ACB194EA4EC00295B0D /* FogLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDAE1ACA194EA4EC00295B0D /* FogLayer.swift */; };
+		EDAE1AD0194EBDD600295B0D /* switchField.png in Resources */ = {isa = PBXBuildFile; fileRef = EDAE1ACC194EBDD500295B0D /* switchField.png */; };
+		EDAE1AD1194EBDD600295B0D /* clearLine.png in Resources */ = {isa = PBXBuildFile; fileRef = EDAE1ACD194EBDD600295B0D /* clearLine.png */; };
+		EDAE1AD2194EBDD600295B0D /* clearSpell.png in Resources */ = {isa = PBXBuildFile; fileRef = EDAE1ACE194EBDD600295B0D /* clearSpell.png */; };
+		EDAE1AD3194EBDD600295B0D /* clearColumn.png in Resources */ = {isa = PBXBuildFile; fileRef = EDAE1ACF194EBDD600295B0D /* clearColumn.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -566,6 +570,10 @@
 		EDAE1AC6194E9ADD00295B0D /* ClearColumn.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ClearColumn.swift; sourceTree = "<group>"; };
 		EDAE1AC8194E9FC400295B0D /* Fog.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Fog.swift; sourceTree = "<group>"; };
 		EDAE1ACA194EA4EC00295B0D /* FogLayer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FogLayer.swift; sourceTree = "<group>"; };
+		EDAE1ACC194EBDD500295B0D /* switchField.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = switchField.png; sourceTree = "<group>"; };
+		EDAE1ACD194EBDD600295B0D /* clearLine.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = clearLine.png; sourceTree = "<group>"; };
+		EDAE1ACE194EBDD600295B0D /* clearSpell.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = clearSpell.png; sourceTree = "<group>"; };
+		EDAE1ACF194EBDD600295B0D /* clearColumn.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = clearColumn.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1011,6 +1019,10 @@
 		03311B05179BF7D100221460 /* Sprites */ = {
 			isa = PBXGroup;
 			children = (
+				EDAE1ACC194EBDD500295B0D /* switchField.png */,
+				EDAE1ACD194EBDD600295B0D /* clearLine.png */,
+				EDAE1ACE194EBDD600295B0D /* clearSpell.png */,
+				EDAE1ACF194EBDD600295B0D /* clearColumn.png */,
 				ED202A7C1945703F00EE8A63 /* playPressed.png */,
 				ED202A7A19456A3B00EE8A63 /* play.png */,
 				03311B06179BF87000221460 /* background.jpg */,
@@ -1242,6 +1254,7 @@
 				0331196A179BF6EF00221460 /* Icon-Small-50.png in Resources */,
 				0331196C179BF6EF00221460 /* Icon-Small.png in Resources */,
 				0331196E179BF6EF00221460 /* Icon-Small@2x.png in Resources */,
+				EDAE1AD2194EBDD600295B0D /* clearSpell.png in Resources */,
 				03311970179BF6EF00221460 /* Icon.png in Resources */,
 				03311972179BF6EF00221460 /* Icon@2x.png in Resources */,
 				03311975179BF6EF00221460 /* iTunesArtwork in Resources */,
@@ -1256,6 +1269,7 @@
 				03311B16179BF87000221460 /* red.png in Resources */,
 				03311B17179BF87000221460 /* tetris_bg.jpg in Resources */,
 				03311B19179C07A300221460 /* Default-568h@2x.png in Resources */,
+				EDAE1AD0194EBDD600295B0D /* switchField.png in Resources */,
 				ED202A7D1945703F00EE8A63 /* playPressed.png in Resources */,
 				250B83922D44EFC51701CD5B /* preview.jpg in Resources */,
 				250B8EE84B932B24957A3027 /* Default.png in Resources */,
@@ -1291,7 +1305,9 @@
 				7A7A2A8E2775FB52BC038EF7 /* inventory-small@2x.png in Resources */,
 				ED7360FD1946C9A900AFE31E /* chime.wav in Resources */,
 				7A7A2C57F23930C93B5B82F0 /* inventory-small.png in Resources */,
+				EDAE1AD3194EBDD600295B0D /* clearColumn.png in Resources */,
 				7A7A20469AB37A010F1F997B /* randomRemove@2x.png in Resources */,
+				EDAE1AD1194EBDD600295B0D /* clearLine.png in Resources */,
 				7A7A231CB1379D77E6D34200 /* nuke@2x.png in Resources */,
 				7A7A27EBD8B242593D5F3EA6 /* gravity@2x.png in Resources */,
 				7A7A2BEB243D53409196007B /* gravity.png in Resources */,

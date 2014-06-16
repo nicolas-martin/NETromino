@@ -1,6 +1,6 @@
 # NETromino #
 
-A multiplayer Tetromino game.
+A multiplayer falling block style game.
 
 Clear lines, collect spells and throw them at your
 enemy!
@@ -10,3 +10,7 @@ enemy!
 - Nuke Field
 - Clear random block
 - Gravity
+- _Switch field_
+- _Fog_
+- _Clear special blocks_
+- _Clear column_
