@@ -199,6 +199,10 @@
 		ED5874591945525B00E25727 /* GameMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED5874581945525B00E25727 /* GameMenu.swift */; };
 		ED7360FD1946C9A900AFE31E /* chime.wav in Resources */ = {isa = PBXBuildFile; fileRef = ED7360FB1946C9A900AFE31E /* chime.wav */; };
 		ED9ABD67194C1A2900491AC4 /* ClearSpell.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED9ABD66194C1A2900491AC4 /* ClearSpell.swift */; };
+		EDA65515194FF81C00F121C3 /* clearLine@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EDA65511194FF81C00F121C3 /* clearLine@2x.png */; };
+		EDA65516194FF81C00F121C3 /* clearColumn@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EDA65512194FF81C00F121C3 /* clearColumn@2x.png */; };
+		EDA65517194FF81C00F121C3 /* switchField@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EDA65513194FF81C00F121C3 /* switchField@2x.png */; };
+		EDA65518194FF81C00F121C3 /* clearSpell@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EDA65514194FF81C00F121C3 /* clearSpell@2x.png */; };
 		EDABBC94194C0AD400F4DA22 /* TClone_Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDABBC93194C0AD400F4DA22 /* TClone_Tests.swift */; };
 		EDAE1AC7194E9ADD00295B0D /* ClearColumn.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDAE1AC6194E9ADD00295B0D /* ClearColumn.swift */; };
 		EDAE1AC9194E9FC400295B0D /* Fog.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDAE1AC8194E9FC400295B0D /* Fog.swift */; };
@@ -564,6 +568,10 @@
 		ED5874581945525B00E25727 /* GameMenu.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameMenu.swift; sourceTree = "<group>"; };
 		ED7360FB1946C9A900AFE31E /* chime.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = chime.wav; sourceTree = "<group>"; };
 		ED9ABD66194C1A2900491AC4 /* ClearSpell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ClearSpell.swift; sourceTree = "<group>"; };
+		EDA65511194FF81C00F121C3 /* clearLine@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "clearLine@2x.png"; sourceTree = "<group>"; };
+		EDA65512194FF81C00F121C3 /* clearColumn@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "clearColumn@2x.png"; sourceTree = "<group>"; };
+		EDA65513194FF81C00F121C3 /* switchField@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "switchField@2x.png"; sourceTree = "<group>"; };
+		EDA65514194FF81C00F121C3 /* clearSpell@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "clearSpell@2x.png"; sourceTree = "<group>"; };
 		EDABBC8F194C0AD400F4DA22 /* TClone Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "TClone Tests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		EDABBC92194C0AD400F4DA22 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		EDABBC93194C0AD400F4DA22 /* TClone_Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TClone_Tests.swift; sourceTree = "<group>"; };
@@ -1019,6 +1027,10 @@
 		03311B05179BF7D100221460 /* Sprites */ = {
 			isa = PBXGroup;
 			children = (
+				EDA65511194FF81C00F121C3 /* clearLine@2x.png */,
+				EDA65512194FF81C00F121C3 /* clearColumn@2x.png */,
+				EDA65513194FF81C00F121C3 /* switchField@2x.png */,
+				EDA65514194FF81C00F121C3 /* clearSpell@2x.png */,
 				EDAE1ACC194EBDD500295B0D /* switchField.png */,
 				EDAE1ACD194EBDD600295B0D /* clearLine.png */,
 				EDAE1ACE194EBDD600295B0D /* clearSpell.png */,
@@ -1255,6 +1267,7 @@
 				0331196C179BF6EF00221460 /* Icon-Small.png in Resources */,
 				0331196E179BF6EF00221460 /* Icon-Small@2x.png in Resources */,
 				EDAE1AD2194EBDD600295B0D /* clearSpell.png in Resources */,
+				EDA65518194FF81C00F121C3 /* clearSpell@2x.png in Resources */,
 				03311970179BF6EF00221460 /* Icon.png in Resources */,
 				03311972179BF6EF00221460 /* Icon@2x.png in Resources */,
 				03311975179BF6EF00221460 /* iTunesArtwork in Resources */,
@@ -1266,6 +1279,7 @@
 				03311B13179BF87000221460 /* green.png in Resources */,
 				03311B14179BF87000221460 /* magenta.png in Resources */,
 				03311B15179BF87000221460 /* orange.png in Resources */,
+				EDA65516194FF81C00F121C3 /* clearColumn@2x.png in Resources */,
 				03311B16179BF87000221460 /* red.png in Resources */,
 				03311B17179BF87000221460 /* tetris_bg.jpg in Resources */,
 				03311B19179C07A300221460 /* Default-568h@2x.png in Resources */,
@@ -1286,6 +1300,7 @@
 				7A7A2ADAD83258874A19DC72 /* red@2x.png in Resources */,
 				7A7A2FCED8FB76DBCA3A1875 /* inventory@2x.png in Resources */,
 				ED202A7B19456A3B00EE8A63 /* play.png in Resources */,
+				EDA65515194FF81C00F121C3 /* clearLine@2x.png in Resources */,
 				7A7A26726371036B125B11D8 /* blue@2x.png in Resources */,
 				7A7A2CB5B04719EF4AAC5118 /* magenta@2x.png in Resources */,
 				7A7A2407A53D5D8D00D37C6C /* magenta-small.png in Resources */,
@@ -1305,6 +1320,7 @@
 				7A7A2A8E2775FB52BC038EF7 /* inventory-small@2x.png in Resources */,
 				ED7360FD1946C9A900AFE31E /* chime.wav in Resources */,
 				7A7A2C57F23930C93B5B82F0 /* inventory-small.png in Resources */,
+				EDA65517194FF81C00F121C3 /* switchField@2x.png in Resources */,
 				EDAE1AD3194EBDD600295B0D /* clearColumn.png in Resources */,
 				7A7A20469AB37A010F1F997B /* randomRemove@2x.png in Resources */,
 				EDAE1AD1194EBDD600295B0D /* clearLine.png in Resources */,

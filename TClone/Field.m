@@ -2,7 +2,7 @@
 // Created by Nicolas Martin on 13-08-11.
 //
 //
-
+//TODO: Remove this class and integrate in board?
 
 #import "CCLayer.h"
 #import "Field.h"
