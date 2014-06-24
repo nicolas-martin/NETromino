@@ -8,7 +8,7 @@
 
 import Foundation
 
-class FogLayer : CCLayer{
+class FogLayer : CCNode{
     
 //    class func scene() -> CCScene{
 //        

@@ -3,6 +3,7 @@
  *
  * Copyright (c) 2010 Ricardo Quesada
  * Copyright (c) 2011 Zynga Inc.
+ * Copyright (c) 2013-2014 Cocos2D Authors
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -29,61 +30,71 @@
 
 /** OS version definitions. Includes both iOS and Mac OS versions
  */
-enum {
-	kCCiOSVersion_4_0   = 0x04000000,
-	kCCiOSVersion_4_0_1 = 0x04000100,
-	kCCiOSVersion_4_1   = 0x04010000,
-	kCCiOSVersion_4_2   = 0x04020000,
-	kCCiOSVersion_4_2_1 = 0x04020100,
-	kCCiOSVersion_4_3   = 0x04030000,
-	kCCiOSVersion_4_3_1 = 0x04030100,
-	kCCiOSVersion_4_3_2 = 0x04030200,
-	kCCiOSVersion_4_3_3 = 0x04030300,
-	kCCiOSVersion_4_3_4 = 0x04030400,
-	kCCiOSVersion_4_3_5 = 0x04030500,
-	kCCiOSVersion_5_0   = 0x05000000,
-	kCCiOSVersion_5_0_1 = 0x05000100,
-	kCCiOSVersion_5_1_0 = 0x05010000,
-	kCCiOSVersion_6_0_0 = 0x06000000,
+typedef NS_ENUM(NSUInteger, CCSystemVersion){
+	CCSystemVersion_iOS_4_0   = 0x04000000,
+	CCSystemVersion_iOS_4_0_1 = 0x04000100,
+	CCSystemVersion_iOS_4_1   = 0x04010000,
+	CCSystemVersion_iOS_4_2   = 0x04020000,
+	CCSystemVersion_iOS_4_2_1 = 0x04020100,
+	CCSystemVersion_iOS_4_3   = 0x04030000,
+	CCSystemVersion_iOS_4_3_1 = 0x04030100,
+	CCSystemVersion_iOS_4_3_2 = 0x04030200,
+	CCSystemVersion_iOS_4_3_3 = 0x04030300,
+	CCSystemVersion_iOS_4_3_4 = 0x04030400,
+	CCSystemVersion_iOS_4_3_5 = 0x04030500,
+	CCSystemVersion_iOS_5_0   = 0x05000000,
+	CCSystemVersion_iOS_5_0_1 = 0x05000100,
+	CCSystemVersion_iOS_5_1_0 = 0x05010000,
+	CCSystemVersion_iOS_6_0  = 0x06000000,
+	CCSystemVersion_iOS_7_0  = 0x06000000,
 	
-	kCCMacVersion_10_6  = 0x0a060000,
-	kCCMacVersion_10_7  = 0x0a070000,
-	kCCMacVersion_10_8  = 0x0a080000,
+	CCSystemVersion_Mac_10_6  = 0x0a060000,
+	CCSystemVersion_Mac_10_7  = 0x0a070000,
+	CCSystemVersion_Mac_10_8  = 0x0a080000,
+	CCSystemVersion_Mac_10_9  = 0x0a080000,
+};
+
+typedef NS_ENUM(NSUInteger, CCDevice) {
+	CCDeviceiPhone,
+	CCDeviceiPhoneRetinaDisplay,
+	CCDeviceiPhone5,
+	CCDeviceiPhone5RetinaDisplay,
+	CCDeviceiPad,
+	CCDeviceiPadRetinaDisplay,
+
+	CCDeviceMac,
+	CCDeviceMacRetinaDisplay,
 };
 
 /**
  CCConfiguration contains some openGL variables
- @since v0.99.0
- */
+  */
 @interface CCConfiguration : NSObject {
 
-	GLint			maxTextureSize_;
-	GLint			maxModelviewStackDepth_;
-	BOOL			supportsPVRTC_;
-	BOOL			supportsNPOT_;
-	BOOL			supportsBGRA8888_;
-	BOOL			supportsDiscardFramebuffer_;
-	BOOL			supportsShareableVAO_;
-	unsigned int	OSVersion_;
-	GLint			maxSamplesAllowed_;
-	GLint			maxTextureUnits_;
+	BOOL			_openGLInitialized;
+	
+	GLint			_maxTextureSize;
+	BOOL			_supportsPVRTC;
+	BOOL			_supportsNPOT;
+	BOOL			_supportsBGRA8888;
+	BOOL			_supportsDiscardFramebuffer;
+	BOOL			_supportsShareableVAO;
+	GLint			_maxSamplesAllowed;
+	GLint			_maxTextureUnits;
+
+	unsigned int	_OSVersion;
 }
 
 /** OpenGL Max texture size. */
 @property (nonatomic, readonly) GLint maxTextureSize;
 
-/** OpenGL Max Modelview Stack Depth. */
-@property (nonatomic, readonly) GLint maxModelviewStackDepth;
-
 /** returns the maximum texture units
- @since v2.0.0
  */
 @property (nonatomic, readonly) GLint maxTextureUnits;
 
 /** Whether or not the GPU supports NPOT (Non Power Of Two) textures.
  OpenGL ES 2.0 already supports NPOT (iOS).
 
- @since v0.99.2
  */
 @property (nonatomic, readonly) BOOL supportsNPOT;
 
@@ -92,18 +103,15 @@ enum {
 
 /** Whether or not BGRA8888 textures are supported.
 
- @since v0.99.2
  */
 @property (nonatomic, readonly) BOOL supportsBGRA8888;
 
 /** Whether or not glDiscardFramebufferEXT is supported
 
- @since v0.99.2
  */
 @property (nonatomic, readonly) BOOL supportsDiscardFramebuffer;
 
 /** Whether or not shareable VAOs are supported.
- @since v2.0.0
  */
 @property (nonatomic, readonly) BOOL supportsShareableVAO;
 
@@ -111,9 +119,9 @@ enum {
 	- On iOS devices it returns the firmware version.
 	- On Mac returns the OS version
 
- @since v0.99.5
  */
 @property (nonatomic, readonly) unsigned int OSVersion;
+
 
 /** returns a shared instance of the CCConfiguration */
 +(CCConfiguration *) sharedConfiguration;
@@ -121,6 +129,11 @@ enum {
 /** returns whether or not an OpenGL is supported */
 - (BOOL) checkForGLExtension:(NSString *)searchName;
 
+/** returns the current device */
+-(NSInteger) runningDevice;
 
+/** dumps in the console the CCConfiguration information.
+ */
+-(void) dumpInfo;
 
 @end

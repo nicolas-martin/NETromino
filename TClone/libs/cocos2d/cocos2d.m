@@ -3,6 +3,7 @@
  *
  * Copyright (c) 2008-2010 Ricardo Quesada
  * Copyright (c) 2011 Zynga Inc.
+ * Copyright (c) 2013-2014 Cocos2D Authors
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -26,9 +27,11 @@
 
 #import <Foundation/Foundation.h>
 #import "cocos2d.h"
-static NSString *version = @"cocos2d v2.0.0";
 
 NSString *cocos2dVersion()
 {
-	return version;
+    int major   = (COCOS2D_VERSION >> 16) & 0x0000FF;
+    int minor   = (COCOS2D_VERSION >>  8) & 0x0000FF;
+    int rev     = (COCOS2D_VERSION >>  0) & 0x0000FF;
+	return([[NSString stringWithFormat:@"Cocos2D-iPhone version %d.%d.%d ", major, minor, rev] stringByAppendingString:COCOS2D_BUILD]);
 }

@@ -3,6 +3,7 @@
  *
  * Copyright (c) 2009-2010 Ricardo Quesada
  * Copyright (c) 2011 Zynga Inc.
+ * Copyright (c) 2013-2014 Cocos2D Authors
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -26,34 +27,33 @@
 
 #import "CCParallaxNode.h"
 #import "Support/CGPointExtension.h"
-#import "Support/ccCArray.h"
 
 @interface CGPointObject : NSObject
 {
-	CGPoint	ratio_;
-	CGPoint offset_;
-	CCNode *child_;	// weak ref
+	CGPoint	_ratio;
+	CGPoint _offset;
+	CCNode *__unsafe_unretained _child;	// weak ref
 }
 @property (nonatomic,readwrite) CGPoint ratio;
 @property (nonatomic,readwrite) CGPoint offset;
-@property (nonatomic,readwrite,assign) CCNode *child;
+@property (nonatomic,readwrite,unsafe_unretained) CCNode *child;
 +(id) pointWithCGPoint:(CGPoint)point offset:(CGPoint)offset;
 -(id) initWithCGPoint:(CGPoint)point offset:(CGPoint)offset;
 @end
 @implementation CGPointObject
-@synthesize ratio = ratio_;
-@synthesize offset = offset_;
-@synthesize child=child_;
+@synthesize ratio = _ratio;
+@synthesize offset = _offset;
+@synthesize child = _child;
 
 +(id) pointWithCGPoint:(CGPoint)ratio offset:(CGPoint)offset
 {
-	return [[[self alloc] initWithCGPoint:ratio offset:offset] autorelease];
+	return [[self alloc] initWithCGPoint:ratio offset:offset];
 }
 -(id) initWithCGPoint:(CGPoint)ratio offset:(CGPoint)offset
 {
 	if( (self=[super init])) {
-		ratio_ = ratio;
-		offset_ = offset;
+		_ratio = ratio;
+		_offset = offset;
 	}
 	return self;
 }
@@ -61,25 +61,17 @@
 
 @implementation CCParallaxNode
 
-@synthesize parallaxArray = parallaxArray_;
+@synthesize parallaxArray = _parallaxArray;
 
 -(id) init
 {
 	if( (self=[super init]) ) {
-		parallaxArray_ = ccArrayNew(5);
-		lastPosition = CGPointMake(-100,-100);
+		_parallaxArray = [[NSMutableArray alloc] init];
+		_lastPosition = CGPointMake(-100,-100);
 	}
 	return self;
 }
 
-- (void) dealloc
-{
-	if( parallaxArray_ ) {
-		ccArrayFree(parallaxArray_);
-		parallaxArray_ = nil;
-	}
-	[super dealloc];
-}
 
 -(void) addChild:(CCNode*)child z:(NSInteger)z tag:(NSInteger)tag
 {
@@ -91,37 +83,39 @@
 	NSAssert( child != nil, @"Argument must be non-nil");
 	CGPointObject *obj = [CGPointObject pointWithCGPoint:ratio offset:offset];
 	obj.child = child;
-	ccArrayAppendObjectWithResize(parallaxArray_, obj);
+    [_parallaxArray addObject:obj];
 
 	CGPoint pos = self.position;
 	pos.x = pos.x * ratio.x + offset.x;
 	pos.y = pos.y * ratio.y + offset.y;
 	child.position = pos;
 
-	[super addChild: child z:z tag:child.tag];
+	[super addChild: child z:z name:child.name];
 }
 
 -(void) removeChild:(CCNode*)node cleanup:(BOOL)cleanup
 {
-	for( unsigned int i=0;i < parallaxArray_->num;i++) {
-		CGPointObject *point = parallaxArray_->arr[i];
-		if( [point.child isEqual:node] ) {
-			ccArrayRemoveObjectAtIndex(parallaxArray_, i);
+	for(NSUInteger i = 0; i < _parallaxArray.count; i++){
+		CGPointObject *point = _parallaxArray[i];
+		
+		if(point.child == node) {
+			[_parallaxArray removeObjectAtIndex:i];
 			break;
 		}
 	}
+
 	[super removeChild:node cleanup:cleanup];
 }
 
 -(void) removeAllChildrenWithCleanup:(BOOL)cleanup
 {
-	ccArrayRemoveAllObjects(parallaxArray_);
+    [_parallaxArray removeAllObjects];
 	[super removeAllChildrenWithCleanup:cleanup];
 }
 
 -(CGPoint) absolutePosition_
 {
-	CGPoint ret = position_;
+	CGPoint ret = _position;
 
 	CCNode *cn = self;
 
@@ -138,24 +132,21 @@
    - using a timer is not guaranteed that it will called after all the positions were updated
    - overriding "draw" will only be precise if the children have a z > 0
 */
--(void) visit
+-(void) visit:(CCRenderer *)renderer parentTransform:(const GLKMatrix4 *)parentTransform
 {
-//	CGPoint pos = position_;
+//	CGPoint pos = _position;
 //	CGPoint	pos = [self convertToWorldSpace:CGPointZero];
 	CGPoint pos = [self absolutePosition_];
-	if( ! CGPointEqualToPoint(pos, lastPosition) ) {
-
-		for(unsigned int i=0; i < parallaxArray_->num; i++ ) {
-
-			CGPointObject *point = parallaxArray_->arr[i];
+	if( ! CGPointEqualToPoint(pos, _lastPosition) ) {
+        for (CGPointObject *point in _parallaxArray) {
 			float x = -pos.x + pos.x * point.ratio.x + point.offset.x;
 			float y = -pos.y + pos.y * point.ratio.y + point.offset.y;
 			point.child.position = ccp(x,y);
 		}
 
-		lastPosition = pos;
+		_lastPosition = pos;
 	}
 
-	[super visit];
+	[super visit:renderer parentTransform:parentTransform];
 }
 @end

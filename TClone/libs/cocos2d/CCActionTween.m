@@ -2,6 +2,7 @@
  * cocos2d for iPhone: http://www.cocos2d-iphone.org
  *
  * Copyright 2009 lhunath (Maarten Billemont)
+ * Copyright (c) 2013-2014 Cocos2D Authors
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -28,44 +29,39 @@
 
 @implementation CCActionTween
 
-+ (id)actionWithDuration:(ccTime)aDuration key:(NSString *)aKey from:(float)aFrom to:(float)aTo {
++ (id)actionWithDuration:(CCTime)aDuration key:(NSString *)aKey from:(float)aFrom to:(float)aTo {
 
-	return [[[[self class] alloc] initWithDuration:aDuration key:aKey from:aFrom to:aTo] autorelease];
+	return [[[self class] alloc] initWithDuration:aDuration key:aKey from:aFrom to:aTo];
 }
 
-- (id)initWithDuration:(ccTime)aDuration key:(NSString *)key from:(float)from to:(float)to {
+- (id)initWithDuration:(CCTime)aDuration key:(NSString *)key from:(float)from to:(float)to {
 
 	if ((self = [super initWithDuration:aDuration])) {
 
-		key_	= [key copy];
-		to_		= to;
-		from_	= from;
+		_key	= [key copy];
+		_to		= to;
+		_from	= from;
 
 	}
 
 	return self;
 }
 
-- (void) dealloc
-{
-	[key_ release];
-	[super dealloc];
-}
 
 - (void)startWithTarget:aTarget
 {
 	[super startWithTarget:aTarget];
-	delta_ = to_ - from_;
+	_delta = _to - _from;
 }
 
-- (void) update:(ccTime) dt
+- (void) update:(CCTime) dt
 {
-	[target_ setValue:[NSNumber numberWithFloat:to_  - delta_ * (1 - dt)] forKey:key_];
+	[_target setValue:[NSNumber numberWithFloat:_to  - _delta * (1 - dt)] forKey:_key];
 }
 
 - (CCActionInterval *) reverse
 {
-	return [[self class] actionWithDuration:duration_ key:key_ from:to_ to:from_];
+	return [[self class] actionWithDuration:_duration key:_key from:_to to:_from];
 }
 
 

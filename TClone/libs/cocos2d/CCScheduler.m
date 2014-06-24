@@ -3,6 +3,7 @@
  *
  * Copyright (c) 2008-2010 Ricardo Quesada
  * Copyright (c) 2011 Zynga Inc.
+ * Copyright (c) 2013-2014 Cocos2D Authors
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -24,730 +25,499 @@
  */
 
 
+/*
+	Possible improvements:
+	1) Binary search in PrioritySearch().
+	2) Dirty flags on the method lists, filter during the next iteration.
+	3) Doubly link timers to avoid O(n) removal cost.
+*/
+
+
 // cocos2d imports
 #import "CCScheduler.h"
-#import "ccMacros.h"
-#import "CCDirector.h"
-#import "Support/uthash.h"
-#import "Support/utlist.h"
-#import "Support/ccCArray.h"
-
-//
-// Data structures
-//
-#pragma mark -
-#pragma mark Data Structures
-
-// A list double-linked list used for "updates with priority"
-typedef struct _listEntry
-{
-	struct	_listEntry *prev, *next;
-	TICK_IMP	impMethod;
-	id			target;				// not retained (retained by hashUpdateEntry)
-	NSInteger	priority;
-	BOOL		paused;
-    BOOL		markedForDeletion;	// selector will no longer be called and entry will be removed at end of the next tick
-} tListEntry;
-
-typedef struct _hashUpdateEntry
-{
-	tListEntry		**list;		// Which list does it belong to ?
-	tListEntry		*entry;		// entry in the list
-	id				target;		// hash key (retained)
-	UT_hash_handle  hh;
-} tHashUpdateEntry;
-
-// Hash Element used for "selectors with interval"
-typedef struct _hashSelectorEntry
-{
-	struct ccArray	*timers;
-	id				target;		// hash key (retained)
-	unsigned int	timerIndex;
-	CCTimer			*currentTimer;
-	BOOL			currentTimerSalvaged;
-	BOOL			paused;
-	UT_hash_handle  hh;
-} tHashSelectorEntry;
+#import <objc/message.h>
 
 
-
-//
-// CCTimer
-//
-#pragma mark -
-#pragma mark - CCTimer
-
-@implementation CCTimer
-
-@synthesize interval;
-
--(id) init
-{
-	NSAssert(NO, @"CCTimer: Init not supported.");
-	[self release];
-	return nil;
-}
-
-+(id) timerWithTarget:(id)t selector:(SEL)s
-{
-	return [[[self alloc] initWithTarget:t selector:s interval:0 repeat:kCCRepeatForever delay:0] autorelease];
-}
-
-+(id) timerWithTarget:(id)t selector:(SEL)s interval:(ccTime) i
-{
-	return [[[self alloc] initWithTarget:t selector:s interval:i repeat:kCCRepeatForever delay:0] autorelease];
-}
-
--(id) initWithTarget:(id)t selector:(SEL)s
-{
-	return [self initWithTarget:t selector:s interval:0 repeat:kCCRepeatForever delay: 0];
-}
-
--(id) initWithTarget:(id)t selector:(SEL)s interval:(ccTime) seconds repeat:(uint) r delay:(ccTime) d
-{
-	if( (self=[super init]) ) {
-#if COCOS2D_DEBUG
-		NSMethodSignature *sig = [t methodSignatureForSelector:s];
-		NSAssert(sig !=0 , @"Signature not found for selector - does it have the following form? -(void) name: (ccTime) dt");
-#endif
-
-		// target is not retained. It is retained in the hash structure
-		target = t;
-		selector = s;
-		impMethod = (TICK_IMP) [t methodForSelector:s];
-		elapsed = -1;
-		interval = seconds;
-		repeat = r;
-		delay = d;
-		useDelay = (delay > 0) ? YES : NO;
-		repeat = r;
-		runForever = (repeat == kCCRepeatForever) ? YES : NO;
-	}
-	return self;
-}
+#define FOREACH_TIMER(__scheduledTarget__, __timerVar__) for(CCTimer *__timerVar__ = __scheduledTarget__->_timers; __timerVar__; __timerVar__ = __timerVar__.next)
 
 
-- (NSString*) description
-{
-	return [NSString stringWithFormat:@"<%@ = %p | target:%@ selector:(%@)>", [self class], self, [target class], NSStringFromSelector(selector)];
-}
+@interface CCScheduledTarget : NSObject
 
--(void) dealloc
-{
-	CCLOGINFO(@"cocos2d: deallocing %@", self);
-	[super dealloc];
-}
+@property(nonatomic, readonly) NSObject<CCSchedulerTarget> *target;
 
--(void) update: (ccTime) dt
-{
-	if( elapsed == - 1)
-	{
-		elapsed = 0;
-		nTimesExecuted = 0;
-	}
-	else
-	{
-		if (runForever && !useDelay)
-		{//standard timer usage
-			elapsed += dt;
-			if( elapsed >= interval ) {
-				impMethod(target, selector, elapsed);
-				elapsed = 0;
+@property(nonatomic, strong) CCTimer *timers;
+@property(nonatomic, readonly) BOOL empty;
+@property(nonatomic, assign) BOOL paused;
+@property(nonatomic, assign) BOOL enableUpdates;
 
-			}
-		}
-		else
-		{//advanced usage
-			elapsed += dt;
-			if (useDelay)
-			{
-				if( elapsed >= delay )
-				{
-					impMethod(target, selector, elapsed);
-					elapsed = elapsed - delay;
-					nTimesExecuted+=1;
-					useDelay = NO;
-				}
-			}
-			else
-			{
-				if (elapsed >= interval)
-				{
-					impMethod(target, selector, elapsed);
-					elapsed = 0;
-					nTimesExecuted += 1;
-
-				}
-			}
-
-			if (nTimesExecuted > repeat)
-			{	//unschedule timer
-				[[[CCDirector sharedDirector] scheduler] unscheduleSelector:selector forTarget:target];
-			}
-		}
-	}
-}
 @end
 
-//
-// CCScheduler
-//
-#pragma mark -
-#pragma mark - CCScheduler
 
-@interface CCScheduler (Private)
--(void) removeHashElement:(tHashSelectorEntry*)element;
+@interface CCTimer (Private)
+
+@property(nonatomic, readwrite) CCTime deltaTime;
+@property(nonatomic, readonly) CCTimerBlock block;
+@property(nonatomic, readonly) CCScheduledTarget *scheduledTarget;
+
+// May differ from invoke time due to pausing.
+@property(nonatomic, assign) CCTime invokeTimeInternal;
+// Timers form a linked list per target.
+@property(nonatomic, strong) CCTimer *next;
+// Invocation requires an extra delay due to being paused.
+@property(nonatomic, readonly) BOOL requiresDelay;
+// If the timer is currently added to the heap or not.
+@property(nonatomic, assign) BOOL scheduled;
+
 @end
 
-@implementation CCScheduler
 
-@synthesize timeScale = timeScale_;
+@interface CCScheduler (Private) <CCSchedulerTarget>
+-(void)scheduleTimer:(CCTimer *)timer retain:(BOOL)retain;
+@end
 
-- (id) init
+
+@implementation CCScheduledTarget {
+	__unsafe_unretained NSObject<CCSchedulerTarget> *_target;
+	CCTimer *_timers;
+}
+
+static void
+InvokeMethods(NSArray *methods, SEL selector, CCTime dt)
 {
-	if( (self=[super init]) ) {
-		timeScale_ = 1.0f;
-
-		// used to trigger CCTimer#update
-		updateSelector = @selector(update:);
-		impMethod = (TICK_IMP) [CCTimer instanceMethodForSelector:updateSelector];
-
-		// updates with priority
-		updates0 = NULL;
-		updatesNeg = NULL;
-		updatesPos = NULL;
-		hashForUpdates = NULL;
-
-		// selectors with interval
-		currentTarget = nil;
-		currentTargetSalvaged = NO;
-		hashForSelectors = nil;
-        updateHashLocked = NO;
+	for(CCScheduledTarget *scheduledTarget in [methods copy]){
+		typedef void (*Func)(id, SEL, CCTime);
+		if(!scheduledTarget->_paused) ((Func)objc_msgSend)(scheduledTarget->_target, selector, dt);
 	}
-
-	return self;
 }
 
-- (NSString*) description
+-(id)initWithTarget:(NSObject<CCSchedulerTarget> *)target
 {
-	return [NSString stringWithFormat:@"<%@ = %p | timeScale = %0.2f >", [self class], self, timeScale_];
-}
-
-- (void) dealloc
-{
-	CCLOG(@"cocos2d: deallocing %@", self);
-
-	[self unscheduleAllSelectors];
-
-	[super dealloc];
-}
-
-
-#pragma mark CCScheduler - Custom Selectors
-
--(void) removeHashElement:(tHashSelectorEntry*)element
-{
-	ccArrayFree(element->timers);
-	[element->target release];
-	HASH_DEL(hashForSelectors, element);
-	free(element);
-}
-
--(void) scheduleSelector:(SEL)selector forTarget:(id)target interval:(ccTime)interval paused:(BOOL)paused
-{
-	[self scheduleSelector:selector forTarget:target interval:interval paused:paused repeat:kCCRepeatForever delay:0.0f];
-}
-
--(void) scheduleSelector:(SEL)selector forTarget:(id)target interval:(ccTime)interval paused:(BOOL)paused repeat:(uint) repeat delay:(ccTime) delay
-{
-	NSAssert( selector != nil, @"Argument selector must be non-nil");
-	NSAssert( target != nil, @"Argument target must be non-nil");
-
-	tHashSelectorEntry *element = NULL;
-	HASH_FIND_INT(hashForSelectors, &target, element);
-
-	if( ! element ) {
-		element = calloc( sizeof( *element ), 1 );
-		element->target = [target retain];
-		HASH_ADD_INT( hashForSelectors, target, element );
-
-		// Is this the 1st element ? Then set the pause level to all the selectors of this target
-		element->paused = paused;
-
-	} else
-		NSAssert( element->paused == paused, @"CCScheduler. Trying to schedule a selector with a pause value different than the target");
-
-
-	if( element->timers == nil )
-		element->timers = ccArrayNew(10);
-	else
-	{
-		for( unsigned int i=0; i< element->timers->num; i++ ) {
-			CCTimer *timer = element->timers->arr[i];
-			if( selector == timer->selector ) {
-				CCLOG(@"CCScheduler#scheduleSelector. Selector already scheduled. Updating interval from: %.4f to %.4f", timer->interval, interval);
-				timer->interval = interval;
-				return;
-			}
-		}
-		ccArrayEnsureExtraCapacity(element->timers, 1);
+	if((self = [super init])){
+		_target = target;
 	}
-
-	CCTimer *timer = [[CCTimer alloc] initWithTarget:target selector:selector interval:interval repeat:repeat delay:delay];
-	ccArrayAppendObject(element->timers, timer);
-	[timer release];
-}
-
--(void) unscheduleSelector:(SEL)selector forTarget:(id)target
-{
-	// explicity handle nil arguments when removing an object
-	if( target==nil && selector==NULL)
-		return;
-
-	NSAssert( target != nil, @"Target MUST not be nil");
-	NSAssert( selector != NULL, @"Selector MUST not be NULL");
-
-	tHashSelectorEntry *element = NULL;
-	HASH_FIND_INT(hashForSelectors, &target, element);
-
-	if( element ) {
-
-		for( unsigned int i=0; i< element->timers->num; i++ ) {
-			CCTimer *timer = element->timers->arr[i];
-
-
-			if( selector == timer->selector ) {
-
-				if( timer == element->currentTimer && !element->currentTimerSalvaged ) {
-					[element->currentTimer retain];
-					element->currentTimerSalvaged = YES;
-				}
-
-				ccArrayRemoveObjectAtIndex(element->timers, i );
-
-				// update timerIndex in case we are in tick:, looping over the actions
-				if( element->timerIndex >= i )
-					element->timerIndex--;
-
-				if( element->timers->num == 0 ) {
-					if( currentTarget == element )
-						currentTargetSalvaged = YES;
-					else
-						[self removeHashElement: element];
-				}
-				return;
-			}
-		}
-	}
-
-	// Not Found
-//	NSLog(@"CCScheduler#unscheduleSelector:forTarget: selector not found: %@", selString);
-
-}
-
-#pragma mark CCScheduler - Update Specific
-
--(void) priorityIn:(tListEntry**)list target:(id)target priority:(NSInteger)priority paused:(BOOL)paused
-{
-	tListEntry *listElement = malloc( sizeof(*listElement) );
-
-	listElement->target = target;
-	listElement->priority = priority;
-	listElement->paused = paused;
-	listElement->impMethod = (TICK_IMP) [target methodForSelector:updateSelector];
-	listElement->next = listElement->prev = NULL;
-    listElement->markedForDeletion = NO;
-
-	// empty list ?
-	if( ! *list ) {
-		DL_APPEND( *list, listElement );
-
-	} else {
-		BOOL added = NO;
-
-		for( tListEntry *elem = *list; elem ; elem = elem->next ) {
-			if( priority < elem->priority ) {
-
-				if( elem == *list )
-					DL_PREPEND(*list, listElement);
-				else {
-					listElement->next = elem;
-					listElement->prev = elem->prev;
-
-					elem->prev->next = listElement;
-					elem->prev = listElement;
-				}
-
-				added = YES;
-				break;
-			}
-		}
-
-		// Not added? priority has the higher value. Append it.
-		if( !added )
-			DL_APPEND(*list, listElement);
-	}
-
-	// update hash entry for quicker access
-	tHashUpdateEntry *hashElement = calloc( sizeof(*hashElement), 1 );
-	hashElement->target = [target retain];
-	hashElement->list = list;
-	hashElement->entry = listElement;
-	HASH_ADD_INT(hashForUpdates, target, hashElement );
-}
-
--(void) appendIn:(tListEntry**)list target:(id)target paused:(BOOL)paused
-{
-	tListEntry *listElement = malloc( sizeof( * listElement ) );
-
-	listElement->target = target;
-	listElement->paused = paused;
-    listElement->markedForDeletion = NO;
-	listElement->impMethod = (TICK_IMP) [target methodForSelector:updateSelector];
-
-	DL_APPEND(*list, listElement);
-
-
-	// update hash entry for quicker access
-	tHashUpdateEntry *hashElement = calloc( sizeof(*hashElement), 1 );
-	hashElement->target = [target retain];
-	hashElement->list = list;
-	hashElement->entry = listElement;
-	HASH_ADD_INT(hashForUpdates, target, hashElement );
-}
-
--(void) scheduleUpdateForTarget:(id)target priority:(NSInteger)priority paused:(BOOL)paused
-{
-	tHashUpdateEntry * hashElement = NULL;
-	HASH_FIND_INT(hashForUpdates, &target, hashElement);
-    if(hashElement)
-    {
-#if COCOS2D_DEBUG >= 1
-        NSAssert( hashElement->entry->markedForDeletion, @"CCScheduler: You can't re-schedule an 'update' selector'. Unschedule it first");
-#endif
-        // TODO : check if priority has changed!
-
-        hashElement->entry->markedForDeletion = NO;
-        return;
-    }
-
-	// most of the updates are going to be 0, that's way there
-	// is an special list for updates with priority 0
-	if( priority == 0 )
-		[self appendIn:&updates0 target:target paused:paused];
-
-	else if( priority < 0 )
-		[self priorityIn:&updatesNeg target:target priority:priority paused:paused];
-
-	else // priority > 0
-		[self priorityIn:&updatesPos target:target priority:priority paused:paused];
-}
-
-- (void) removeUpdateFromHash:(tListEntry*)entry
-{
-	tHashUpdateEntry * element = NULL;
 	
-	HASH_FIND_INT(hashForUpdates, &entry->target, element);
-	if( element ) {
-		// list entry
-		DL_DELETE( *element->list, element->entry );
-		free( element->entry );
-		
-		// hash entry
-		id target = element->target;
-		HASH_DEL( hashForUpdates, element);
-		free(element);
-		
-		// target#release should be the last one to prevent
-		// a possible double-free. eg: If the [target dealloc] might want to remove it itself from there
-		[target release];
-	}
+	return self;
 }
 
--(void) unscheduleUpdateForTarget:(id)target
+static CCTimer *
+RemoveRecursive(CCTimer *timer, CCTimer *skip)
 {
-	if( target == nil )
-		return;
-
-	tHashUpdateEntry * element = NULL;
-	HASH_FIND_INT(hashForUpdates, &target, element);
-	if( element ) {
-        if(updateHashLocked)
-            element->entry->markedForDeletion = YES;
-        else
-            [self removeUpdateFromHash:element->entry];
-
-//		// list entry
-//		DL_DELETE( *element->list, element->entry );
-//		free( element->entry );
-//
-//		// hash entry
-//		[element->target release];
-//		HASH_DEL( hashForUpdates, element);
-//		free(element);
+	if(timer == skip){
+		return timer.next;
+	} else {
+		timer.next = RemoveRecursive(timer.next, skip);
+		return timer;
 	}
 }
 
-#pragma mark CCScheduler - Common for Update selector & Custom Selectors
-
--(void) unscheduleAllSelectors
+-(void)removeTimer:(CCTimer *)timer
 {
-    [self unscheduleAllSelectorsWithMinPriority:kCCPrioritySystem];
+	_timers = RemoveRecursive(_timers, timer);
 }
 
--(void) unscheduleAllSelectorsWithMinPriority:(NSInteger)minPriority
+-(void)invalidateTimers
 {
-	// Custom Selectors
-	for(tHashSelectorEntry *element=hashForSelectors; element != NULL; ) {
-		id target = element->target;
-		element=element->hh.next;
-		[self unscheduleAllSelectorsForTarget:target];
-	}
-
-	// Updates selectors
-	tListEntry *entry, *tmp;
-    if(minPriority < 0) {
-        DL_FOREACH_SAFE( updatesNeg, entry, tmp ) {
-            if(entry->priority >= minPriority) {
-                [self unscheduleUpdateForTarget:entry->target];
-            }
-        }
-    }
-    if(minPriority <= 0) {
-        DL_FOREACH_SAFE( updates0, entry, tmp ) {
-            [self unscheduleUpdateForTarget:entry->target];
-        }
-    }
-	DL_FOREACH_SAFE( updatesPos, entry, tmp ) {
-        if(entry->priority >= minPriority) {
-            [self unscheduleUpdateForTarget:entry->target];
-        }
-	}
-
+	FOREACH_TIMER(self, timer) [timer invalidate];
 }
 
--(void) unscheduleAllSelectorsForTarget:(id)target
+
+-(BOOL)empty
 {
-	// explicit nil handling
-	if( target == nil )
-		return;
-
-	// Custom Selectors
-	tHashSelectorEntry *element = NULL;
-	HASH_FIND_INT(hashForSelectors, &target, element);
-
-	if( element ) {
-		if( ccArrayContainsObject(element->timers, element->currentTimer) && !element->currentTimerSalvaged ) {
-			[element->currentTimer retain];
-			element->currentTimerSalvaged = YES;
-		}
-		ccArrayRemoveAllObjects(element->timers);
-		if( currentTarget == element )
-			currentTargetSalvaged = YES;
-		else
-			[self removeHashElement:element];
-	}
-
-	// Update Selector
-	[self unscheduleUpdateForTarget:target];
+	return (_timers == nil && !_enableUpdates);
 }
 
--(void) resumeTarget:(id)target
+-(void)setPaused:(BOOL)paused
 {
-	NSAssert( target != nil, @"target must be non nil" );
-
-	// Custom Selectors
-	tHashSelectorEntry *element = NULL;
-	HASH_FIND_INT(hashForSelectors, &target, element);
-	if( element )
-		element->paused = NO;
-
-	// Update selector
-	tHashUpdateEntry * elementUpdate = NULL;
-	HASH_FIND_INT(hashForUpdates, &target, elementUpdate);
-	if( elementUpdate ) {
-		NSAssert( elementUpdate->entry != NULL, @"resumeTarget: unknown error");
-		elementUpdate->entry->paused = NO;
+	if(paused != _paused){
+		FOREACH_TIMER(self, timer) timer.paused = paused;
+		_paused = paused;
 	}
 }
 
--(void) pauseTarget:(id)target
-{
-	NSAssert( target != nil, @"target must be non nil" );
-
-	// Custom selectors
-	tHashSelectorEntry *element = NULL;
-	HASH_FIND_INT(hashForSelectors, &target, element);
-	if( element )
-		element->paused = YES;
-
-	// Update selector
-	tHashUpdateEntry * elementUpdate = NULL;
-	HASH_FIND_INT(hashForUpdates, &target, elementUpdate);
-	if( elementUpdate ) {
-		NSAssert( elementUpdate->entry != NULL, @"pauseTarget: unknown error");
-		elementUpdate->entry->paused = YES;
-	}
-
-}
-
--(BOOL) isTargetPaused:(id)target
-{
-	NSAssert( target != nil, @"target must be non nil" );
-
-	// Custom selectors
-	tHashSelectorEntry *element = NULL;
-	HASH_FIND_INT(hashForSelectors, &target, element);
-	if( element )
-    {
-		return element->paused;
-    }
-    return NO;  // should never get here
-
-}
-
--(NSSet*) pauseAllTargets
-{
-    return [self pauseAllTargetsWithMinPriority:kCCPrioritySystem];
-}
-
--(NSSet*) pauseAllTargetsWithMinPriority:(NSInteger)minPriority
-{
-    NSMutableSet* idsWithSelectors = [NSMutableSet setWithCapacity:50];
-    
-    // Custom Selectors
-    for(tHashSelectorEntry *element=hashForSelectors; element != NULL; element=element->hh.next) {
-        element->paused = YES;
-        [idsWithSelectors addObject:element->target];
-    }
-    
-    // Updates selectors
-    tListEntry *entry, *tmp;
-    if(minPriority < 0) {
-        DL_FOREACH_SAFE( updatesNeg, entry, tmp ) {
-            if(entry->priority >= minPriority) {
-                entry->paused = YES;
-                [idsWithSelectors addObject:entry->target];
-            }
-        }
-    }
-    if(minPriority <= 0) {
-        DL_FOREACH_SAFE( updates0, entry, tmp ) {
-            entry->paused = YES;
-            [idsWithSelectors addObject:entry->target];
-        }
-    }
-    DL_FOREACH_SAFE( updatesPos, entry, tmp ) {
-        if(entry->priority >= minPriority) {
-            entry->paused = YES;
-            [idsWithSelectors addObject:entry->target];
-        }
-    }
-    
-    return idsWithSelectors;
-}
-
--(void) resumeTargets:(NSSet *)targetsToResume
-{
-    for(id target in targetsToResume) {
-        [self resumeTarget:target];
-    }
-}
-
-#pragma mark CCScheduler - Main Loop
-
--(void) update: (ccTime) dt
-{
-    updateHashLocked = YES;
-
-	if( timeScale_ != 1.0f )
-		dt *= timeScale_;
-
-	// Iterate all over the Updates selectors
-	tListEntry *entry, *tmp;
-
-	// updates with priority < 0
-	DL_FOREACH_SAFE( updatesNeg, entry, tmp ) {
-		if( ! entry->paused && !entry->markedForDeletion )
-			entry->impMethod( entry->target, updateSelector, dt );
-	}
-
-	// updates with priority == 0
-	DL_FOREACH_SAFE( updates0, entry, tmp ) {
-		if( ! entry->paused && !entry->markedForDeletion )
-        {
-			entry->impMethod( entry->target, updateSelector, dt );
-        }
-	}
-
-	// updates with priority > 0
-	DL_FOREACH_SAFE( updatesPos, entry, tmp ) {
-		if( ! entry->paused  && !entry->markedForDeletion )
-			entry->impMethod( entry->target, updateSelector, dt );
-	}
-
-	// Iterate all over the  custome selectors
-	for(tHashSelectorEntry *elt=hashForSelectors; elt != NULL; ) {
-
-		currentTarget = elt;
-		currentTargetSalvaged = NO;
-
-		if( ! currentTarget->paused ) {
-
-			// The 'timers' ccArray may change while inside this loop.
-			for( elt->timerIndex = 0; elt->timerIndex < elt->timers->num; elt->timerIndex++) {
-				elt->currentTimer = elt->timers->arr[elt->timerIndex];
-				elt->currentTimerSalvaged = NO;
-
-				impMethod( elt->currentTimer, updateSelector, dt);
-
-				if( elt->currentTimerSalvaged ) {
-					// The currentTimer told the remove itself. To prevent the timer from
-					// accidentally deallocating itself before finishing its step, we retained
-					// it. Now that step is done, it is safe to release it.
-					[elt->currentTimer release];
-				}
-
-				elt->currentTimer = nil;
-			}
-		}
-
-		// elt, at this moment, is still valid
-		// so it is safe to ask this here (issue #490)
-		elt = elt->hh.next;
-
-		// only delete currentTarget if no actions were scheduled during the cycle (issue #481)
-		if( currentTargetSalvaged && currentTarget->timers->num == 0 )
-			[self removeHashElement:currentTarget];
-	}
-
-    // delete all updates that are morked for deletion
-    // updates with priority < 0
-	DL_FOREACH_SAFE( updatesNeg, entry, tmp ) {
-		if(entry->markedForDeletion )
-        {
-            [self removeUpdateFromHash:entry];
-        }
-	}
-
-	// updates with priority == 0
-	DL_FOREACH_SAFE( updates0, entry, tmp ) {
-		if(entry->markedForDeletion )
-        {
-            [self removeUpdateFromHash:entry];
-        }
-	}
-
-	// updates with priority > 0
-	DL_FOREACH_SAFE( updatesPos, entry, tmp ) {
-		if(entry->markedForDeletion )
-        {
-            [self removeUpdateFromHash:entry];
-        }
-	}
-
-    updateHashLocked = NO;
-	currentTarget = nil;
-}
 @end
 
+
+@interface NSNull(CCSchedulerTarget)<CCSchedulerTarget>
+@end
+
+
+@implementation NSNull(CCSchedulerTarget)
+-(NSInteger)priority {return NSIntegerMax;}
+@end
+
+
+@implementation CCTimer {
+	CCTimerBlock _block;
+	CCTimer *_next;
+	
+	CCTime _invokeTimeInternal;
+	CCTime _pauseDelay;
+	BOOL _scheduled;
+	
+	__weak CCScheduler *_scheduler;
+	__weak CCScheduledTarget *_scheduledTarget;
+}
+
+-(CCTime)invokeTime
+{
+	return (_paused || self.invalid ? INFINITY : _invokeTimeInternal + _pauseDelay);
+}
+
+-(void)applyPauseDelay:(CCTime)currentTime
+{
+	_invokeTimeInternal = MAX(_invokeTimeInternal, currentTime) + _pauseDelay;
+	_pauseDelay = 0.0;
+}
+
+-(void)setPaused:(BOOL)paused
+{
+	if(paused != _paused){
+		CCTime currentTime = _scheduler.currentTime;
+		
+		// This should ensure _pauseDelay is always positive since currentTime can never decrease.
+		_pauseDelay += MAX(_invokeTimeInternal - currentTime, 0.0)*(paused ? 1.0 : -1.0);
+		
+		if(!paused && !_scheduled){
+			[self applyPauseDelay:currentTime];
+			[_scheduler scheduleTimer:self retain:YES];
+		}
+		
+		_paused = paused;
+	}
+}
+
+// A valid block that does nothing.
+static CCTimerBlock INVALIDATED_BLOCK = ^(CCTimer *timer){};
+
+-(void)repeatOnceWithInterval:(CCTime)interval
+{
+	self.repeatCount = 1;
+	self.repeatInterval = interval;
+}
+
+-(void)invalidate
+{
+	_block = INVALIDATED_BLOCK;
+	_scheduledTarget = nil;
+	_repeatCount = 0;
+}
+
+-(BOOL)invalid {return (_block == INVALIDATED_BLOCK);}
+
+@end
+
+
+@implementation CCTimer(Private)
+
+-(id)initWithDelay:(CCTime)delay scheduler:(CCScheduler *)scheduler scheduledTarget:(CCScheduledTarget *)scheduledTarget block:(CCTimerBlock)block;
+{
+	if((self = [super init])){
+		_deltaTime = delay;
+		_invokeTimeInternal = scheduler.currentTime + delay;
+		_repeatInterval = delay;
+		_scheduler = scheduler;
+		_scheduledTarget = scheduledTarget;
+		_block = [block copy];
+	}
+	
+	return self;
+}
+
+-(BOOL)requiresDelay {return (_pauseDelay > 0.0);}
+
+-(BOOL)scheduled {return _scheduled;}
+-(void)setScheduled:(BOOL)scheduled {_scheduled = scheduled;}
+
+-(CCTime)invokeTimeInternal {return _invokeTimeInternal;}
+-(void)setInvokeTimeInternal:(CCTime)invokeTimeInternal {_invokeTimeInternal = invokeTimeInternal;}
+
+-(CCTimerBlock)block {return _block;}
+-(CCScheduledTarget *)scheduledTarget {return _scheduledTarget;}
+
+-(CCTimer *)next {return _next;}
+-(void)setNext:(CCTimer *)next {_next = next;}
+
+-(void)setDeltaTime:(CCTime)deltaTime {_deltaTime = deltaTime;}
+
+@end
+
+
+@implementation CCScheduler {
+	CFBinaryHeapRef _heap;
+	CFMutableDictionaryRef _scheduledTargets;
+	
+	NSMutableArray *_updates;
+	NSMutableArray *_fixedUpdates;
+	
+	CCTimer *_fixedUpdateTimer;
+}
+
+static CFComparisonResult
+ComparePriorities(const void *a, const void *b)
+{
+	NSInteger priority_a = [(__bridge CCTimer *)a scheduledTarget].target.priority;
+	NSInteger priority_b = [(__bridge CCTimer *)b scheduledTarget].target.priority;
+	
+	if(priority_a < priority_b){
+		return kCFCompareLessThan;
+	} else if(priority_b < priority_a){
+		return kCFCompareGreaterThan;
+	} else {
+		return kCFCompareEqualTo;
+	}
+}
+
+static CFComparisonResult
+CompareTimers(const void *a, const void *b, void *context)
+{
+	CCTime time_a = [(__bridge CCTimer *)a invokeTimeInternal];
+	CCTime time_b = [(__bridge CCTimer *)b invokeTimeInternal];
+	
+	if(time_a < time_b){
+		return kCFCompareLessThan;
+	} else if(time_b < time_a){
+		return kCFCompareGreaterThan;
+	} else {
+		return ComparePriorities(a, b);
+	}
+}
+
+-(id)init
+{
+	if((self = [super init])){
+		_timeScale = 1.0;
+		_maxTimeStep = 1.0/10.0;
+		
+		CFBinaryHeapCallBacks callbacks = {
+			.version = 0,
+			.retain = NULL,
+			.release = NULL,
+			.copyDescription = NULL,
+			.compare = CompareTimers,
+		};
+		
+		_heap = CFBinaryHeapCreate(NULL, 0, &callbacks, NULL);
+		
+		_scheduledTargets = CFDictionaryCreateMutable(NULL, 0, &kCFTypeDictionaryKeyCallBacks, &kCFTypeDictionaryValueCallBacks);
+		
+		// All targets except nil should be implicitly paused initially.
+		CCScheduledTarget *nilTarget = [self scheduledTargetForTarget:[NSNull null] insert:YES];
+		nilTarget.paused = NO;
+		
+		_updates = [NSMutableArray array];
+		_fixedUpdates = [NSMutableArray array];
+		
+		// Annoyance to avoid a retain cycle.
+		__block __weak __typeof(self) _self = self;
+		
+		// Schedule a timer to run the fixedUpdate: methods.
+		_fixedUpdateTimer = [self scheduleBlock:^(CCTimer *timer){
+			if(timer.invokeTime > 0.0){
+				CCScheduler *sceduler = _self;
+				InvokeMethods(sceduler->_fixedUpdates, @selector(fixedUpdate:), timer.repeatInterval);
+				sceduler->_lastFixedUpdateTime = timer.invokeTime;
+			}
+		} forTarget:self withDelay:0];
+
+		_fixedUpdateTimer.repeatCount = CCTimerRepeatForever;
+		_fixedUpdateTimer.repeatInterval = 1.0/60.0;
+	}
+	
+	return self;
+}
+
+-(void)dealloc
+{
+	CFRelease(_heap);
+	CFRelease(_scheduledTargets);
+}
+
+-(NSInteger)priority
+{
+	return NSIntegerMax;
+}
+
+-(CCTime)fixedUpdateInterval {return _fixedUpdateTimer.repeatInterval;}
+-(void)setFixedUpdateInterval:(CCTime)fixedTimeStep {_fixedUpdateTimer.repeatInterval = fixedTimeStep;}
+
+-(CCScheduledTarget *)scheduledTargetForTarget:(NSObject<CCSchedulerTarget> *)target insert:(BOOL)insert
+{
+	// Need to transform nil -> NSNulls.
+	target = (target == nil ? [NSNull null] : target);
+	
+	CCScheduledTarget *scheduledTarget = CFDictionaryGetValue(_scheduledTargets, (__bridge CFTypeRef)target);
+	if(scheduledTarget == nil && insert){
+		scheduledTarget = [[CCScheduledTarget alloc] initWithTarget:target];
+		CFDictionarySetValue(_scheduledTargets, (__bridge CFTypeRef)target, (__bridge CFTypeRef)scheduledTarget);
+		
+		// New targets are implicitly paused.
+		scheduledTarget.paused = YES;
+	}
+	
+	return scheduledTarget;
+}
+
+-(void)scheduleTimer:(CCTimer *)timer retain:(BOOL)retain
+{
+	if(retain) CFRetain((__bridge CFTypeRef)timer);
+	
+	CFBinaryHeapAddValue(_heap, (__bridge CFTypeRef)timer);
+	timer.scheduled = YES;
+}
+
+-(CCTimer *)scheduleBlock:(CCTimerBlock)block forTarget:(NSObject<CCSchedulerTarget> *)target withDelay:(CCTime)delay
+{
+	CCScheduledTarget *scheduledTarget = [self scheduledTargetForTarget:target insert:YES];
+	
+	CCTimer *timer = [[CCTimer alloc] initWithDelay:delay scheduler:self scheduledTarget:scheduledTarget block:block];
+	[self scheduleTimer:timer retain:YES];
+	
+	timer.next = scheduledTarget.timers;
+	scheduledTarget.timers = timer;
+	
+	return timer;
+}
+
+-(void)updateTo:(CCTime)targetTime
+{
+	NSAssert(targetTime >= _currentTime, @"Cannot step to a time in the past.");
+	
+	while(CFBinaryHeapGetCount(_heap) > 0){
+		CCTimer *timer = CFBinaryHeapGetMinimum(_heap);
+		CCTime invokeTime = timer.invokeTimeInternal;
+		
+		if(invokeTime > targetTime){
+			break;
+		} else {
+			CFBinaryHeapRemoveMinimumValue(_heap);
+			timer.scheduled = NO;
+		}
+		
+		_currentTime = invokeTime;
+		
+		if(timer.paused){
+			// Release the timer now in case it never becomes rescheduled.
+			CFRelease((__bridge CFTypeRef)timer);
+		} else if(timer.requiresDelay){
+			[timer applyPauseDelay:_currentTime];
+			[self scheduleTimer:timer retain:NO];
+		} else {
+			timer.block(timer);
+			
+			if(timer.repeatCount > 0){
+				if(timer.repeatCount < CCTimerRepeatForever) timer.repeatCount--;
+				
+				CCTime delay = timer.deltaTime = timer.repeatInterval;
+				timer.invokeTimeInternal += delay;
+				
+				NSAssert(delay > 0.0, @"Rescheduling a timer with a repeat interval of 0 will cause an infinite loop.");
+				[self scheduleTimer:timer retain:NO];
+			} else {
+				CCScheduledTarget *scheduledTarget = timer.scheduledTarget;
+				[scheduledTarget removeTimer:timer];
+				if(scheduledTarget.empty){
+					CFDictionaryRemoveValue(_scheduledTargets, (__bridge CFTypeRef)scheduledTarget.target);
+				}
+				
+				// We are done with the timer.
+				[timer invalidate];
+				CFRelease((__bridge CFTypeRef)timer);
+			}
+		}
+	}
+	
+	_currentTime = targetTime;
+}
+
+static NSUInteger
+PrioritySearch(NSArray *array, NSInteger priority)
+{
+	for(NSUInteger i=0, count=array.count; i<count; i++){
+		CCScheduledTarget *scheduledTarget = array[i];
+		if(scheduledTarget.target.priority > priority) return i;
+	}
+	
+	return array.count;
+}
+
+-(void)scheduleTarget:(NSObject<CCSchedulerTarget> *)target
+{
+	BOOL update = [target respondsToSelector:@selector(update:)];
+	BOOL fixedUpdate = [target respondsToSelector:@selector(fixedUpdate:)];
+	
+	// Don't bother scheduling anything if it doesn't implement any methods.
+	if(update || fixedUpdate){
+		CCScheduledTarget *scheduledTarget = [self scheduledTargetForTarget:target insert:YES];
+		
+		// Don't schedule something more than once.
+		if(!scheduledTarget.enableUpdates){
+			scheduledTarget.enableUpdates = YES;
+			NSInteger priority = target.priority;
+			
+			if(update) [_updates insertObject:scheduledTarget atIndex:PrioritySearch(_updates, priority)];
+			if(fixedUpdate) [_fixedUpdates insertObject:scheduledTarget atIndex:PrioritySearch(_fixedUpdates, priority)];
+		}
+	}
+}
+
+-(void)unscheduleTarget:(NSObject<CCSchedulerTarget> *)target
+{
+	CCScheduledTarget *scheduledTarget = [self scheduledTargetForTarget:target insert:NO];
+	
+	if(scheduledTarget){
+		// Remove the update methods if they are scheduled
+		if(scheduledTarget.enableUpdates){
+			if([scheduledTarget.target respondsToSelector:@selector(update:)]){
+				[_updates removeObject:scheduledTarget];
+			}
+			
+			if([scheduledTarget.target respondsToSelector:@selector(fixedUpdate:)]){
+				[_fixedUpdates removeObject:scheduledTarget];
+			}
+		}
+		
+		[scheduledTarget invalidateTimers];
+		
+		CFDictionaryRemoveValue(_scheduledTargets, (__bridge CFTypeRef)target);
+	}
+}
+
+-(BOOL)isTargetScheduled:(NSObject<CCSchedulerTarget> *)target
+{
+	return ([self scheduledTargetForTarget:target insert:NO] != nil);
+}
+
+-(void)setPaused:(BOOL)paused target:(NSObject<CCSchedulerTarget> *)target
+{
+	CCScheduledTarget *scheduledTarget = [self scheduledTargetForTarget:target insert:NO];
+	scheduledTarget.paused = paused;
+}
+
+-(BOOL)isTargetPaused:(NSObject<CCSchedulerTarget> *)target
+{
+	CCScheduledTarget *scheduledTarget = [self scheduledTargetForTarget:target insert:NO];
+	return scheduledTarget.paused;
+}
+
+-(NSArray *)timersForTarget:(NSObject<CCSchedulerTarget> *)target
+{
+	CCScheduledTarget *scheduledTarget = [self scheduledTargetForTarget:target insert:NO];
+	
+	NSMutableArray *arr = [NSMutableArray array];
+	for(CCTimer *timer = scheduledTarget.timers; timer; timer = timer.next){
+		if(!timer.invalid) [arr addObject:timer];
+	}
+	
+	return arr;
+}
+
+-(void)update:(CCTime)dt
+{
+	CCTime clampedDelta = MIN(dt*_timeScale, _maxTimeStep);
+	[self updateTo:_currentTime + clampedDelta];
+	
+	InvokeMethods(_updates, @selector(update:), clampedDelta);
+	_lastUpdateTime = _currentTime;
+}
+
+@end

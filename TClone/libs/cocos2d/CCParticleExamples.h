@@ -3,6 +3,7 @@
  *
  * Copyright (c) 2008-2010 Ricardo Quesada
  * Copyright (c) 2011 Zynga Inc.
+ * Copyright (c) 2013-2014 Cocos2D Authors
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -24,72 +25,49 @@
  *
  */
 
-
 #import "ccMacros.h"
-#import "CCParticleSystemQuad.h"
+#import "CCParticleSystem.h"
 
-//! A fire particle system
-@interface CCParticleFire: CCParticleSystemQuad
-{
-}
+@interface CCParticleFire: CCParticleSystem
+
 @end
 
-//! A fireworks particle system
-@interface CCParticleFireworks : CCParticleSystemQuad
-{
-}
+@interface CCParticleFireworks : CCParticleSystem
+
 @end
 
-//! A sun particle system
-@interface CCParticleSun : CCParticleSystemQuad
-{
-}
+@interface CCParticleSun : CCParticleSystem
+
 @end
 
-//! A galaxy particle system
-@interface CCParticleGalaxy : CCParticleSystemQuad
-{
-}
+@interface CCParticleGalaxy : CCParticleSystem
+
 @end
 
-//! A flower particle system
-@interface CCParticleFlower : CCParticleSystemQuad
-{
-}
+@interface CCParticleFlower : CCParticleSystem
+
 @end
 
-//! A meteor particle system
-@interface CCParticleMeteor : CCParticleSystemQuad
-{
-}
+@interface CCParticleMeteor : CCParticleSystem
+
 @end
 
-//! An spiral particle system
-@interface CCParticleSpiral : CCParticleSystemQuad
-{
-}
+@interface CCParticleSpiral : CCParticleSystem
+
 @end
 
-//! An explosion particle system
-@interface CCParticleExplosion : CCParticleSystemQuad
-{
-}
+@interface CCParticleExplosion : CCParticleSystem
+
 @end
 
-//! An smoke particle system
-@interface CCParticleSmoke : CCParticleSystemQuad
-{
-}
+@interface CCParticleSmoke : CCParticleSystem
+
 @end
 
-//! An snow particle system
-@interface CCParticleSnow : CCParticleSystemQuad
-{
-}
+@interface CCParticleSnow : CCParticleSystem
+
 @end
 
-//! A rain particle system
-@interface CCParticleRain : CCParticleSystemQuad
-{
-}
+@interface CCParticleRain : CCParticleSystem
+
 @end

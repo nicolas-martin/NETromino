@@ -2,8 +2,8 @@
  * cocos2d for iPhone: http://www.cocos2d-iphone.org
  *
  * Copyright (c) 2008 Radu Gruian
- *
  * Copyright (c) 2011 Vit Valentin
+ * Copyright (c) 2013-2014 Cocos2D Authors
  *
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -41,11 +41,11 @@
 
 @implementation CCPointArray
 
-@synthesize controlPoints = controlPoints_;
+@synthesize controlPoints = _controlPoints;
 
 +(id) arrayWithCapacity:(NSUInteger)capacity
 {
-	return [[[self alloc] initWithCapacity:capacity] autorelease];
+	return [[self alloc] initWithCapacity:capacity];
 }
 
 -(id) init
@@ -57,7 +57,7 @@
 -(id) initWithCapacity:(NSUInteger)capacity
 {
 	if( (self=[super init])) {
-		controlPoints_ = [[NSMutableArray alloc] initWithCapacity:capacity];
+		_controlPoints = [[NSMutableArray alloc] initWithCapacity:capacity];
 	}
 	
 	return self;
@@ -65,20 +65,13 @@
 
 -(id) copyWithZone:(NSZone *)zone
 {
-	NSMutableArray *newArray = [controlPoints_ mutableCopy];
+	NSMutableArray *newArray = [_controlPoints mutableCopy];
 	CCPointArray *points = [[[self class] allocWithZone:zone] initWithCapacity:10];
 	points.controlPoints = newArray;
-	[newArray release];
 	
 	return points;
 }
 
--(void) dealloc
-{
-	[controlPoints_ release];
-	
-	[super dealloc];
-}
 
 -(void) addControlPoint:(CGPoint)controlPoint
 {
@@ -88,7 +81,7 @@
 	NSValue *value = [NSValue valueWithCGPoint:controlPoint];
 #endif
 	
-	[controlPoints_ addObject:value];
+	[_controlPoints addObject:value];
 }
 
 -(void) insertControlPoint:(CGPoint)controlPoint atIndex:(NSUInteger)index
@@ -99,15 +92,15 @@
 	NSValue *value = [NSValue valueWithCGPoint:controlPoint];
 #endif
 	
-	[controlPoints_ insertObject:value atIndex:index];
+	[_controlPoints insertObject:value atIndex:index];
 	
 }
 
 -(CGPoint) getControlPointAtIndex:(NSInteger)index
 {
-	index = MIN([controlPoints_ count]-1, MAX(index, 0));
+	index = MIN([_controlPoints count]-1, MAX(index, 0));
 
-	NSValue *value = [controlPoints_ objectAtIndex:index];
+	NSValue *value = [_controlPoints objectAtIndex:index];
 
 #ifdef __CC_PLATFORM_MAC
 	CGPoint point = NSPointToCGPoint([value pointValue]);
@@ -126,45 +119,44 @@
 	NSValue *value = [NSValue valueWithCGPoint:controlPoint];
 #endif
 
-	[controlPoints_ replaceObjectAtIndex:index withObject:value];
+	[_controlPoints replaceObjectAtIndex:index withObject:value];
 }
 
 -(void) removeControlPointAtIndex:(NSUInteger)index
 {
-	[controlPoints_ removeObjectAtIndex:index];
+	[_controlPoints removeObjectAtIndex:index];
 }
 
 -(NSUInteger) count
 {
-	return [controlPoints_ count];
+	return [_controlPoints count];
 }
 
 -(CCPointArray*) reverse
 {
-	NSMutableArray *newArray = [[NSMutableArray alloc] initWithCapacity:[controlPoints_ count]];
-	NSEnumerator *enumerator = [controlPoints_ reverseObjectEnumerator];
+	NSMutableArray *newArray = [[NSMutableArray alloc] initWithCapacity:[_controlPoints count]];
+	NSEnumerator *enumerator = [_controlPoints reverseObjectEnumerator];
 	for (id element in enumerator)
 		[newArray addObject:element];
 
 	CCPointArray *config = [[[self class] alloc] initWithCapacity:0];
 	config.controlPoints = newArray;
 
-	[newArray release];
 	
-	return [config autorelease];
+	return config;
 }
 
 -(void) reverseInline
 {
-	NSUInteger l = [controlPoints_ count];
+	NSUInteger l = [_controlPoints count];
 	for( NSUInteger i=0; i<l/2;i++)
-		[controlPoints_ exchangeObjectAtIndex:i withObjectAtIndex:l-i-1];
+		[_controlPoints exchangeObjectAtIndex:i withObjectAtIndex:l-i-1];
 }
 @end
 
 // CatmullRom Spline formula:
 
-inline CGPoint ccCardinalSplineAt( CGPoint p0, CGPoint p1, CGPoint p2, CGPoint p3, CGFloat tension, ccTime t )
+inline CGPoint CCCardinalSplineAt( CGPoint p0, CGPoint p1, CGPoint p2, CGPoint p3, CGFloat tension, CCTime t )
 {
 	CGFloat t2 = t * t;
 	CGFloat t3 = t2 * t;
@@ -187,108 +179,124 @@ inline CGPoint ccCardinalSplineAt( CGPoint p0, CGPoint p1, CGPoint p2, CGPoint p
 
 #pragma mark - CCCatmullRomTo
 
-@interface CCCardinalSplineTo ()
+@interface CCActionCardinalSplineTo ()
 -(void) updatePosition:(CGPoint)newPosition;
 @end
 
-@implementation CCCardinalSplineTo
+@implementation CCActionCardinalSplineTo
 
-@synthesize points=points_;
+@synthesize points=_points;
 
-+(id) actionWithDuration:(ccTime)duration points:(CCPointArray *)points tension:(CGFloat)tension
++(id) actionWithDuration:(CCTime)duration points:(CCPointArray *)points tension:(CGFloat)tension
 {
-	return [[[self alloc] initWithDuration:duration points:points tension:tension ] autorelease];
+	return [[self alloc] initWithDuration:duration points:points tension:tension ];
 }
 
--(id) initWithDuration:(ccTime)duration points:(CCPointArray *)points tension:(CGFloat)tension								
+-(id) initWithDuration:(CCTime)duration points:(CCPointArray *)points tension:(CGFloat)tension								
 {
 	NSAssert( [points count] > 0, @"Invalid configuration. It must at least have one control point");
 
 	if( (self=[super initWithDuration:duration]) )
 	{
 		self.points = points;
-		tension_ = tension;
+		_tension = tension;
 	}
 
 	return self;
 }
 
-- (void)dealloc
-{
-	[points_ release];
-    [super dealloc];
-}
 
 -(void) startWithTarget:(id)target
 {
 	[super startWithTarget:target];
 	
-	deltaT_ = (CGFloat) 1 / [points_ count];
+//	_deltaT = (CGFloat) 1 / [_points count];
+	
+	// Issue #1441
+	_deltaT = (CGFloat) 1 / ([_points count]-1);
+	
+	_previousPosition = [(CCNode*)target position];
+	_accumulatedDiff = CGPointZero;
 }
 
 -(id) copyWithZone: (NSZone*) zone
 {
-	CCAction *copy = [[[self class] allocWithZone: zone] initWithDuration:[self duration] points:points_ tension:tension_];
+	CCAction *copy = [[[self class] allocWithZone: zone] initWithDuration:[self duration] points:_points tension:_tension];
     return copy;
 }
 
--(void) update:(ccTime) dt
-{	
+-(void) update:(CCTime)dt
+{
 	NSUInteger p;
 	CGFloat lt;
-	
-	// border
-	if( dt == 1 ) {
-		p = [points_ count] - 1;
+
+	// eg.
+	// p..p..p..p..p..p..p
+	// 1..2..3..4..5..6..7
+	// want p to be 1, 2, 3, 4, 5, 6
+	if (dt == 1) {
+		p = [_points count] - 1;
 		lt = 1;
 	} else {
-		p = dt / deltaT_;
-		lt = (dt - deltaT_ * (CGFloat)p) / deltaT_;
+		p = dt / _deltaT;
+		lt = (dt - _deltaT * (CGFloat)p) / _deltaT;
 	}
 
 	// Interpolate
-	CGPoint pp0 = [points_ getControlPointAtIndex:p-1];
-	CGPoint pp1 = [points_ getControlPointAtIndex:p+0];
-	CGPoint pp2 = [points_ getControlPointAtIndex:p+1];
-	CGPoint pp3 = [points_ getControlPointAtIndex:p+2];
-	
-	CGPoint newPos = ccCardinalSplineAt( pp0, pp1, pp2, pp3, tension_, lt );
-	
-	[self updatePosition:newPos];
+	CGPoint pp0 = [_points getControlPointAtIndex:p-1];
+	CGPoint pp1 = [_points getControlPointAtIndex:p+0];
+	CGPoint pp2 = [_points getControlPointAtIndex:p+1];
+	CGPoint pp3 = [_points getControlPointAtIndex:p+2];
+
+	CGPoint newPos = CCCardinalSplineAt( pp0, pp1, pp2, pp3, _tension, lt );
+
+#if CC_ENABLE_STACKABLE_ACTIONS
+	CCNode *node = (CCNode*)_target;
+	CGPoint diff = ccpSub( node.position, _previousPosition);
+	if( diff.x !=0 || diff.y != 0 ) {
+		_accumulatedDiff = ccpAdd( _accumulatedDiff, diff);
+		newPos = ccpAdd( newPos, _accumulatedDiff);
+	}
+#endif
+
+	[self updatePosition:newPos];	
 }
 
 -(void) updatePosition:(CGPoint)newPos
 {
-	[target_ setPosition:newPos];
+	[(CCNode *)_target setPosition:newPos];
+	_previousPosition = newPos;
 }
 
 -(CCActionInterval*) reverse
 {
-	CCPointArray *reverse = [points_ reverse];
+	CCPointArray *reverse = [_points reverse];
 
-	return [[self class] actionWithDuration:duration_ points:reverse tension:tension_];
+	return [[self class] actionWithDuration:_duration points:reverse tension:_tension];
 }
 @end
 
-#pragma mark - CCCardinalSplineBy
+#pragma mark - CCActionCardinalSplineBy
 
-@implementation CCCardinalSplineBy
+@implementation CCActionCardinalSplineBy
 
 -(void) startWithTarget:(id)target
 {
 	[super startWithTarget:target];
 
-	startPosition_ = [(CCNode*)target position];
+	_startPosition = [(CCNode*)target position];
 }
 
 -(void) updatePosition:(CGPoint)newPos
 {
-	[target_ setPosition:ccpAdd(newPos, startPosition_)];
+	CGPoint p = ccpAdd(newPos, _startPosition);
+	[(CCNode *)_target setPosition:p];
+	_previousPosition = p;
 }
 
 -(CCActionInterval*) reverse
 {
-	CCPointArray *copyConfig = [points_ copy];
+	CCPointArray *copyConfig = [_points copy];
 	
 	//
 	// convert "absolutes" to "diffs"
@@ -307,7 +315,6 @@ inline CGPoint ccCardinalSplineAt( CGPoint p0, CGPoint p1, CGPoint p2, CGPoint p
 	// convert to "diffs" to "reverse absolute"
 	
 	CCPointArray *reverse = [copyConfig reverse];
-	[copyConfig release];
 	
 	// 1st element (which should be 0,0) should be here too
 	p = [reverse getControlPointAtIndex: [reverse count]-1];
@@ -326,17 +333,17 @@ inline CGPoint ccCardinalSplineAt( CGPoint p0, CGPoint p1, CGPoint p2, CGPoint p
 		p = abs;
 	}
 	
-	return [[self class] actionWithDuration:duration_ points:reverse tension:tension_];
+	return [[self class] actionWithDuration:_duration points:reverse tension:_tension];
 }
 @end
 
-@implementation CCCatmullRomTo
-+(id) actionWithDuration:(ccTime)dt points:(CCPointArray *)points
+@implementation CCActionCatmullRomTo
++(id) actionWithDuration:(CCTime)dt points:(CCPointArray *)points
 {
-	return [[[self alloc] initWithDuration:dt points:points] autorelease];
+	return [[self alloc] initWithDuration:dt points:points];
 }
 
--(id) initWithDuration:(ccTime)dt points:(CCPointArray *)points
+-(id) initWithDuration:(CCTime)dt points:(CCPointArray *)points
 {
 	if( (self=[super initWithDuration:dt points:points tension:0.5f]) ) {
 		
@@ -346,13 +353,13 @@ inline CGPoint ccCardinalSplineAt( CGPoint p0, CGPoint p1, CGPoint p2, CGPoint p
 }
 @end
 
-@implementation CCCatmullRomBy
-+(id) actionWithDuration:(ccTime)dt points:(CCPointArray *)points
+@implementation CCActionCatmullRomBy
++(id) actionWithDuration:(CCTime)dt points:(CCPointArray *)points
 {
-	return [[[self alloc] initWithDuration:dt points:points] autorelease];
+	return [[self alloc] initWithDuration:dt points:points];
 }
 
--(id) initWithDuration:(ccTime)dt points:(CCPointArray *)points
+-(id) initWithDuration:(CCTime)dt points:(CCPointArray *)points
 {
 	if( (self=[super initWithDuration:dt points:points tension:0.5f]) ) {
 		

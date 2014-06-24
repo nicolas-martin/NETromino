@@ -2,6 +2,7 @@
  * cocos2d for iPhone: http://www.cocos2d-iphone.org
  *
  * Copyright (c) 2012 Zynga Inc.
+ * Copyright (c) 2013-2014 Cocos2D Authors
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -23,6 +24,7 @@
  */
 
 #import "CCNode+Debug.h"
+#import "CCNode_Private.h"
 
 #ifdef DEBUG
 
@@ -37,16 +39,15 @@
 	buf[i] = 0;
 	
 
-	if(children_) {
+	if(_children) {
 		
 		[self sortAllChildren];
 		
-		ccArray *arrayData = children_->data;
 		i = 0;
 		
 		// draw children zOrder < 0
-		for( ; i < arrayData->num; i++ ) {
-			CCNode *child = arrayData->arr[i];
+		for( ; i < _children.count; i++ ) {
+			CCNode *child = [_children objectAtIndex:i];
 			if ( [child zOrder] < 0 )
 				[child walkSceneGraph:level+1];
 			else
@@ -57,8 +58,8 @@
 		NSLog(@"walk tree: %s> %@ %p", buf, self, self);
 		
 		// draw children zOrder >= 0
-		for( ; i < arrayData->num; i++ ) {
-			CCNode *child =  arrayData->arr[i];
+		for( ; i < _children.count; i++ ) {
+			CCNode *child = [_children objectAtIndex:i];
 			[child walkSceneGraph:level+1];
 		}
 		

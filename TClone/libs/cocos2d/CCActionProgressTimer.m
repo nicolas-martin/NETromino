@@ -2,6 +2,7 @@
  * cocos2d for iPhone: http://www.cocos2d-iphone.org
  *
  * Copyright (C) 2010 Lam Pham
+ * Copyright (c) 2013-2014 Cocos2D Authors
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -26,69 +27,67 @@
 
 #import "CCActionProgressTimer.h"
 
-#define kProgressTimerCast CCProgressTimer*
-
-@implementation CCProgressTo
-+(id) actionWithDuration: (ccTime) t percent: (float) v
+@implementation CCActionProgressTo
++(id) actionWithDuration: (CCTime) t percent: (float) v
 {
-	return [[[ self alloc] initWithDuration: t percent: v] autorelease];
+	return [[ self alloc] initWithDuration: t percent: v];
 }
 
--(id) initWithDuration: (ccTime) t percent: (float) v
+-(id) initWithDuration: (CCTime) t percent: (float) v
 {
 	if( (self=[super initWithDuration: t] ) )
-		to_ = v;
+		_to = v;
 
 	return self;
 }
 
 -(id) copyWithZone: (NSZone*) zone
 {
-	CCAction *copy = [[[self class] allocWithZone: zone] initWithDuration:duration_ percent:to_];
+	CCAction *copy = [[[self class] allocWithZone: zone] initWithDuration:_duration percent:_to];
 	return copy;
 }
 
 -(void) startWithTarget:(id) aTarget;
 {
 	[super startWithTarget:aTarget];
-	from_ = [(kProgressTimerCast)target_ percentage];
+	_from = [(CCProgressNode*)_target percentage];
 
 	// XXX: Is this correct ?
 	// Adding it to support CCRepeat
-	if( from_ == 100)
-		from_ = 0;
+	if( _from == 100)
+		_from = 0;
 }
 
--(void) update: (ccTime) t
+-(void) update: (CCTime) t
 {
-	[(kProgressTimerCast)target_ setPercentage: from_ + ( to_ - from_ ) * t];
+	[(CCProgressNode*)_target setPercentage: _from + ( _to - _from ) * t];
 }
 @end
 
-@implementation CCProgressFromTo
-+(id) actionWithDuration: (ccTime) t from:(float)fromPercentage to:(float) toPercentage
+@implementation CCActionProgressFromTo
++(id) actionWithDuration: (CCTime) t from:(float)fromPercentage to:(float) toPercentage
 {
-	return [[[self alloc] initWithDuration: t from: fromPercentage to: toPercentage] autorelease];
+	return [[self alloc] initWithDuration: t from: fromPercentage to: toPercentage];
 }
 
--(id) initWithDuration: (ccTime) t from:(float)fromPercentage to:(float) toPercentage
+-(id) initWithDuration: (CCTime) t from:(float)fromPercentage to:(float) toPercentage
 {
 	if( (self=[super initWithDuration: t] ) ){
-		to_ = toPercentage;
-		from_ = fromPercentage;
+		_to = toPercentage;
+		_from = fromPercentage;
 	}
 	return self;
 }
 
 -(id) copyWithZone: (NSZone*) zone
 {
-	CCAction *copy = [[[self class] allocWithZone: zone] initWithDuration:duration_ from:from_ to:to_];
+	CCAction *copy = [[[self class] allocWithZone: zone] initWithDuration:_duration from:_from to:_to];
 	return copy;
 }
 
 - (CCActionInterval *) reverse
 {
-	return [[self class] actionWithDuration:duration_ from:to_ to:from_];
+	return [[self class] actionWithDuration:_duration from:_to to:_from];
 }
 
 -(void) startWithTarget:(id) aTarget;
@@ -96,8 +95,8 @@
 	[super startWithTarget:aTarget];
 }
 
--(void) update: (ccTime) t
+-(void) update: (CCTime) t
 {
-	[(kProgressTimerCast)target_ setPercentage: from_ + ( to_ - from_ ) * t];
+	[(CCProgressNode*)_target setPercentage: _from + ( _to - _from ) * t];
 }
 @end

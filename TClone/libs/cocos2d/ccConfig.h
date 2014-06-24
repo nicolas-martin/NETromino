@@ -3,6 +3,7 @@
  *
  * Copyright (c) 2008-2010 Ricardo Quesada
  * Copyright (c) 2011 Zynga Inc.
+ * Copyright (c) 2013-2014 Cocos2D Authors
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -28,36 +29,16 @@
  cocos2d (cc) configuration file
 */
 
-/** @def CC_ENABLE_GL_STATE_CACHE
- If enabled, cocos2d will maintain an OpenGL state cache internally to avoid unnecessary switches.
- In order to use them, you have to use the following functions, insead of the the GL ones:
-	- ccGLUseProgram() instead of glUseProgram()
-	- ccGLDeleteProgram() instead of glDeleteProgram()
-	- ccGLBlendFunc() instead of glBlendFunc()
-
- If this functionality is disabled, then ccGLUseProgram(), ccGLDeleteProgram(), ccGLBlendFunc() will call the GL ones, without using the cache.
-
- It is recommened to enable it whenever possible to improve speed.
- If you are migrating your code from GL ES 1.1, then keep it disabled. Once all your code works as expected, turn it on.
-
- Default value: Disabled by default
-
- @since v2.0.0
- */
-#ifndef CC_ENABLE_GL_STATE_CACHE
-#define CC_ENABLE_GL_STATE_CACHE 1
-#endif
-
-/** @def CC_ENABLE_DEPRECATED
- If enabled, cocos2d will compile all deprecated methods, classes and free functions. Also, renamed constants will be active as well.
- Enable it only when migrating a v1.0 or earlier v2.0 versions to the most recent cocdos2d version.
+/** @def CC_ENABLE_STACKABLE_ACTIONS
+ If enabled, actions that alter the position property (eg: CCMoveBy, CCJumpBy, CCBezierBy, etc..) will be stacked.
+ If you run 2 or more 'position' actions at the same time on a node, then end position will be the sum of all the positions. 
+ If disabled, only the last run action will take effect.
  
- Default value: Enabled by default
- 
- @since v2.0.0
+ Enabled by default. Disable to be compatible with v2.0 and older versions.
+
  */
-#ifndef CC_ENABLE_DEPRECATED
-#define CC_ENABLE_DEPRECATED 1
+#ifndef CC_ENABLE_STACKABLE_ACTIONS
+#define CC_ENABLE_STACKABLE_ACTIONS 1
 #endif
 
 
@@ -79,7 +60,6 @@
 
  To enabled set it to 1. Disabled by default.
 
- @since v0.99.5
  */
 #ifndef CC_FIX_ARTIFACTS_BY_STRECHING_TEXEL
 #define CC_FIX_ARTIFACTS_BY_STRECHING_TEXEL 0
@@ -104,21 +84,6 @@
 #ifndef CC_DIRECTOR_STATS_POSITION
 #define CC_DIRECTOR_STATS_POSITION ccp(0,0)
 #endif
-
-/** @def CC_DIRECTOR_IOS_USE_BACKGROUND_THREAD
- If enabled, cocos2d-ios will run on a background thread. If disabled cocos2d-ios will run the main thread.
-
- To enable set it to a 1, to disable it set to 0. Enabled by default.
-
- Only valid for cocos2d-ios. Not supported on cocos2d-mac.
- 
- This is an EXPERIMENTAL feature. Do not use it unless you are a developer.
-
- */
-#ifndef CC_DIRECTOR_IOS_USE_BACKGROUND_THREAD
-#define CC_DIRECTOR_IOS_USE_BACKGROUND_THREAD 0
-#endif
-
 
 #define CC_MAC_USE_DISPLAY_LINK_THREAD 0
 #define CC_MAC_USE_OWN_THREAD 1
@@ -151,56 +116,9 @@
 #define CC_NODE_RENDER_SUBPIXEL 1
 #endif
 
-/** @def CC_SPRITEBATCHNODE_RENDER_SUBPIXEL
- If enabled, the CCSprite objects rendered with CCSpriteBatchNode will be able to render in subpixels.
- If disabled, integer pixels will be used.
-
- To enable set it to 1. Enabled by default.
- */
-#ifndef CC_SPRITEBATCHNODE_RENDER_SUBPIXEL
-#define CC_SPRITEBATCHNODE_RENDER_SUBPIXEL	1
-#endif
-
-/** @def CC_TEXTURE_ATLAS_USE_TRIANGLE_STRIP
- Use GL_TRIANGLE_STRIP instead of GL_TRIANGLES when rendering the texture atlas.
- It seems it is the recommend way, but it is much slower, so, enable it at your own risk
-
- To enable set it to a value different than 0. Disabled by default.
-
- */
-#ifndef CC_TEXTURE_ATLAS_USE_TRIANGLE_STRIP
-#define CC_TEXTURE_ATLAS_USE_TRIANGLE_STRIP 0
-#endif
-
-/** @def CC_TEXTURE_ATLAS_USE_VAO
- By default, CCTextureAtlas (used by many cocos2d classes) will use VAO (Vertex Array Objects).
- Apple recommends its usage but they might consume a lot of memory, specially if you use many of them.
- So for certain cases, where you might need hundreds of VAO objects, it might be a good idea to disable it.
- 
- To disable it set it to 0. Enabled by default.
- 
- */
-#ifndef CC_TEXTURE_ATLAS_USE_VAO
-#define CC_TEXTURE_ATLAS_USE_VAO 1
-#endif
-
-
-/** @def CC_USE_LA88_LABELS
- If enabled, it will use LA88 (Luminance Alpha 16-bit textures) for CCLabelTTF objects.
- If it is disabled, it will use A8 (Alpha 8-bit textures).
- LA88 textures are 6% faster than A8 textures, but they will consume 2x memory.
-
- This feature is enabled by default.
-
- @since v0.99.5
- */
-#ifndef CC_USE_LA88_LABELS
-#define CC_USE_LA88_LABELS 1
-#endif
-
 /** @def CC_SPRITE_DEBUG_DRAW
  If enabled, all subclasses of CCSprite will draw a bounding box.
- Useful for debugging purposes only. It is recommened to leave it disabled.
+ Useful for debugging purposes only. It is recommended to leave it disabled.
 
  If the CCSprite is being drawn by a CCSpriteBatchNode, the bounding box might be a bit different.
  To enable set it to a value different than 0. Disabled by default:
@@ -212,34 +130,6 @@
 #define CC_SPRITE_DEBUG_DRAW 0
 #endif
 
-
-/** @def CC_LABELBMFONT_DEBUG_DRAW
- If enabled, all subclasses of CCLabelBMFont will draw a bounding box
- Useful for debugging purposes only. It is recommened to leave it disabled.
-
- To enable set it to a value different than 0. Disabled by default.
- */
-#ifndef CC_LABELBMFONT_DEBUG_DRAW
-#define CC_LABELBMFONT_DEBUG_DRAW 0
-#endif
-
-/** @def CC_LABELATLAS_DEBUG_DRAW
- If enabled, all subclasses of CCLabeltAtlas will draw a bounding box
- Useful for debugging purposes only. It is recommened to leave it disabled.
-
- To enable set it to a value different than 0. Disabled by default.
- */
-#ifndef CC_LABELATLAS_DEBUG_DRAW
-#define CC_LABELATLAS_DEBUG_DRAW 0
-#endif
-
-/** @def CC_ENABLE_PROFILERS
- If enabled, it will activate various profilers within cocos2d. This statistical data will be saved in the CCProfiler singleton.
- In order to display saved data, you have to call the CC_PROFILER_DISPLAY_TIMERS() macro.
- Useful for profiling purposes only. If unsure, leave it disabled.
-
- To enable set it to a value different than 0. Disabled by default.
- */
-#ifndef CC_ENABLE_PROFILERS
-#define CC_ENABLE_PROFILERS 0
+#ifndef CC_ENABLE_EXPERIMENTAL_EFFECTS
+#define CC_ENABLE_EXPERIMENTAL_EFFECTS 0
 #endif
