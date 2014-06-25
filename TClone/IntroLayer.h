@@ -7,7 +7,7 @@
 #import "cocos2d.h"
 
 
-@interface IntroLayer : CCLayer {
+@interface IntroLayer : CCNode {
 
 }
 

@@ -4,7 +4,7 @@
 
 #import <Foundation/Foundation.h>
 #import "cocos2d.h"
-#import "CCLayer.h"
+#import "CCNode.h"
 #import "GameLogicLayer.h"
 #import "ICastable.h"
 #import "Field.h"

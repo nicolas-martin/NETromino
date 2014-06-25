@@ -4,7 +4,6 @@
 
 
 #import "HudLayer.h"
-#import "CGPointExtension.h"
 #import "CCLabelTTF.h"
 #import "CCDirector.h"
 
@@ -17,9 +16,9 @@
 - (id)init {
     self = [super init];
     if (self) {
-        CGSize winSize = [CCDirector sharedDirector].winSize;
+        CGSize winSize = [CCDirector sharedDirector].viewSize;
         _label = [CCLabelTTF labelWithString:@"0" fontName:@"Helvetica" fontSize:18.0];
-        _label.color = ccc3(255,255,255);
+        _label.color = [CCColor blackColor];
         NSUInteger margin = 10;
         //_label.position = ccp(winSize.width - (_label.contentSize.width/2) - margin, _label.contentSize.height/2 + margin);
         _label.position = ccp(0,0);

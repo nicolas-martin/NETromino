@@ -5,10 +5,9 @@
 
 #import "Inventory.h"
 #import "ICastable.h"
-#import "CCSprite.h"
-#import "CGPointExtension.h"
 #import "CCActionEase.h"
 #import "GameLogicLayer.h"
+#import "UITouch+CC.h"
 
 #define NSLog(FORMAT, ...) printf("%s\n", [[NSString stringWithFormat:FORMAT, ##__VA_ARGS__] UTF8String]);
 
@@ -52,7 +51,8 @@
 
     }
 
-    return [self initWithFile:filename];
+    //return [self initWithFile:filename];
+    return self;
 }
 
 - (void)addSpell:(<ICastable>)spell
@@ -61,7 +61,7 @@
     if(_Inventory.count < 10)
     {
         [_Inventory addObject:spell];
-        CCSprite *newSpellSprite = [CCSprite spriteWithFile:spell.spriteFileName];
+        CCSprite *newSpellSprite = [CCSprite spriteWithImageNamed:spell.spriteFileName];
 
         if(!_Main)
         {
@@ -69,7 +69,7 @@
         }
 
         [newSpellSprite setPosition:ccp(newSpellSprite.contentSize.width * _Inventory.count, newSpellSprite.contentSize.height/2)];
-        [newSpellSprite setTag:1];
+        [newSpellSprite setName:@"1"];
         newSpellSprite.userObject = spell;
         [movableSprites addObject:newSpellSprite];
         [self addChild:newSpellSprite];
@@ -95,25 +95,24 @@
 //TODO: The logic should be thrown to the controller
 - (BOOL)ccTouchBegan:(UITouch *)touch withEvent:(UIEvent *)event
 {
-    CGPoint touchLocation = [self convertTouchToNodeSpace:touch];
+    CGPoint touchLocation = [touch locationInNode:self];
     [self selectSpriteForTouch:touchLocation];
     return TRUE;
 }
 
 - (void)ccTouchMoved:(UITouch *)touch withEvent:(UIEvent *)event
 {
-    CGPoint touchLocation = [self convertTouchToNodeSpace:touch];
+    CGPoint touchLocation = [touch locationInNode:self];
 
     if (selSprite) {
-        id move = [CCEaseIn actionWithAction:[CCMoveTo actionWithDuration:0.1 position:touchLocation]];
-        [selSprite runAction:move];
+        [selSprite setPosition:touchLocation];
 
     }
 }
 
 - (void)ccTouchEnded:(UITouch *)touch withEvent:(UIEvent *)event
 {
-    CGPoint touchLocation = [self convertTouchToNodeSpace:touch];
+    CGPoint touchLocation = [touch locationInNode:self];
 
     for (NSMutableDictionary *dictionary in _fieldBoundingBoxes)
     {
@@ -147,10 +146,10 @@
 
 - (void)selectSpriteForTouch:(CGPoint)touchLocation
 {
-    CCSprite * newSprite = nil;
-    for (CCSprite *sprite in movableSprites)
+    CCNode * newSprite = nil;
+    for (CCNode *sprite in movableSprites)
     {
-        if (sprite.tag == 1){
+        if (sprite.name == @"1"){
 
             if (CGRectContainsPoint(sprite.boundingBox, touchLocation)) {
                 newSprite = sprite;
@@ -159,18 +158,7 @@
 
         }
     }
-    
-    //TODO: Remove this
-    if (newSprite != selSprite) {
-        [selSprite stopAllActions];
-        [selSprite runAction:[CCRotateTo actionWithDuration:0.1 angle:0]];
-        CCRotateTo * rotLeft = [CCRotateBy actionWithDuration:0.1 angle:-4.0];
-        CCRotateTo * rotCenter = [CCRotateBy actionWithDuration:0.1 angle:0.0];
-        CCRotateTo * rotRight = [CCRotateBy actionWithDuration:0.1 angle:4.0];
-        CCSequence * rotSeq = [CCSequence actions:rotLeft, rotCenter, rotRight, rotCenter, nil];
-        [newSprite runAction:[CCRepeatForever actionWithAction:rotSeq]];
-        selSprite = newSprite;
-    }
+
 }
 
 @end

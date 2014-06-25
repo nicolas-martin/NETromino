@@ -4,10 +4,10 @@
 
 
 #import <Foundation/Foundation.h>
-#import "CCLayer.h"
+#import "CCNode.h"
 
 
-@interface HudLayer : CCLayer
+@interface HudLayer : CCNode
 
 + (id)initLayer;
 

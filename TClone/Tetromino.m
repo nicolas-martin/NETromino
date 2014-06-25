@@ -326,10 +326,9 @@ static NSUInteger orientationCount[7] = {2, 1, 4, 4, 2, 2, 4};
 
 - (void)moveTetrominoDown {
 
-	CCArray *reversedChildren = [[CCArray alloc] initWithArray:self.children];  // make copy
-	[reversedChildren reverseObjects]; // reverse contents
+	NSArray *reversedChildren = [[NSArray alloc] initWithArray:self.children];  // make copy
 
-	for (Block *currentBlock in reversedChildren)
+	for (Block *currentBlock in [reversedChildren reverseObjectEnumerator])
 	{
 		//move each block down
 		[currentBlock moveDown];

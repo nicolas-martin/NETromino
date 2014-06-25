@@ -6,7 +6,7 @@
 //
 //
 
-class GameMenu : CCLayer{
+class GameMenu : CCNode{
     
     class func scene() -> CCScene{
 
@@ -21,6 +21,7 @@ class GameMenu : CCLayer{
 
     init(){
         super.init()
+        /*
         let mySelector: Selector = "onPlayPressed"
 
         var PlayButton = CCMenuItemImage(normalImage: "play.png", selectedImage: "playPressed.png", disabledImage: "play.png", target: self, selector: mySelector)
@@ -36,7 +37,7 @@ class GameMenu : CCLayer{
         Menu.position = CGPoint(x: winSize.width * 0.5,y: winSize.height * 0.4)
         Menu.alignItemsVerticallyWithPadding(15)
         
-        self.addChild(Menu)
+        self.addChild(Menu)*/
         
     }
     

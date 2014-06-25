@@ -4,7 +4,7 @@
 //
 //TODO: Remove this class and integrate in board?
 
-#import "CCLayer.h"
+#import "CCNode.h"
 #import "Field.h"
 #import "Board.h"
 #import "Tetromino.h"
@@ -68,21 +68,34 @@
 - (BOOL)canMoveTetrominoByYTetromino:(Tetromino *)userTetromino offSetY:(NSUInteger)offSetY {
 
     // Sort blocks by x value if moving left, reverse order if moving right
-    CCArray *reversedChildren = [[CCArray alloc] initWithArray:userTetromino.children];
+    NSArray *reversedChildren = [[NSArray alloc] initWithArray:userTetromino.children];
+    NSEnumerator *enumerator = [reversedChildren objectEnumerator];
 
     if (offSetY > 0) {
-        [reversedChildren reverseObjects];
-    }
+        for (Block *currentBlock in [reversedChildren reverseObjectEnumerator]) {
+            //dont compare yourself
+            if (!([userTetromino isBlockInTetromino:[_board getBlockAt:ccp(currentBlock.boardX, currentBlock.boardY + offSetY)]])) {
+                //if there's another block at the position you're looking at, you can't move
+                if ([_board isBlockAt:ccp(currentBlock.boardX, currentBlock.boardY + offSetY)]) {
+                    return NO;
+                }
+            }
+        }
+    }else
+    {
 
-    for (Block *currentBlock in reversedChildren) {
-        //dont compare yourself
-        if (!([userTetromino isBlockInTetromino:[_board getBlockAt:ccp(currentBlock.boardX, currentBlock.boardY + offSetY)]])) {
-            //if there's another block at the position you're looking at, you can't move
-            if ([_board isBlockAt:ccp(currentBlock.boardX, currentBlock.boardY + offSetY)]) {
-                return NO;
+
+        for (Block *currentBlock in [reversedChildren objectEnumerator]) {
+            //dont compare yourself
+            if (!([userTetromino isBlockInTetromino:[_board getBlockAt:ccp(currentBlock.boardX, currentBlock.boardY + offSetY)]])) {
+                //if there's another block at the position you're looking at, you can't move
+                if ([_board isBlockAt:ccp(currentBlock.boardX, currentBlock.boardY + offSetY)]) {
+                    return NO;
+                }
             }
         }
     }
+
     return YES;
 
 }
@@ -91,18 +104,29 @@
 - (BOOL)canMoveTetrominoByXTetromino:(Tetromino *)userTetromino offSetX:(NSUInteger)offSetX {
 
     // Sort blocks by x value if moving left, reverse order if moving right
-    CCArray *reversedChildren = [[CCArray alloc] initWithArray:userTetromino.children];
+    NSArray *reversedChildren = [[NSArray alloc] initWithArray:userTetromino.children];
 
     if (offSetX > 0) {
-        [reversedChildren reverseObjects];
+        for (Block *currentBlock in [reversedChildren reverseObjectEnumerator] ) {
+            //dont compare yourself
+            if (!([userTetromino isBlockInTetromino:[_board getBlockAt:ccp(currentBlock.boardX + offSetX, currentBlock.boardY)]])) {
+                //if there's another block at the position you're looking at, you can't move
+                if ([_board isBlockAt:ccp(currentBlock.boardX + offSetX, currentBlock.boardY)]) {
+                    return NO;
+                }
+            }
+        }
     }
+    else
+    {
 
-    for (Block *currentBlock in reversedChildren) {
-        //dont compare yourself
-        if (!([userTetromino isBlockInTetromino:[_board getBlockAt:ccp(currentBlock.boardX + offSetX, currentBlock.boardY)]])) {
-            //if there's another block at the position you're looking at, you can't move
-            if ([_board isBlockAt:ccp(currentBlock.boardX + offSetX, currentBlock.boardY)]) {
-                return NO;
+        for (Block *currentBlock in [reversedChildren objectEnumerator]) {
+            //dont compare yourself
+            if (!([userTetromino isBlockInTetromino:[_board getBlockAt:ccp(currentBlock.boardX + offSetX, currentBlock.boardY)]])) {
+                //if there's another block at the position you're looking at, you can't move
+                if ([_board isBlockAt:ccp(currentBlock.boardX + offSetX, currentBlock.boardY)]) {
+                    return NO;
+                }
             }
         }
     }

@@ -8,7 +8,7 @@
 @class Board;
 @class Tetromino;
 
-@interface Field : CCLayer {//<GameControllerObserver> {
+@interface Field : CCNode {//<GameControllerObserver> {
 
 
 }

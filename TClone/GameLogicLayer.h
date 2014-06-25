@@ -9,7 +9,7 @@
 #define kLastColumn 9
 #define kLastRow 19
 
-@interface GameLogicLayer : CCLayer <UIGestureRecognizerDelegate>
+@interface GameLogicLayer : CCNode <UIGestureRecognizerDelegate>
 {
     int playerWidth;
     int playerHeight;

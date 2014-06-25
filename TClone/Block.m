@@ -3,9 +3,10 @@
 //
 //
 
-#import "Tetromino.h"
 #import "AddLine.h"
 #import "Block.h"
+#import "CCTextureCache.h"
+#import "Tetromino.h"
 
 @interface Block (private)
 
@@ -69,7 +70,7 @@
         //TODO: Use their own sprites instead of scaling down.
 
         filename = [[NSString alloc] initWithFormat:@"%@.png", color];
-        Block *block = [self initWithFile:filename];
+        [self setTexture:[[CCTextureCache sharedTextureCache] addImage:filename]];
         [self setAnchorPoint:ccp(0,0)];
 
     }

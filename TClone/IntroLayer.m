@@ -34,18 +34,13 @@
 		NSString * message;
             message = @"Hello World!";
         
-        CGSize winSize = [[CCDirector sharedDirector] winSize];
+        CGSize winSize = [[CCDirector sharedDirector] viewSize];
         CCLabelTTF * label = [CCLabelTTF labelWithString:message fontName:@"Arial" fontSize:32];
-        label.color = ccc3(0,0,0);
+        label.color = [CCColor blueColor];
         label.position = ccp(winSize.width/2, winSize.height/2);
         [self addChild:label];
-        
-        [self runAction:[CCSequence actions:[CCDelayTime actionWithDuration:3],
-          [CCCallBlockN actionWithBlock:^(CCNode *node)
-		{
-             [[CCDirector sharedDirector] replaceScene:[GameLogicLayer scene]];
-		 }],
-          nil]];
+        [[CCDirector sharedDirector] replaceScene:[GameLogicLayer scene]];
+
 
 
 	}

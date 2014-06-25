@@ -3,7 +3,7 @@
 //
 //
 
-#import "CCLayer.h"
+#import "CCNode.h"
 #import "GameLogicLayer.h"
 #import "CCNode+SFGestureRecognizers.h"
 #import "Field.h"
@@ -82,7 +82,7 @@ static GameLogicLayer *sharedManager = nil;
         [_FieldLayer3 initWithName:@"Field3" TileSize:16 Height:320 Width:160 board:player3Board];
         [_FieldLayer4 initWithName:@"Field4" TileSize:16 Height:320 Width:160 board:player4Board];
 
-        CGSize winSize = [CCDirector sharedDirector].winSize;
+        CGSize winSize = [CCDirector sharedDirector].viewSize;
         NSUInteger rightMargin = 50;
         NSUInteger topMargin = 20;
         NSUInteger bottomMargin = 20;
@@ -185,7 +185,8 @@ static GameLogicLayer *sharedManager = nil;
         [_MainField addGestureRecognizer:tapGestureRecognizer];
 
         _gameController.inventory.isTouchEnabled = YES;
-        [[[CCDirector sharedDirector] touchDispatcher] addTargetedDelegate:_gameController.inventory priority:0 swallowsTouches:NO];
+        //FIXME : add touch delegate
+        //[[[CCDirector sharedDirector] touchDispatcher] addTargetedDelegate:_gameController.inventory priority:0 swallowsTouches:NO];
 
 
 
@@ -299,7 +300,7 @@ static GameLogicLayer *sharedManager = nil;
 
 }
 
-- (void)updateBoard:(ccTime)dt
+- (void)updateBoard:(CCTime)dt
 {
     NSMutableArray *controllersToRemove = [NSMutableArray array];
     frameCount += 1;

@@ -22,15 +22,11 @@
             message = @"You Won!";
         }
 
-        CCLayerColor *_shadowLayer = [CCLayerColor layerWithColor: ccc4(0,0,0, 80)];
-
-        [self addChild:_shadowLayer];
-
 
 
         CCLabelTTF * label = [CCLabelTTF labelWithString:message fontName:@"Arial" fontSize:32];
         [label setAnchorPoint:ccp(0,0)];
-        label.color = ccc3(220,20,60);
+        label.color = [CCColor greenColor];
         [label setPosition:ccp(size.width/2, size.height/2)];
 
         [self setAnchorPoint:ccp(0, 0)];

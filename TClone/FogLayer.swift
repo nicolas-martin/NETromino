@@ -30,11 +30,11 @@ class FogLayer : CCNode{
         
         //TODO: Make layer with transparent spots.
         
-        let background = CCSprite(file: "fog.png")
-        background.anchorPoint = CGPoint(x: 0, y: 0)
+        //let background = CCSprite(file: "fog.png")
+        //background.anchorPoint = CGPoint(x: 0, y: 0)
         
-        let fogLayer = FogLayer()
-        fogLayer.addChild(background)
+        //let fogLayer = FogLayer()
+        //fogLayer.addChild(background)
         
     }
     

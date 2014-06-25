@@ -4,14 +4,14 @@
 
 
 #import <Foundation/Foundation.h>
-#import "CCLayer.h"
+#import "CCNode.h"
 #import "CCSprite.h"
 
 @protocol ICastable;
 @class CCSprite;
 
 
-@interface Inventory : CCSprite
+@interface Inventory : CCNode
 {
     CCSprite * selSprite;
     NSMutableArray *movableSprites;

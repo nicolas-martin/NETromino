@@ -5,7 +5,7 @@
 #import <Foundation/Foundation.h>
 #import "cocos2d.h"
 
-@interface GameOverLayer : CCLayer
+@interface GameOverLayer : CCNode
 {
     
 }
